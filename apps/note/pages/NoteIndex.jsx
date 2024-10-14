@@ -13,6 +13,7 @@ export function NoteIndex() {
   const [filterBy, setFilterBy] = useState(
     noteService.getFilterFromSearchParams(searchParams)
   )
+  const [selectedNote, setSelectedNote] = useState(null) 
 
   useEffect(() => {
     setSearchParams(utilService.getTruthyValues(filterBy))
@@ -42,8 +43,14 @@ export function NoteIndex() {
   }
 
   function onNoteAdded(newNote) {
-    setNotes((prevNotes) => [...prevNotes, newNote]) 
-
+    if (newNote.id) {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) => (note.id === newNote.id ? newNote : note))
+      )
+    } else {
+      setNotes((prevNotes) => [...prevNotes, newNote])
+    }
+    setSelectedNote(null) 
   }
 
   function onChangeColor(noteId, color) {
@@ -59,20 +66,27 @@ export function NoteIndex() {
     )
     setNotes(updatedNotes)
   }
+
   function onSetFilterBy(filterBy) {
     setFilterBy((preFilter) => ({ ...preFilter, ...filterBy }))
   }
 
+  function onEditNote(note) {
+    setSelectedNote(note) 
+  }
+
   if (!notes) return <h1>Loading...</h1>
+
   return (
     <section className="note-index">
       <NoteFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <NoteAdd onNoteAdded={onNoteAdded} />
+      <NoteAdd selectedNote={selectedNote} onNoteAdded={onNoteAdded} />
       <NoteList
         notes={notes}
         onRemoveNote={onRemoveNote}
         onChangeColor={onChangeColor}
         onTogglePin={onTogglePin}
+        onEditNote={onEditNote}
       />
     </section>
   )
