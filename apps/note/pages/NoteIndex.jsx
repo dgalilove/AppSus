@@ -2,10 +2,10 @@ const { useEffect, useState } = React
 const { useSearchParams } = ReactRouterDOM
 
 import { utilService } from "../../../services/util.service.js"
+import { NoteAdd } from "../cmps/NoteAdd.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { noteService } from "../services/note.service.js"
-
 
 export function NoteIndex() {
   const [notes, setNotes] = useState(null)
@@ -18,6 +18,10 @@ export function NoteIndex() {
     setSearchParams(utilService.getTruthyValues(filterBy))
     loadNotes()
   }, [filterBy])
+  
+  useEffect(() => {
+    loadNotes()
+  },[notes])
 
   function loadNotes() {
     noteService
@@ -61,6 +65,7 @@ export function NoteIndex() {
   return (
     <section className="note-index">
       <NoteFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+      <NoteAdd />
       <NoteList
         notes={notes}
         onRemoveNote={onRemoveNote}

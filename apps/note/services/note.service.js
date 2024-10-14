@@ -14,7 +14,7 @@ export const noteService = {
   get,
   remove,
   save,
-  getEmptyNote,
+  createEmptyNote,
   getDefaultFilter,
   getFilterFromSearchParams,
 }
@@ -55,10 +55,23 @@ function save(note) {
     return storageService.post(NOTE_KEY, note)
   }
 }
-
-function getEmptyNote(title = "", txt = "") {
-  return { title, txt }
+function createEmptyNote() {
+  return {
+      id: "",
+      createdAt: Date.now(),
+      type: "NoteTxt",
+      isPinned: false,
+      style: {
+          backgroundColor: "#ffffff", 
+      },
+      info: {
+          title: "",
+          txt: "",
+      },
+  }
 }
+
+
 
 function getDefaultFilter() {
   return {
