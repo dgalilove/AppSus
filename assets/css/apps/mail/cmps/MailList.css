@@ -60,6 +60,7 @@
      padding-right: 0.714286em;
 
      margin-right: auto;
+
  }
 
 
@@ -104,7 +105,20 @@
      transition: 0.1s;
 
      margin-right: 0.714286em;
+     color: rgb(189, 189, 189);
  }
+
+ .mail-list ul li:hover .star-btn {
+     color: black;
+ }
+
+
+ .mail-list ul li .star-btn.stared {
+     color: gold;
+ }
+
+
+
 
  .mail-list ul li .star-btn:hover div {
      scale: 1;

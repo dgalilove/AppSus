@@ -4,7 +4,6 @@ const { useState, useEffect, useRef } = React
 
 export function SideBar({ unreadMails, openCompose }) {
 
-
     return (
         <div className="side-bar">
             <div className="compose-container">

@@ -24,23 +24,22 @@ export function MailIndex() {
         setSearchParams(utilService.getTruthyValues(filterBy))
         setIsComposeOpen(filterBy.compose)
         loadMails()
-        console.log(filterBy)
     }, [filterBy])
 
     function loadMails() {
         mailService.query(filterBy)
             .then(mails => {
-                console.log(mails)
                 setMails(mails)
-                countUnreadMails()
+                countUnreadMails(mails)
             })
             .catch(err => console.log(err))
     }
 
-    function countUnreadMails() {
-        if (!mails) return
+    function countUnreadMails(mails) {
+
         const unreadMails = mails.filter(mail => !mail.isRead)
         setUnreadMails(unreadMails.length)
+        console.log(unreadMails.length)
     }
 
     function onSetFilterBy(filterByToEdit) {

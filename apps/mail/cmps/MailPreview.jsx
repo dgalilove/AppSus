@@ -1,33 +1,53 @@
 import { mailService } from "../services/mail.service.js"
 
-const { useParams, useNavigate, Link } = ReactRouterDOM
-const { useState, useEffect } = React
+const { useRef, useState, useEffect } = React
 
-export function MailPreview() {
+export function MailPreview({ mail, onSetFilterBy }) {
 
-    const [mail, setMail] = useState(null)
-    const { mailId } = useParams()
-    const navigate = useNavigate()
+    const starRef = useRef()
+    const [isHover, setIsHover] = useState(false);
 
     useEffect(() => {
+        console.log(isHover)
+    }, [isHover])
+    function onStarClick(ev, mailId) {
+        ev.stopPropagation()
         mailService.get(mailId)
             .then(mail => {
-                setMail(mail)
+                mail = { ...mail, isStar: !mail.isStar }
+                mailService.save(mail)
+                    .then(mails => {
+                        onSetFilterBy({})
+                    })
+
             })
-    }, [mailId])
+    }
 
-    if (!mail) return <div>Loading...</div>
 
-    const { subject, body, from, sentAt, name } = mail
-    const date = new Date(sentAt).toString().split(' ')
+    const { name, subject, sentAt, isStar, body } = mail
+    const date = new Date(sentAt).toDateString().split(' ')
+    const staredClass = isStar ? 'stared' : ''
+    const starStyle = {
+        cursor: 'pointer',
+        fill: 'gold',
+        fontSize: `14px`,
+        border: 'none',
+    }
+
     return (
-        <div className="mail-preview">
-            <button ><Link to={'/mail'}>Back</Link></button>
-            <h2>{subject}</h2>
-            <h3>{name}</h3>
-            <p>{`<${from}>`}{`${date[1]} ${date[2]}, ${date[3]}, ${date[4]}`}</p>
-            <h4>{body}</h4>
-        </div>
+        <React.Fragment >
+            <button className={`star-btn ${staredClass}`}
+                ref={starRef}
+                onClick={(event) => onStarClick(event, mail.id)}
+                style={starStyle}>
+                <div></div>
+                <span>{isStar ? '★' : '☆'}</span>
+            </button>
+
+            <h2>{name}</h2>
+            <h3>{subject} - <span className="gray">{body}</span></h3>
+            <h4>{date[1]} {date[2]}</h4>
+        </React.Fragment>
 
     )
 }
