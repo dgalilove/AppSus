@@ -1,4 +1,4 @@
-import { NotePreview } from "./NotePreView.jsx"
+import { NotePreview } from "./NotePreview.jsx"
 
 
 export function NoteList({ notes, onRemoveNote, onChangeColor, onTogglePin }) {

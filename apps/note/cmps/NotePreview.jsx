@@ -4,6 +4,8 @@ export function NotePreview({
   onChangeColor,
   onTogglePin,
 }) {
+
+  if (!note) return <h1>Loading...</h1>
   return (
     <section className="note-preview">
       {note.type === "NoteTxt" && note.info.txt && (
