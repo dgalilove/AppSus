@@ -1,4 +1,5 @@
 import { MailList } from "../cmps/MailList.jsx"
+import { SideBar } from "../cmps/SideBar.jsx"
 import { mailService } from "../services/mail.service.js"
 
 const { useState, useEffect, useRef } = React
@@ -20,9 +21,8 @@ export function MailIndex() {
             .catch(err => console.log(err))
     }
 
-
-    if (!mails) return <div>Loading...</div>
     return <div className="main-index">
+        <SideBar />
         <MailList mailList={mails} loadMails={loadMails} />
     </div>
 }
