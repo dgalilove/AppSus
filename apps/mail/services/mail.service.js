@@ -14,6 +14,10 @@
 //     to: 'user@appsus.com'
 // }
 
+export const mailService = {
+    query,
+}
+
 const loggedUser = {
     email: 'user@appsus.com',
     fullName: 'Eli Copter'
@@ -25,4 +29,8 @@ const filterBy = {
     isRead: true,
     isStared: true,
     labels: []
+}
+
+function query() {
+    return async
 }
