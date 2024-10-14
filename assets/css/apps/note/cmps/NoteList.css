@@ -1,11 +1,23 @@
- /* note list */
  .note-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px; /* Adjust the gap between notes */
+    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+    gap: 10px;
     padding: 10px;
   }
 
   .note-preview{
-    background-color: rgb(185, 94, 94);
+    display: grid;
+    grid-template-rows: 1fr auto  ;
+    background-color: rgba(185, 94, 94, 0.856);
+    border: none;
+    border-radius: 10px;
+    min-height: 10em;
+    padding: 1em;
+  }
+
+
+
+  .note-buttons{
+    justify-self: end;
+    align-self: end;
   }

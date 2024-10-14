@@ -18,10 +18,6 @@ export function NoteIndex() {
     setSearchParams(utilService.getTruthyValues(filterBy))
     loadNotes()
   }, [filterBy])
-  
-  useEffect(() => {
-    loadNotes()
-  },[notes])
 
   function loadNotes() {
     noteService
@@ -44,6 +40,12 @@ export function NoteIndex() {
         console.log("Problems removing note:", err)
       })
   }
+
+  function onNoteAdded(newNote) {
+    setNotes((prevNotes) => [...prevNotes, newNote]) 
+
+  }
+
   function onChangeColor(noteId, color) {
     const updatedNotes = notes.map((note) =>
       note.id === noteId ? { ...note, style: { backgroundColor: color } } : note
@@ -65,7 +67,7 @@ export function NoteIndex() {
   return (
     <section className="note-index">
       <NoteFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <NoteAdd />
+      <NoteAdd onNoteAdded={onNoteAdded} />
       <NoteList
         notes={notes}
         onRemoveNote={onRemoveNote}
