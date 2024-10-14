@@ -22,7 +22,7 @@ export function MailIndex() {
     }
 
     return <div className="mail-index">
-        <SideBar />
+        {/* <SideBar /> */}
         <MailList mailList={mails} loadMails={loadMails} />
     </div>
 }

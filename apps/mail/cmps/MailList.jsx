@@ -29,14 +29,6 @@ export function MailList({ mailList }) {
             })
     }
 
-    function onStarClick(ev, mailId) {
-        ev.stopPropagation()
-        mailService.get(mailId)
-            .then(mail => {
-                mail = { ...mail, isStar: !mail.isStar }
-                mailService.save(mail)
-            })
-    }
 
     return <div className="mail-list">
         <ul>
@@ -52,6 +44,7 @@ export function MailList({ mailList }) {
                     fontSize: `14px`,
                     border: 'none',
                 }
+                console.log(date)
 
                 return (
                     <li onClick={() => onMailOpen(mail.id)} key={mail.id} className={classIsRead}>
