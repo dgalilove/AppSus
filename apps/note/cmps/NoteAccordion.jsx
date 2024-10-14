@@ -1,9 +1,11 @@
-const { useState, useEffect } = React
+const { useState, useEffect , useRef } = React
+
+
 
 export const NoteAccordion = ({ note, setNote }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const accordionRef = useRef(null) 
 
-  // Only open the accordion, don't close it once it's open
   const toggleAccordion = () => {
     if (!isOpen) {
       setIsOpen(true)
@@ -24,8 +26,21 @@ export const NoteAccordion = ({ note, setNote }) => {
     }))
   }
 
+  const handleClickOutside = (event) => {
+    if (accordionRef.current && !accordionRef.current.contains(event.target)) {
+      setIsOpen(false) 
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
+
   return (
-    <div className="note-accordion">
+    <div className="note-accordion" ref={accordionRef}>
       <div className="accordion-header" onClick={toggleAccordion}>
         <input
           type="text"
@@ -38,7 +53,7 @@ export const NoteAccordion = ({ note, setNote }) => {
       {isOpen && (
         <div className="accordion-body">
           <textarea
-            placeholder="Type your note here..."
+            placeholder="Type note here..."
             value={note.info.txt}
             onChange={handleTextChange}
             className="accordion-text"
