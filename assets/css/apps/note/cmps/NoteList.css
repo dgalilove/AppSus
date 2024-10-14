@@ -1,1 +1,11 @@
  /* note list */
+ .note-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px; /* Adjust the gap between notes */
+    padding: 10px;
+  }
+
+  .note-preview{
+    background-color: rgb(185, 94, 94);
+  }

@@ -1,7 +1,5 @@
 function createEventEmitter() {
     const listenersMap = {}
-    // Trick for DEBUG
-    window.mapmap = listenersMap
     return {
         on(evName, listener) {
             listenersMap[evName] = (listenersMap[evName]) ? [...listenersMap[evName], listener] : [listener]
