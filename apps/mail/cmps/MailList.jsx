@@ -10,6 +10,7 @@ export function MailList({ mailList, onSetFilterBy }) {
     const starRef = useRef()
 
     if (!mailList) return <div>Loading...</div>
+    if (mailList.length === 0) return <div>No Such Data</div>
 
     function onMailOpen(mailId) {
         mailService.get(mailId)
@@ -32,7 +33,6 @@ export function MailList({ mailList, onSetFilterBy }) {
 
             })
     }
-
 
     return <div className="mail-list">
         <ul>

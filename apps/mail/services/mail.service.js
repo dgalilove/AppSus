@@ -31,20 +31,28 @@ const loggedUser = {
 
 function query(filterBy = {}) {
     return storageService.query(ZMAIL_DB)
-    // .then(mails => {
-    //     if (filterBy.status === 'inbox') {
-    //         mails = mails.filter(mail => mail.to === loggedUser.email)
-    //     }
-    //     else if (filterBy.status === 'sent') {
-    //         mails = mails.filter(mail => mail.from === loggedUser.email)
-    //     }
-    //     else if (filterBy.status === 'trash') {
-    //         mails = mails.filter(mail => mail.removeAt)
-    //     }
-    //     else if (filterBy.status === 'draft') {
-    //         mails = mails.filter(mail => !mail.sentAt && mail.openAt)
-    //     }
-    // })
+        .then(mails => {
+
+            if (filterBy.status === 'inbox') {
+                mails = mails.filter(mail => {
+                    return mail.to === loggedUser.email
+                })
+            }
+            else if (filterBy.status === 'sent') {
+                mails = mails.filter(mail => {
+                    console.log(mail.from)
+                    console.log(loggedUser.email)
+                    return mail.from === loggedUser.email
+                })
+            }
+            else if (filterBy.status === 'trash') {
+                mails = mails.filter(mail => mail.removeAt)
+            }
+            else if (filterBy.status === 'draft') {
+                mails = mails.filter(mail => !mail.sentAt && mail.openAt)
+            }
+            return mails
+        })
 }
 
 function get(mailId) {
@@ -239,6 +247,18 @@ function _createMails() {
                 isStar: false,
                 from: 'noreply@mailing.fifa.com',
                 to: 'user@appsus.com'
+            }, {
+                id: 'e113',
+                createdAt: new Date("2024-10-14T08:30:00").getTime(),
+                subject: 'New match schedules for FIFA World Cup 26™',
+                body: 'Check out the latest match schedules for FIFA World Cup 26™ group stage and knockout rounds. Don’t miss any action from your favorite teams!',
+                isRead: false,
+                sentAt: new Date("2024-10-14T08:35:00").getTime(),
+                removeAt: null,
+                name: 'FIFA Updates',
+                isStar: false,
+                from: 'user@appsus.com',
+                to: 'noreply@mailing.fifa.com'
             }
         ]
         console.log(mails)

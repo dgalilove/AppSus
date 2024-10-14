@@ -23,16 +23,16 @@ export function MailIndex() {
     useEffect(() => {
         setSearchParams(utilService.getTruthyValues(filterBy))
         setIsComposeOpen(filterBy.compose)
-        console.log(filterBy)
         loadMails()
+        console.log(filterBy)
     }, [filterBy])
 
     function loadMails() {
         mailService.query(filterBy)
             .then(mails => {
+                console.log(mails)
                 setMails(mails)
                 countUnreadMails()
-
             })
             .catch(err => console.log(err))
     }
