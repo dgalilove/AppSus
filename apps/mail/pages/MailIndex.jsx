@@ -21,7 +21,7 @@ export function MailIndex() {
             .catch(err => console.log(err))
     }
 
-    return <div className="main-index">
+    return <div className="mail-index">
         <SideBar />
         <MailList mailList={mails} loadMails={loadMails} />
     </div>
