@@ -6,6 +6,7 @@ import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { noteService } from "../services/note.service.js"
 
+
 export function NoteIndex() {
   const [notes, setNotes] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams()

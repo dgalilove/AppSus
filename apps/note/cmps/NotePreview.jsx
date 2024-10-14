@@ -8,14 +8,14 @@ export function NotePreview({
     <section className="note-preview">
       {note.type === "NoteTxt" && note.info.txt && (
         <div>
-          <h2>{note.info.title || "Untitled Note"}</h2>
-          <h4>{note.info.txt || "Empty"}</h4>
+          <h2>{note.info.title}</h2>
+          <h4>{note.info.txt}</h4>
         </div>
       )}
 
       {note.type === "NoteTodos" && note.info.todos && (
         <div>
-          <h2>{note.info.title || "Untitled Note"}</h2>
+          <h2>{note.info.title}</h2>
           <h4>Todos:</h4>
           <ul>
             {note.info.todos.map((todo, idx) => (
@@ -29,7 +29,7 @@ export function NotePreview({
 
       {note.type === "NoteImg" && note.info.url && (
         <div>
-        <h2>{note.info.title || "Untitled Note"}</h2>
+        <h2>{note.info.title}</h2>
           <img
             src={note.info.url}
             alt={note.info.title}
