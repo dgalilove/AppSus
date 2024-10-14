@@ -1,5 +1,6 @@
  /* mail index  */
 
  .mail-index {
-     /* display: flex; */
+     display: flex;
+     width: calc(100% - 72px);
  }

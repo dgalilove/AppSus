@@ -1,5 +1,9 @@
  /* mail list */
 
+ .mail-list {
+     width: 100%;
+ }
+
  .mail-list ul {
      padding: 0;
      margin: 0;
@@ -49,18 +53,19 @@
  .mail-list ul li h3 {
      font-size: 0.875em;
 
+
      text-overflow: ellipsis;
      overflow: hidden;
      white-space: nowrap;
-
      padding-right: 0.714286em;
 
      margin-right: auto;
-
  }
+
 
  .mail-list ul li h3 .gray {
      color: var(--clr-mail-list-body);
+
  }
 
  .mail-list ul li h4 {

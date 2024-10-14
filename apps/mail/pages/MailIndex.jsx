@@ -14,6 +14,7 @@ export function MailIndex() {
     }, [mails])
 
     function loadMails() {
+
         mailService.query(filterBy)
             .then(mails => {
                 setMails(mails)
@@ -22,8 +23,8 @@ export function MailIndex() {
     }
 
     return <div className="mail-index">
-        {/* <SideBar /> */}
-        <MailList mailList={mails} loadMails={loadMails} />
+        <SideBar />
+        <MailList mailList={mails} />
     </div>
 }
 

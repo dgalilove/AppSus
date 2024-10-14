@@ -44,11 +44,9 @@ export function MailList({ mailList }) {
                     fontSize: `14px`,
                     border: 'none',
                 }
-                console.log(date)
 
                 return (
                     <li onClick={() => onMailOpen(mail.id)} key={mail.id} className={classIsRead}>
-
                         <button className="star-btn"
                             ref={starRef}
                             onClick={(event) => onStarClick(event, mail.id)}
