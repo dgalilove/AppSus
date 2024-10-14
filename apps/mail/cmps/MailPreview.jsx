@@ -2,7 +2,7 @@ import { mailService } from "../services/mail.service.js"
 
 const { useRef, useState, useEffect } = React
 
-export function MailPreview({ mail, onSetFilterBy }) {
+export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
 
     const starRef = useRef()
     const [isHover, setIsHover] = useState(false);
@@ -37,6 +37,11 @@ export function MailPreview({ mail, onSetFilterBy }) {
             })
     }
 
+    function onRemove(ev, mailId) {
+        ev.stopPropagation()
+        onRemoveMail(mailId)
+    }
+
 
     const { name, subject, sentAt, isStar, body, isRead } = mail
     console.log(isRead)
@@ -64,7 +69,7 @@ export function MailPreview({ mail, onSetFilterBy }) {
             <h4>{date[1]} {date[2]}</h4>
 
             <div className="tool-bar">
-                <i className="fa-regular fa-trash-can" onClick={(event) => onStarClick(event, mail.id)}></i>
+                <i className="fa-regular fa-trash-can" onClick={(event) => onRemove(event, mail.id)}></i>
                 {isRead ?
                     <i className="fa-regular fa-envelope" onClick={(event) => onMailReadMark(event, mail.id)}></i>
                     : <i className="fa-regular fa-envelope-open" onClick={(event) => onMailReadMark(event, mail.id)}></i>}

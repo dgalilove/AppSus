@@ -5,11 +5,14 @@ import { loadFromStorage, saveToStorage } from "../../../services/storage.servic
 import { utilService } from "../../../services/util.service.js"
 
 const ZMAIL_DB = 'zmail_db'
+const ZMAIL_REMOVED_DB = 'zmail_removed_db'
 
 _createMails()
+_createRemovedMails()
 
 export const mailService = {
     query,
+    queryRemoved,
     get,
     save,
     remove,
@@ -55,12 +58,22 @@ function query(filterBy = {}) {
         })
 }
 
+function queryRemoved() {
+    return storageService.query(ZMAIL_REMOVED_DB)
+
+}
+
 function get(mailId) {
     return storageService.get(ZMAIL_DB, mailId)
 }
 
 function remove(mailId) {
+    get(mailId).then(mail => {
+        console.log(mail)
+        storageService.post(ZMAIL_REMOVED_DB, mail)
+    })
     return storageService.remove(ZMAIL_DB, mailId)
+
 }
 
 function save(mail) {
@@ -266,19 +279,12 @@ function _createMails() {
     }
 }
 
-function _createMail(to, subject, body) {
-    return {
-        id: utilService.makeId(),
-        createdAt: Date.now(),
-        subject,
-        body,
-        isRead: false,
-        sentAt: Date.now(),
-        removeAt: null,
-        name: loggedUser.fullName,
-        isStar: false,
-        from: loggedUser.email,
-        to
+
+function _createRemovedMails() {
+    let removedMails = loadFromStorage(ZMAIL_REMOVED_DB)
+    if (!removedMails || !removedMails.length) {
+        removedMails = []
+        console.log(removedMails)
+        saveToStorage(ZMAIL_REMOVED_DB, removedMails)
     }
 }
-

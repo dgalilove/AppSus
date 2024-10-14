@@ -54,12 +54,21 @@ export function MailIndex() {
     function closeCompose() {
         setIsComposeOpen(false)
         onSetFilterBy({ compose: '', to: '', subject: '', body: '' })
+    }
 
+    function onRemoveMail(mailId) {
+        mailService.remove(mailId)
+            .then(() => {
+                setMails(prevMails => prevMails.filter(mail => mail.id !== mailId))
+            })
+            .catch(err => {
+                console.log('err:', err)
+            })
     }
 
     return <div className="mail-index">
         <SideBar unreadMails={unreadMails} openCompose={openCompose} />
-        <MailList mailList={mails} onSetFilterBy={onSetFilterBy} />
+        <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
         {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
     </div>

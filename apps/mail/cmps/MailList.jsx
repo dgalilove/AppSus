@@ -4,7 +4,7 @@ import { MailPreview } from "./MailPreview.jsx"
 const { useNavigate } = ReactRouterDOM
 
 
-export function MailList({ mailList, onSetFilterBy }) {
+export function MailList({ mailList, onSetFilterBy, onRemoveMail }) {
 
     const navigate = useNavigate()
 
@@ -21,6 +21,8 @@ export function MailList({ mailList, onSetFilterBy }) {
     }
 
 
+
+
     return <div className="mail-list">
         <ul>
             {mailList.map(mail => {
@@ -29,7 +31,7 @@ export function MailList({ mailList, onSetFilterBy }) {
 
                 return (
                     <li onClick={() => onMailOpen(mail.id)} key={mail.id} className={classIsRead}>
-                        <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} />
+                        <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
                     </li>
                 )
             })}
