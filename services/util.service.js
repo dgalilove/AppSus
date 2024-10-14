@@ -6,6 +6,9 @@ export const utilService = {
     padNum,
     getDayName,
     getMonthName,
+    animateCSS,
+    debounce,
+    getTruthyValues
 }
 
 function makeId(length = 6) {
@@ -59,4 +62,41 @@ function getMonthName(date) {
         "July", "August", "September", "October", "November", "December"
     ]
     return monthNames[date.getMonth()]
+}
+
+
+function animateCSS(el, animation = 'bounce') {
+    const prefix = 'animate__'
+    return new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`
+        el.classList.add(`${prefix}animated`, animationName)
+        function handleAnimationEnd(event) {
+            event.stopPropagation()
+            el.classList.remove(`${prefix}animated`, animationName)
+            resolve('Animation ended')
+        }
+
+        el.addEventListener('animationend', handleAnimationEnd, { once: true })
+    })
+}
+
+function getTruthyValues(obj) {
+    const newObj = {}
+    for (const key in obj) {
+        const value = obj[key]
+        if (value || value === 0) {
+            newObj[key] = value
+        }
+    }
+    return newObj
+}
+
+function debounce(callback, delay = 300) {
+    let timer
+    return function (...args) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            callback(...args)
+        }, delay)
+    }
 }
