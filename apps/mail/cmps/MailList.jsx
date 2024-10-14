@@ -42,14 +42,14 @@ export function MailList({ mailList }) {
         <ul>
             {mailList.map(mail => {
                 const classIsRead = mail.isRead ? 'read' : ''
-                const { name, subject, sentAt, isStar } = mail
+                const { name, subject, sentAt, isStar, body } = mail
                 const date = new Date(sentAt).toDateString().split(' ')
 
                 const starStyle = {
                     cursor: 'pointer',
                     color: isStar ? 'gold' : 'gray',
                     fill: 'gold',
-                    fontSize: `25px`,
+                    fontSize: `14px`,
                     border: 'none',
                 }
 
@@ -65,7 +65,7 @@ export function MailList({ mailList }) {
                         </button>
 
                         <h2>{name}</h2>
-                        <h3>{subject}</h3>
+                        <h3>{subject} - <span className="gray">{body}</span></h3>
                         <h4>{date[1]} {date[2]}</h4>
                     </li>
                 )
