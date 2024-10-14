@@ -1,17 +1,33 @@
-import { LongTxt } from "./LongTxt.jsx"
+import { mailService } from "../services/mail.service.js"
 
-const { useState, useEffect, useRef } = React
+const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useState, useEffect } = React
 
-export function MailPreview({ mail }) {
+export function MailPreview() {
 
-    const { subject, body, sentAt } = mail
-    const date = new Date(sentAt)
+    const [mail, setMail] = useState(null)
+    const { mailId } = useParams()
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        mailService.get(mailId)
+            .then(mail => {
+                setMail(mail)
+            })
+    }, [mailId])
+
+    if (!mail) return <div>Loading...</div>
+
+    const { subject, body, from, sentAt, name } = mail
+    const date = new Date(sentAt).toString().split(' ')
     return (
-        <React.Fragment>
+        <div className="mail-preview">
+            <button ><Link to={'/mail'}>Back</Link></button>
             <h2>{subject}</h2>
-            <h3><LongTxt txt={body} /></h3>
-            <h4>{date.getDate()}.{date.getMonth()}</h4>
-        </React.Fragment>
+            <h3>{name}</h3>
+            <p>{`<${from}>`}{`${date[1]} ${date[2]}, ${date[3]}, ${date[4]}`}</p>
+            <h4>{body}</h4>
+        </div>
+
     )
 }
