@@ -5,4 +5,8 @@
     --clr-mail-read: #f2f6fc;
 
     --clr-mail-list-body: rgb(95, 99, 104);
+
+    --clr-bg-side-bar: #f6f8fc;
+    --clr-composed-btn-side-bar: rgb(194, 231, 255);
+    --clr-selected-side-bar: #001d35;
 }

@@ -1,0 +1,47 @@
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 72px;
+    height: 100vh;
+    background-color: var(--clr-bg-side-bar);
+}
+
+.side-bar .compose-container {
+    margin: 0.5em 0 1em;
+    padding: 0 0 0 0.5em;
+    min-width: 72px;
+    height: 80px;
+}
+
+.side-bar .compose-container .compose-btn {
+    font-size: 0.875rem;
+    line-height: 2.2857143em;
+
+    padding: 0;
+
+    min-width: 56px;
+    height: 56px;
+    border-radius: 1.1428571em;
+
+    background-color: var(--clr-composed-btn-side-bar);
+    color: var(--clr-selected-side-bar);
+    border: none;
+
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.side-bar .compose-container .compose-btn:hover {
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, .3), 0 4px 8px 3px rgba(60, 64, 67, .15);
+
+}
+
+.side-bar .btn {
+    position: relative;
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 6px;
+}
