@@ -1,10 +1,11 @@
-const { useState, useEffect , useRef } = React
+import { eventBusService , showSuccessMsg} from "../../../services/event-bus.service.js"
 
+const { useState, useEffect, useRef } = React
 
 
 export const NoteAccordion = ({ note, setNote }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const accordionRef = useRef(null) 
+  const accordionRef = useRef(null)
 
   const toggleAccordion = () => {
     if (!isOpen) {
@@ -17,6 +18,7 @@ export const NoteAccordion = ({ note, setNote }) => {
       ...prevNote,
       info: { ...prevNote.info, title: event.target.value },
     }))
+    showSuccessMsg("Title updated successfully!") 
   }
 
   const handleTextChange = (event) => {
@@ -24,20 +26,26 @@ export const NoteAccordion = ({ note, setNote }) => {
       ...prevNote,
       info: { ...prevNote.info, txt: event.target.value },
     }))
+    showSuccessMsg("Text updated successfully!")
   }
 
   const handleClickOutside = (event) => {
     if (accordionRef.current && !accordionRef.current.contains(event.target)) {
-      setIsOpen(false) 
+      setIsOpen(false)
     }
   }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside)
+    const removeListener = eventBusService.on("close-all-accordions", () => setIsOpen(false))
+  
+    document.addEventListener("mousedown", handleClickOutside);
+  
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
+      removeListener()
     }
   }, [])
+  
 
   return (
     <div className="note-accordion" ref={accordionRef}>
@@ -58,6 +66,7 @@ export const NoteAccordion = ({ note, setNote }) => {
             onChange={handleTextChange}
             className="accordion-text"
           />
+        <button>Save</button>
         </div>
       )}
     </div>
