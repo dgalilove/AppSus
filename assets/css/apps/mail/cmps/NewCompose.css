@@ -1,0 +1,10 @@
+.new-compose {
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+
+    background-color: white;
+}

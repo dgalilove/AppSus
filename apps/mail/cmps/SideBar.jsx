@@ -13,10 +13,10 @@ export function SideBar({ unreadMails }) {
     return (
         <div className="side-bar">
             <div className="compose-container">
-                <button className="compose-btn"><i class="fa-solid fa-pencil"></i></button>
+                <button className="compose-btn"><i className="fa-solid fa-pencil"></i></button>
             </div>
 
-            <button className="btn"><div></div> <span>Inbox</span><span>{unreadMails}</span></button>
+            <button className="btn"><div></div> <span>Inbox</span><span>{unreadMails ? unreadMails : ''}</span></button>
             <button className="btn">Stared</button>
             <button className="btn">Sent</button>
             <button className="btn">Drafts</button>

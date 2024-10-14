@@ -1,4 +1,5 @@
 import { MailList } from "../cmps/MailList.jsx"
+import { NewCompose } from "../cmps/NewCompse.jsx"
 import { SideBar } from "../cmps/SideBar.jsx"
 import { mailService } from "../services/mail.service.js"
 
@@ -9,10 +10,11 @@ export function MailIndex() {
     const [mails, setMails] = useState('')
     const [unreadMails, setUnreadMails] = useState('')
     const [filterBy, setFilterBy] = useState({})
+    const [isComposeOpen, setIsComposeOpen] = useState(true)
 
     useEffect(() => {
         loadMails()
-    }, [mails])
+    }, [filterBy])
 
     function loadMails() {
         mailService.query(filterBy)
@@ -32,6 +34,7 @@ export function MailIndex() {
     return <div className="mail-index">
         <SideBar unreadMails={unreadMails} />
         <MailList mailList={mails} />
+        {isComposeOpen && <NewCompose />}
     </div>
 }
 
