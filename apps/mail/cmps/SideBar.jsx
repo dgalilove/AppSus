@@ -1,6 +1,6 @@
 const { useState, useEffect, useRef } = React
 
-export function SideBar() {
+export function SideBar({ unreadMails }) {
 
     useEffect(() => {
         console.log(`SideBar`, `uploaded`)
@@ -13,10 +13,10 @@ export function SideBar() {
     return (
         <div className="side-bar">
             <div className="compose-container">
-                <button className="compose-btn">New</button>
+                <button className="compose-btn"><i class="fa-solid fa-pencil"></i></button>
             </div>
 
-            <button className="btn"><div></div> <span>Inbox</span><span>number</span></button>
+            <button className="btn"><div></div> <span>Inbox</span><span>{unreadMails}</span></button>
             <button className="btn">Stared</button>
             <button className="btn">Sent</button>
             <button className="btn">Drafts</button>

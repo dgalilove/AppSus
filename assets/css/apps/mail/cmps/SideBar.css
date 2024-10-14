@@ -16,6 +16,10 @@
 }
 
 .side-bar .compose-container .compose-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     font-size: 0.875rem;
     line-height: 2.2857143em;
 
@@ -31,6 +35,10 @@
 
     cursor: pointer;
     transition: 0.1s;
+}
+
+.side-bar .compose-container .compose-btn i {
+    font-size: 1.25rem;
 }
 
 .side-bar .compose-container .compose-btn:hover {

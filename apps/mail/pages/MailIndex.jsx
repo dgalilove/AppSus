@@ -7,6 +7,7 @@ const { useState, useEffect, useRef } = React
 export function MailIndex() {
 
     const [mails, setMails] = useState('')
+    const [unreadMails, setUnreadMails] = useState('')
     const [filterBy, setFilterBy] = useState({})
 
     useEffect(() => {
@@ -14,16 +15,22 @@ export function MailIndex() {
     }, [mails])
 
     function loadMails() {
-
         mailService.query(filterBy)
             .then(mails => {
                 setMails(mails)
+                countUnreadMails()
             })
             .catch(err => console.log(err))
     }
 
+    function countUnreadMails() {
+        if (!mails) return
+        const unreadMails = mails.filter(mail => !mail.isRead)
+        setUnreadMails(unreadMails.length)
+    }
+
     return <div className="mail-index">
-        <SideBar />
+        <SideBar unreadMails={unreadMails} />
         <MailList mailList={mails} />
     </div>
 }
