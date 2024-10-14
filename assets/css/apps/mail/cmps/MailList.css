@@ -77,13 +77,14 @@
      margin-left: 28px;
      min-width: 56px;
      font-size: 0.875em;
+
  }
 
  .mail-list ul li button {
      position: relative;
  }
 
- .mail-list ul li div {
+ .mail-list ul li .shadow {
      position: absolute;
      top: 50%;
      left: 50%;
@@ -93,7 +94,7 @@
      scale: 0;
      width: 40px;
      height: 40px;
-     background-color: rgba(106, 105, 105, 0.26);
+     background-color: var(--clr-mail-list-btn-shadow);
 
      border-radius: 50%;
      transition: 0.1s;
@@ -120,6 +121,46 @@
 
 
 
- .mail-list ul li .star-btn:hover div {
+ .mail-list ul li .star-btn:hover .shadow {
      scale: 1;
+ }
+
+ .mail-list ul li .tool-bar {
+     justify-content: flex-end;
+     font-size: 0.875rem;
+
+     align-items: center;
+     margin-left: 28px;
+
+     cursor: pointer;
+
+     display: none;
+ }
+
+ .mail-list ul li .tool-bar i {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 40px;
+     height: 40px;
+
+ }
+
+ .mail-list ul li .tool-bar i:hover {
+     background-color: var(--clr-mail-list-btn-shadow);
+     border-radius: 50%;
+
+
+
+     width: 40px;
+     height: 40px;
+
+ }
+
+ .mail-list ul li:hover .tool-bar {
+     display: flex;
+ }
+
+ .mail-list ul li:hover h4 {
+     display: none;
  }

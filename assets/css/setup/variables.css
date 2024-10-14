@@ -9,4 +9,6 @@
     --clr-bg-side-bar: #f6f8fc;
     --clr-composed-btn-side-bar: rgb(194, 231, 255);
     --clr-selected-side-bar: #001d35;
+
+    --clr-mail-list-btn-shadow: rgba(100, 121, 143, 0.12);
 }

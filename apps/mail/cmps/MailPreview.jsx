@@ -10,6 +10,7 @@ export function MailPreview({ mail, onSetFilterBy }) {
     useEffect(() => {
         console.log(isHover)
     }, [isHover])
+
     function onStarClick(ev, mailId) {
         ev.stopPropagation()
         mailService.get(mailId)
@@ -23,8 +24,22 @@ export function MailPreview({ mail, onSetFilterBy }) {
             })
     }
 
+    function onMailReadMark(ev, mailId) {
+        ev.stopPropagation()
+        mailService.get(mailId)
+            .then(mail => {
+                mail = { ...mail, isRead: !mail.isRead }
+                mailService.save(mail)
+                    .then(mails => {
+                        onSetFilterBy({})
+                    })
 
-    const { name, subject, sentAt, isStar, body } = mail
+            })
+    }
+
+
+    const { name, subject, sentAt, isStar, body, isRead } = mail
+    console.log(isRead)
     const date = new Date(sentAt).toDateString().split(' ')
     const staredClass = isStar ? 'stared' : ''
     const starStyle = {
@@ -40,13 +55,20 @@ export function MailPreview({ mail, onSetFilterBy }) {
                 ref={starRef}
                 onClick={(event) => onStarClick(event, mail.id)}
                 style={starStyle}>
-                <div></div>
+                <div className="shadow"></div>
                 <span>{isStar ? '★' : '☆'}</span>
             </button>
 
             <h2>{name}</h2>
             <h3>{subject} - <span className="gray">{body}</span></h3>
             <h4>{date[1]} {date[2]}</h4>
+
+            <div className="tool-bar">
+                <i className="fa-regular fa-trash-can" onClick={(event) => onStarClick(event, mail.id)}></i>
+                {isRead ?
+                    <i className="fa-regular fa-envelope" onClick={(event) => onMailReadMark(event, mail.id)}></i>
+                    : <i className="fa-regular fa-envelope-open" onClick={(event) => onMailReadMark(event, mail.id)}></i>}
+            </div>
         </React.Fragment>
 
     )
