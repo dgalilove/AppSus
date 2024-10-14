@@ -62,7 +62,7 @@ function createEmptyNote() {
       type: "NoteTxt",
       isPinned: false,
       style: {
-          backgroundColor: "#ffffff", 
+          backgroundColor: "#b95e5e", 
       },
       info: {
           title: "",
@@ -90,7 +90,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: true,
         style: {
-          backgroundColor: "#00d",
+          backgroundColor: "#b95e5e",
         },
         info: {
           txt: "Fullstack Me Baby!",
@@ -106,7 +106,7 @@ function _createNotes() {
           title: "Bobi and Me",
         },
         style: {
-          backgroundColor: "#00d",
+          backgroundColor: "#b95e5e",
         },
       },
       {

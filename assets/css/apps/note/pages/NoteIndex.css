@@ -1,2 +1,27 @@
  /* note index */
+.note-index{
+    background-color: #212121c0;
+}
+.note-edit{
+    display: grid;
+    justify-items: center;
+}
 
+.note-accordion{
+    display: grid;
+    grid-auto-rows: auto;
+}
+.accordion-title {
+    width : 100%;
+    color : white;  
+    background-color: transparent;
+    font-size: 1.5em;
+    border: white 1px solid ;
+}
+.accordion-text{
+    color : white;  
+    background-color: transparent;
+    border: none;
+    font-size: 1.3em;
+
+}

@@ -38,13 +38,25 @@ export const NoteAccordion = ({ note, setNote }) => {
   useEffect(() => {
     const removeListener = eventBusService.on("close-all-accordions", () => setIsOpen(false))
   
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
   
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
       removeListener()
     }
   }, [])
+
+  function handleChange({ target }) {
+    const field = target.name;
+    let value = target.value;
+
+    if (field === "backgroundColor") {
+      setNote((prevNote) => ({
+        ...prevNote,
+        style: { ...prevNote.style, backgroundColor: value },
+      }));
+    }
+  }
   
 
   return (
@@ -52,7 +64,7 @@ export const NoteAccordion = ({ note, setNote }) => {
       <div className="accordion-header" onClick={toggleAccordion}>
         <input
           type="text"
-          placeholder="Title"
+          placeholder="New Note"
           value={note.info.title}
           onChange={handleTitleChange}
           className="accordion-title"
@@ -65,8 +77,18 @@ export const NoteAccordion = ({ note, setNote }) => {
             value={note.info.txt}
             onChange={handleTextChange}
             className="accordion-text"
+             rows="4" cols="50"
           />
-        <button>Save</button>
+          <div className="accordion-buttons">
+          <input
+              type="color"
+              value={(note.style && note.style.backgroundColor) || "#b95e5e"} 
+              onChange={handleChange}
+              name="backgroundColor"
+              id="backgroundColor"
+            />
+            <button>Save</button>
+          </div>
         </div>
       )}
     </div>
