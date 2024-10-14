@@ -12,13 +12,16 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        onSetFilterBy(filterByToEdit)
+        setMailToAdd(prevMail => ({ ...prevMail, to: filterByToEdit.to || '', subject: filterByToEdit.subject || '', body: filterByToEdit.body || '' }))
+    }, [])
 
+
+    useEffect(() => {
+        onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
 
 
     function handleChange({ target }) {
-
         let { value, name: field, type } = target
         switch (type) {
             case 'number':
@@ -30,7 +33,7 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
                 value = target.checked
                 break
         }
-        setMailToAdd(prevMail => ({ ...prevMail, ...prevMail, [field]: value }))
+        setMailToAdd(prevMail => ({ ...prevMail, [field]: value }))
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
@@ -54,9 +57,9 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
             <form onSubmit={onAddMail}>
                 <button onClick={closeCompose}>x</button>
                 <h2>New Message</h2>
-                <input required type="text" placeholder={'To'} name='to' onChange={handleChange} value={to} />
-                <input required type="text" placeholder={'Subject'} name='subject' onChange={handleChange} value={subject} />
-                <textarea required type="text" name='body' onChange={handleChange} value={body} />
+                <input required type="text" placeholder={'To'} name='to' value={to} onChange={handleChange} />
+                <input required type="text" placeholder={'Subject'} name='subject' value={subject} onChange={handleChange} />
+                <textarea required type="text" name='body' value={body} onChange={handleChange} />
                 <button>Send</button>
             </form>
         </div>
