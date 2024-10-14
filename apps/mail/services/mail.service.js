@@ -2,6 +2,7 @@
 
 import { storageService } from "../../../services/async-storage.service.js"
 import { loadFromStorage, saveToStorage } from "../../../services/storage.service.js"
+import { utilService } from "../../../services/util.service.js"
 
 const ZMAIL_DB = 'zmail_db'
 
@@ -12,6 +13,7 @@ export const mailService = {
     get,
     save,
     remove,
+    getFilterFromSearchParams
 }
 
 const loggedUser = {
@@ -57,10 +59,26 @@ function save(mail) {
     if (mail.id) {
         return storageService.put(ZMAIL_DB, mail)
     } else {
-        mail.createdAt = mail.updatedAt = Date.now()
-        return storageService.post(ZMAIL_DB, mail)
+        const newMail = _createMail(mail.to, mail.subject, mail.body)
+        return storageService.post(ZMAIL_DB, newMail)
     }
 }
+
+
+function getDefaultFilter() {
+    return { txt: '', status: 'inbox', compose: '', to: '', subject: '', body: '' }
+}
+
+
+function getFilterFromSearchParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || ''
+    }
+    return filterBy
+}
+
 
 function _createMails() {
     let mails = loadFromStorage(ZMAIL_DB)
@@ -227,3 +245,20 @@ function _createMails() {
         saveToStorage(ZMAIL_DB, mails)
     }
 }
+
+function _createMail(to, subject, body) {
+    return {
+        id: utilService.makeId(),
+        createdAt: Date.now(),
+        subject,
+        body,
+        isRead: false,
+        sentAt: Date.now(),
+        removeAt: null,
+        name: loggedUser.fullName,
+        isStar: false,
+        from: loggedUser.email,
+        to
+    }
+}
+

@@ -4,7 +4,7 @@ const { useNavigate } = ReactRouterDOM
 const { useRef, useState } = React
 
 
-export function MailList({ mailList }) {
+export function MailList({ mailList, onSetFilterBy }) {
 
     const navigate = useNavigate()
     const starRef = useRef()
@@ -26,6 +26,10 @@ export function MailList({ mailList }) {
             .then(mail => {
                 mail = { ...mail, isStar: !mail.isStar }
                 mailService.save(mail)
+                    .then(mails => {
+                        onSetFilterBy({})
+                    })
+
             })
     }
 
