@@ -21,6 +21,10 @@ export function MailIndex() {
 
 
     useEffect(() => {
+        setFilterBy(prevFilterBy => ({ ...prevFilterBy, status: 'inbox' }))
+    }, [])
+
+    useEffect(() => {
         setSearchParams(utilService.getTruthyValues(filterBy))
         setIsComposeOpen(filterBy.compose)
         loadMails()
@@ -39,7 +43,6 @@ export function MailIndex() {
 
         const unreadMails = mails.filter(mail => !mail.isRead)
         setUnreadMails(unreadMails.length)
-        console.log(unreadMails.length)
     }
 
     function onSetFilterBy(filterByToEdit) {
@@ -67,7 +70,7 @@ export function MailIndex() {
     }
 
     return <div className="mail-index">
-        <SideBar unreadMails={unreadMails} openCompose={openCompose} />
+        <SideBar unreadMails={unreadMails} openCompose={openCompose} onSetFilterBy={onSetFilterBy} />
         <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
         {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 

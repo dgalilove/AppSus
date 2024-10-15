@@ -5,11 +5,6 @@ const { useRef, useState, useEffect } = React
 export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
 
     const starRef = useRef()
-    const [isHover, setIsHover] = useState(false);
-
-    useEffect(() => {
-        console.log(isHover)
-    }, [isHover])
 
     function onStarClick(ev, mailId) {
         ev.stopPropagation()
@@ -44,7 +39,6 @@ export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
 
 
     const { name, subject, sentAt, isStar, body, isRead } = mail
-    console.log(isRead)
     const date = new Date(sentAt).toDateString().split(' ')
     const staredClass = isStar ? 'stared' : ''
     const starStyle = {

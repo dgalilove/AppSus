@@ -8,11 +8,9 @@ const ZMAIL_DB = 'zmail_db'
 const ZMAIL_REMOVED_DB = 'zmail_removed_db'
 
 _createMails()
-_createRemovedMails()
 
 export const mailService = {
     query,
-    queryRemoved,
     get,
     save,
     remove,
@@ -35,10 +33,9 @@ const loggedUser = {
 function query(filterBy = {}) {
     return storageService.query(ZMAIL_DB)
         .then(mails => {
-
             if (filterBy.status === 'inbox') {
                 mails = mails.filter(mail => {
-                    return mail.to === loggedUser.email
+                    return (mail.to === loggedUser.email && !mail.removedAt)
                 })
             }
             else if (filterBy.status === 'sent') {
@@ -54,25 +51,29 @@ function query(filterBy = {}) {
             else if (filterBy.status === 'draft') {
                 mails = mails.filter(mail => !mail.sentAt && mail.openAt)
             }
+            else if (filterBy.status === 'stared') {
+                mails = mails.filter(mail => mail.isStar)
+            }
             return mails
         })
 }
 
-function queryRemoved() {
-    return storageService.query(ZMAIL_REMOVED_DB)
 
-}
 
 function get(mailId) {
     return storageService.get(ZMAIL_DB, mailId)
 }
 
 function remove(mailId) {
-    get(mailId).then(mail => {
-        console.log(mail)
-        storageService.post(ZMAIL_REMOVED_DB, mail)
+    return get(mailId).then(mail => {
+        if (!mail.removeAt) {
+            mail.removeAt = Date.now()
+            return storageService.put(ZMAIL_DB, mail)
+        } else {
+            return storageService.remove(ZMAIL_DB, mailId)
+
+        }
     })
-    return storageService.remove(ZMAIL_DB, mailId)
 
 }
 
@@ -280,11 +281,18 @@ function _createMails() {
 }
 
 
-function _createRemovedMails() {
-    let removedMails = loadFromStorage(ZMAIL_REMOVED_DB)
-    if (!removedMails || !removedMails.length) {
-        removedMails = []
-        console.log(removedMails)
-        saveToStorage(ZMAIL_REMOVED_DB, removedMails)
+function _createMail(to, subject, body) {
+    return {
+        id: utilService.makeId(),
+        createdAt: Date.now(),
+        subject,
+        body,
+        isRead: false,
+        sentAt: Date.now(),
+        removeAt: null,
+        name: loggedUser.fullName,
+        isStar: false,
+        from: loggedUser.email,
+        to
     }
 }
