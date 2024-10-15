@@ -20,14 +20,37 @@ export function NoteIndex() {
     loadNotes()
   }, [filterBy])
 
+  function sortNotes(notes) {
+    return notes.sort((a, b) => {
+      if (a.isPinned && !b.isPinned) return -1
+      if (!a.isPinned && b.isPinned) return 1
+    })
+  }
+
   function loadNotes() {
     noteService
       .query(filterBy)
       .then((notes) => {
-        setNotes(notes)
+        setNotes(sortNotes(notes))
       })
       .catch((err) => {
         console.log("Problems getting notes:", err)
+      })
+  }
+
+  function updateNote(noteId, updateCallback) {
+    const updatedNotes = notes.map((note) =>
+      note.id === noteId ? updateCallback(note) : note
+    )
+    const updatedNote = updatedNotes.find((note) => note.id === noteId)
+
+    noteService
+      .save(updatedNote)
+      .then(() => {
+        setNotes(sortNotes(updatedNotes))
+      })
+      .catch((err) => {
+        console.log("Failed to update note", err)
       })
   }
 
@@ -51,21 +74,18 @@ export function NoteIndex() {
       setNotes((prevNotes) => [...prevNotes, newNote])
     }
     loadNotes()
-    setSelectedNote(null) 
+    setSelectedNote(null)
   }
 
   function onChangeColor(noteId, color) {
-    const updatedNotes = notes.map((note) =>
-      note.id === noteId ? { ...note, style: { backgroundColor: color } } : note
-    )
-    setNotes(updatedNotes)
+    updateNote(noteId, (note) => ({
+      ...note,
+      style: { backgroundColor: color },
+    }))
   }
 
   function onTogglePin(noteId) {
-    const updatedNotes = notes.map((note) =>
-      note.id === noteId ? { ...note, isPinned: !note.isPinned } : note
-    )
-    setNotes(updatedNotes)
+    updateNote(noteId, (note) => ({ ...note, isPinned: !note.isPinned }))
   }
 
   function onSetFilterBy(filterBy) {
