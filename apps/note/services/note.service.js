@@ -98,7 +98,7 @@ function getDefaultFilter() {
 function _createNotes() {
   let notes = loadFromStorage(NOTE_KEY)
   if (!notes || !notes.length) {
-    const notes = [
+     const notes = [
       {
         id: "n101",
         createdAt: 1112222,
@@ -137,7 +137,243 @@ function _createNotes() {
           ],
         },
       },
+      {
+        id: "n104",
+        createdAt: 1112255,
+        type: "NoteTxt",
+        isPinned: true,
+        style: {
+          backgroundColor: "#6a1b9a",
+        },
+        info: {
+          txt: "Learn React Hooks",
+        },
+      },
+      {
+        id: "n105",
+        createdAt: 1112266,
+        type: "NoteImg",
+        isPinned: false,
+        info: {
+          url: "https://images.unsplash.com/photo-1542080255-e564af7ae266?q=80&w=2719&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+,
+          title: "Beautiful Sunset",
+        },
+        style: {
+          backgroundColor: "#ff7043",
+        },
+      },
+      {
+        id: "n106",
+        createdAt: 1112277,
+        type: "NoteTodos",
+        isPinned: true,
+        info: {
+          title: "Project Tasks",
+          todos: [
+            { txt: "Finish UI", doneAt: null },
+            { txt: "API Integration", doneAt: 187111111 },
+          ],
+        },
+        style: {
+          backgroundColor: "#66bb6a",
+        },
+      },
+      {
+        id: "n107",
+        createdAt: 1112288,
+        type: "NoteTxt",
+        isPinned: false,
+        style: {
+          backgroundColor: "#29b6f6",
+        },
+        info: {
+          txt: "Meeting with client at 2 PM.",
+        },
+      },
+      {
+        id: "n108",
+        createdAt: 1112299,
+        type: "NoteImg",
+        isPinned: false,
+        info: {
+          url: "https://images.unsplash.com/photo-1541848952518-f6c52dbc7c94?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          title: "Mountain Landscape",
+        },
+        style: {
+          backgroundColor: "#ffcc80",
+        },
+      },
+      {
+        id: "n109",
+        createdAt: 1112300,
+        type: "NoteTodos",
+        isPinned: true,
+        info: {
+          title: "Groceries",
+          todos: [
+            { txt: "Buy milk", doneAt: null },
+            { txt: "Get bread", doneAt: null },
+            { txt: "Buy eggs", doneAt: 187111222 },
+          ],
+        },
+        style: {
+          backgroundColor: "#d32f2f",
+        },
+      },
+      {
+        id: "n110",
+        createdAt: 1112311,
+        type: "NoteTxt",
+        isPinned: false,
+        style: {
+          backgroundColor: "#8e24aa",
+        },
+        info: {
+          txt: "Read JavaScript Patterns book.",
+        },
+      },
+      {
+        id: "n111",
+        createdAt: 1112322,
+        type: "NoteImg",
+        isPinned: true,
+        info: {
+          url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          title: "Ocean Wave",
+        },
+        style: {
+          backgroundColor: "#00bfa5",
+        },
+      },
+      {
+        id: "n112",
+        createdAt: 1112333,
+        type: "NoteTodos",
+        isPinned: false,
+        info: {
+          title: "Weekend Tasks",
+          todos: [
+            { txt: "Clean the house", doneAt: null },
+            { txt: "Wash the car", doneAt: null },
+            { txt: "Prepare dinner", doneAt: null },
+          ],
+        },
+        style: {
+          backgroundColor: "#ffd600",
+        },
+      },
+      {
+        id: "n113",
+        createdAt: 1112344,
+        type: "NoteTxt",
+        isPinned: false,
+        style: {
+          backgroundColor: "#4caf50",
+        },
+        info: {
+          txt: "Prepare for presentation.",
+        },
+      },
+      {
+        id: "n114",
+        createdAt: 1112355,
+        type: "NoteImg",
+        isPinned: false,
+        info: {
+          url: "https://images3.alphacoders.com/128/1287397.jpeg",
+          title: "City Lights",
+        },
+        style: {
+          backgroundColor: "#ff8a65",
+        },
+      },
+      {
+        id: "n115",
+        createdAt: 1112366,
+        type: "NoteTodos",
+        isPinned: true,
+        info: {
+          title: "Travel Plans",
+          todos: [
+            { txt: "Book flights", doneAt: null },
+            { txt: "Reserve hotel", doneAt: null },
+          ],
+        },
+        style: {
+          backgroundColor: "#c2185b",
+        },
+      },
+      {
+        id: "n116",
+        createdAt: 1112377,
+        type: "NoteTxt",
+        isPinned: true,
+        style: {
+          backgroundColor: "#3949ab",
+        },
+        info: {
+          txt: "Learn GraphQL and Apollo.",
+        },
+      },
+      {
+        id: "n117",
+        createdAt: 1112388,
+        type: "NoteImg",
+        isPinned: false,
+        info: {
+          url: "https://images.unsplash.com/photo-1542640244-7e672d6cef4e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          title: "Forest Path",
+        },
+        style: {
+          backgroundColor: "#7e57c2",
+        },
+      },
+      {
+        id: "n118",
+        createdAt: 1112399,
+        type: "NoteTodos",
+        isPinned: false,
+        info: {
+          title: "Fitness Goals",
+          todos: [
+            { txt: "Go for a run", doneAt: null },
+            { txt: "Do 20 push-ups", doneAt: null },
+            { txt: "Drink more water", doneAt: null },
+          ],
+        },
+        style: {
+          backgroundColor: "#009688",
+        },
+      },
+      {
+        id: "n119",
+        createdAt: 1112400,
+        type: "NoteTxt",
+        isPinned: false,
+        style: {
+          backgroundColor: "#ef5350",
+        },
+        info: {
+          txt: "Complete React course by end of the week.",
+        },
+      },
+      {
+        id: "n120",
+        createdAt: 1112411,
+        type: "NoteImg",
+        isPinned: true,
+        info: {
+          url: "https://images2.alphacoders.com/128/1287207.jpeg",
+          title: "Starry Sky",
+        },
+        style: {
+          backgroundColor: "#2196f3",
+        },
+      },
     ]
+    
+    
     saveToStorage(NOTE_KEY, notes)
   }
 }

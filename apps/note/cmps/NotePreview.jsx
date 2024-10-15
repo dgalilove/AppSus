@@ -43,20 +43,31 @@ export function NotePreview({
     }
 
     if (isExpanded) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [isExpanded])
+  
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+
+  const toggleAccordion = () => {
+    setIsAccordionOpen(!isAccordionOpen)
+  }
+
+  const backgroundColor =
+    note.style && note.style.backgroundColor
+      ? note.style.backgroundColor
+      : "#b95e5e"
 
   return (
     <section
       ref={noteRef}
       className={`note-preview ${isExpanded ? "expanded" : ""}`}
       onClick={!isExpanded ? toggleExpanded : undefined}
-      style={{ backgroundColor: note.style.backgroundColor }}
+      style={{ backgroundColor }} 
     >
       <div className="note-preview-scrollable">
         {note.type === "NoteTxt" && note.info.txt && (
@@ -84,7 +95,7 @@ export function NotePreview({
             <img
               src={note.info.url}
               alt={note.info.title}
-              style={{ width: "100%", height: "auto", maxWidth: "300px" }}
+              
             />
           </div>
         )}

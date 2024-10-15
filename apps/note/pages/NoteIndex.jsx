@@ -80,7 +80,7 @@ export function NoteIndex() {
   function onChangeColor(noteId, color) {
     updateNote(noteId, (note) => ({
       ...note,
-      style: { backgroundColor: color },
+      style: { ...note.style, backgroundColor: color }, // Ensure other style properties are preserved
     }))
   }
 
