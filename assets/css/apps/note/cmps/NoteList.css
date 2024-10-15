@@ -1,58 +1,36 @@
 /* Note List */
 .note-list {
-  columns: 5;
-  column-gap: 1em;
+  column-count: 5; /* Adjust the number of columns as needed */
+  column-gap: 1em; /* Gap between the columns */
   padding: 6em;
   height: 100%;
-  overflow: hidden;
+  overflow: auto; /* Allow scrolling if content overflows */
 }
 
-.note-preview {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  background-color: rgba(185, 94, 94);
-  border: none;
+.note-item {
+  background-color: #f4f4f4;
   border-radius: 10px;
-  padding: 1.5em 1.5em 0 1.5em;
-  margin-bottom: 10px;
-  min-height: 10em;
-  max-height: 70%;
-  overflow: hidden;
+  padding: 1em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  margin-bottom: 1em;
+  display: inline-block;
+  width: 100%; /* Ensures the note item takes up the full width of its column */
+  transition: transform 0.2s ease-in-out;
 }
 
-.note-preview div img {
+.note-item:hover {
+  transform: scale(1.05); /* Scale the note slightly on hover */
+}
+
+.note-item img{
   border: none;
-  border-radius: 10px;
+  border-radius: 15px;
+  margin-top: 20px;
 }
 
-.note-preview-scrollable {
-  padding-bottom: 1em; 
-}
-
-/* Expanded note styling */
-.note-preview.expanded {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30%;
-  min-height: 20vh;
-  max-height: 80vh;
-  z-index: 1000;
-  overflow-y: auto;
-}
-
-/* Ensure content wraps correctly */
-.note-preview div:not(.note-buttons) {
-  display: grid;
-  gap: 1em;
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
 
 .note-buttons {
-  grid-row: 2; 
   padding: 1em;
   display: flex;
   justify-content: flex-end;
@@ -61,3 +39,47 @@
   left: 0;
   right: 0;
 }
+
+.note-edit-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%; /* You can adjust the size */
+  z-index: 1000;
+}
+
+
+
+.note-accordion-edit{
+  display: grid;
+  grid-auto-rows: auto 1fr auto;
+  gap: 10px;
+  padding: 1.5em;
+  box-shadow: 0 0.1em 1em rgba(0, 0, 0, 1);
+  border: none;
+  border-radius: 10px;
+  transition: border 0.3s ease;
+  height: fit-content;
+}
+
+.note-accordion-edit textarea, 
+.note-accordion-edit input[type="text"] {
+  background-color: transparent;
+  user-select: none;
+  outline: none;
+  border: #f4f4f4 1px solid ;
+  resize: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1em;
+  padding :1em;
+}
+
+.note-accordion-edit input[type="text"]{
+  font-weight: bold;
+  font-size: 1.3em;
+
+}
+
+.note-accordion-edit img{
+} 
