@@ -88,7 +88,7 @@ export function MailIndex() {
             </div>
         </div>
         <div className="mail-index-body">
-            <SideBar unreadMails={unreadMails} openCompose={openCompose} onSetFilterBy={onSetFilterBy} />
+            <SideBar unreadMails={unreadMails} openCompose={openCompose} onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
             <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} />
             {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 

@@ -1,11 +1,156 @@
+.new-compose {
+    width: 550px;
+    position: fixed;
+    bottom: 0;
+    right: 1.5em;
+    z-index: 9;
+    background-color: white;
+    box-shadow:
+        rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px, rgba(0, 0, 0, 0.2) 0px 5px 5px -3px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.new-compose .title-and-exit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    background-color: var(--clr-compose-header-bg);
+
+
+    height: 40px;
+    width: 100%;
+}
+
+.new-compose .title-and-exit .buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-left: 4px;
+    padding-right: 12px;
+}
+
+.new-compose .title-and-exit button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    background-color: transparent;
+    border: none;
+    width: 1em;
+    height: 1em;
+
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.new-compose .title-and-exit button:hover {
+    background-color: rgba(68, 71, 70, 0.078);
+}
+
+.new-compose .title-and-exit h2 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 10px 0;
+
+    color: var(--clr-compose-header);
+    margin: 0 0 0 16px;
+}
+
 .new-compose form {
     display: flex;
     flex-direction: column;
 
-    position: fixed;
-    bottom: 0;
-    right: 20px;
-    z-index: 9;
+    height: 560px;
+    width: 100%;
 
-    background-color: white;
+    padding: 0 1em;
+}
+
+.new-compose form .form-line {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 3px 0 4px;
+    width: 100%;
+
+    box-shadow:
+        rgba(100, 121, 143, 0.12) 0px -1px 0px 0px inset;
+}
+
+.new-compose form .to-line label {
+    font-size: 0.875rem;
+    color: #444746;
+
+    width: 20px;
+}
+
+
+.new-compose form .to-line input {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.new-compose form .subject-line input {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    outline: none;
+    border: none;
+
+    padding: 10px 0;
+}
+
+.new-compose form .subject-line input::placeholder {
+    color: #444746;
+}
+
+.new-compose form textarea {
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+
+    resize: none;
+    overflow-y: scroll;
+
+    font-weight: 400;
+    padding: 10px 0;
+    height: 100%;
+    border: none;
+    outline: none;
+    box-shadow:
+        rgba(100, 121, 143, 0.12) 0px -1px 0px 0px inset;
+}
+
+.new-compose form textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.new-compose form .submit-line {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 0 16px 0;
+    height: 60px;
+}
+
+.new-compose form .submit-line button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 0.8em;
+    border: none;
+
+    height: 1.8em;
+
+    border-radius: 0.875em;
+
+    font-size: 1.25rem;
+    color: var(--clr-mail);
+    background-color: var(--clr-compose-send-btn);
 }

@@ -1,32 +1,43 @@
 .side-bar {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 
-    min-width: 72px;
-    height: 100vh;
+    position: fixed;
+    top: 126px;
+    bottom: 0;
+    left: 0;
+
+    z-index: 8;
+
+    width: 72px;
     background-color: var(--clr-bg-side-bar);
+    transition: 0.4s;
+}
+
+.side-bar:hover {
+    width: 256px;
 }
 
 .side-bar .compose-container {
     margin: 0.5em 0 1em;
     padding: 0 0 0 0.5em;
-    min-width: 72px;
-    height: 80px;
+
 }
 
 .side-bar .compose-container .compose-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
     font-size: 0.875rem;
     line-height: 2.2857143em;
 
     padding: 0;
+    padding-left: 1.2857143em;
 
-    min-width: 56px;
-    height: 56px;
+    min-width: 4em;
+    height: 4em;
     border-radius: 1.1428571em;
 
     background-color: var(--clr-composed-btn-side-bar);
@@ -34,8 +45,27 @@
     border: none;
 
     cursor: pointer;
+    transition: 0.4s;
+}
+
+.side-bar .compose-container .compose-btn::after {
+    content: 'Compose';
+    margin-left: 0.6em;
+    opacity: 0;
+    width: 0;
     transition: 0.1s;
 }
+
+.side-bar:hover .compose-btn {
+    min-width: 8.428571em;
+    padding-right: 1.71428857em;
+}
+
+.side-bar:hover .compose-btn:after {
+    opacity: 1;
+    width: fit-content;
+}
+
 
 .side-bar .compose-container .compose-btn i {
     font-size: 1.25rem;
@@ -46,10 +76,122 @@
 
 }
 
+
+.side-bar .btn::before {
+    display: inline-block;
+
+    content: attr(title);
+    position: absolute;
+    /* font-size: 0.675rem; */
+
+    top: 50%;
+    left: 50px;
+
+    translate: 0 -50%;
+
+    display: none;
+
+
+}
+
+.side-bar .btn::after {
+    display: inline-block;
+
+    content: attr(title-2);
+    position: absolute;
+
+    top: 50%;
+    left: 75%;
+
+    translate: 0 -50%;
+
+    display: none;
+    border-left: 1px solid blue;
+    padding-left: 1em;
+
+}
+
+.side-bar:hover .btn::before {
+    display: block;
+
+}
+
+.side-bar:hover .btn::after {
+    display: block;
+
+}
+
+
 .side-bar .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     position: relative;
-    min-width: 20px;
-    height: 20px;
+    font-size: 0.875rem;
+
+
+    background: none;
+    height: 30px;
+    width: 30px;
+
+    border-radius: 50%;
+    border: none;
 
     padding: 0 6px;
+    margin-left: 1.625em;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.side-bar:hover .btn {
+    justify-content: flex-start;
+
+    background: none;
+    height: 30px;
+    width: 80%;
+
+    border-radius: 0 1em 1em 0;
+    border: none;
+
+    padding: 0 6px;
+    padding-left: 1.625em;
+    margin-left: 0;
+
+    cursor: pointer;
+}
+
+
+.side-bar .btn .unread-mails {
+    position: absolute;
+
+    top: 5px;
+    right: 7px;
+
+    width: 0.5em;
+    height: 0.5em;
+
+    background-color: red;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+
+.side-bar:hover .btn .unread-mails {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.side-bar .btn:hover {
+    background-color: var(--clr-search-bar-shadow-read-filter);
+
+}
+
+.side-bar .btn.active {
+    background-color: var(--clr-selected-btn-side-bar);
+    font-weight: bold;
 }

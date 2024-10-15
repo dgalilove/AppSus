@@ -13,6 +13,11 @@
     --clr-mail-list-btn-shadow: rgba(100, 121, 143, 0.12);
     --clr-search-bg: #eaf1fb;
 
+    --clr-selected-btn-side-bar: #d3e3fd;
+    --clr-compose-header-bg: #f2f6fc;
+    --clr-compose-header: #041e49;
+    --clr-compose-send-btn: #0b57d0;
+
     --clr-search-bar-shadow-read-filter: rgba(60, 64, 67, .1);
     --clr-search-bar-shadow-read-filter-hover: rgba(60, 64, 67, 0.229);
 }

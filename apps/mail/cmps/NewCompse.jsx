@@ -53,13 +53,24 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
 
     return (
         <div className="new-compose">
-            <form onSubmit={onAddMail}>
-                <button onClick={closeCompose}>x</button>
+            <div className="title-and-exit">
+                <div className="buttons">
+                    <button onClick={closeCompose}>x</button>
+                </div>
                 <h2>New Message</h2>
-                <input required type="text" placeholder={'To'} name='to' value={to} onChange={handleChange} />
-                <input required type="text" placeholder={'Subject'} name='subject' value={subject} onChange={handleChange} />
+            </div>
+            <form onSubmit={onAddMail}>
+                <div className="to-line form-line">
+                    <label htmlFor="to">To</label>
+                    <input id={'to'} required type="text" name='to' value={to} onChange={handleChange} />
+                </div>
+                <div className="subject-line form-line">
+                    <input required type="text" placeholder={'Subject'} name='subject' value={subject} onChange={handleChange} />
+                </div>
                 <textarea required type="text" name='body' value={body} onChange={handleChange} />
-                <button>Send</button>
+                <div className="submit-line">
+                    <button>Send</button>
+                </div>
             </form>
         </div>
     )

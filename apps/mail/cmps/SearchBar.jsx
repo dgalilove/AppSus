@@ -39,9 +39,7 @@ export function SearchBar({ onSetFilterBy, filterBy }) {
         <section className="search-bar">
             <input type="search" placeholder='Search mail' onChange={handleChange} />
             <button className={activeReadFilterClass} onClick={() => setIsUnreadOn(!isUnreadOn)}><i className="fa-regular fa-envelope-open"></i></button>
-            {/* <button onClick={() => onSetFilterBy({ sort: 'date' })}>date</button>
-            <button onClick={() => onSetFilterBy({ sort: 'name' })}>name</button>
-            <button onClick={() => onSetFilterBy({ sort: 'subject' })}>subject</button> */}
+
         </section>
     )
 }

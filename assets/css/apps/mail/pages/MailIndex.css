@@ -3,5 +3,7 @@
 
  .mail-index .mail-index-body {
      display: flex;
-     width: calc(100% - 72px);
+     line-height: 20px;
+     background-color: var(--clr-bg-side-bar);
+     font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
  }
