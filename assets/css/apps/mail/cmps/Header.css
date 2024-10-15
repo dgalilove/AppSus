@@ -38,8 +38,13 @@
     cursor: pointer;
 }
 
-.mail-index .mail-index-header .burger-and-logo .burger:hover {
+.mail-index .mail-index-header .burger-and-logo .burger.open {
     background: var(--clr-search-bar-shadow-read-filter);
+
+}
+
+.mail-index .mail-index-header .burger-and-logo .burger:hover {
+    background: var(--clr-search-bar-shadow-read-filter-hover);
 
 }
 

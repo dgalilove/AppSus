@@ -7,3 +7,8 @@
      background-color: var(--clr-bg-side-bar);
      font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
  }
+
+ .mail-index-body:has(.side-bar.open) .mail-list,
+ .mail-index-body:has(.side-bar.open) .mail-details {
+     margin-left: 256px;
+ }

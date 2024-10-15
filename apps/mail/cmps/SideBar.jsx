@@ -1,11 +1,16 @@
 const { Link, NavLink } = ReactRouterDOM
 
-export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy }) {
+const { useState } = React
+
+export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy, isOpen }) {
+
+    const [isHover, setIsHover] = useState(false)
 
 
     const numberOfUnreadMails = unreadMails ? unreadMails : ''
+    const isOpenClass = isOpen ? 'open' : ''
     return (
-        <div className="side-bar">
+        <div className={`side-bar ${isOpenClass}`}>
             <div className="compose-container">
                 <button onClick={openCompose} className="compose-btn"><i className="fa-solid fa-pencil"></i></button>
             </div>
