@@ -3,11 +3,14 @@ export function NotePreview({
   onRemoveNote,
   onChangeColor,
   onTogglePin,
-  onEditNote
+  onEditNote,
 }) {
   if (!note) return <h1>Loading...</h1>
+  const backgroundColor =
+    (note.style && note.style.backgroundColor) || "#b95e5e"
+
   return (
-    <section className="note-preview">
+    <section className="note-preview" style={{ backgroundColor }}>
       {note.type === "NoteTxt" && note.info.txt && (
         <div>
           <h2 className="note-title">{note.info.title || "Empty Title"}</h2>
@@ -43,7 +46,7 @@ export function NotePreview({
         </button>
         <input
           type="color"
-          value={(note.style && note.style.backgroundColor) || "#ffffff"}
+          value={(note.style && note.style.backgroundColor) || "#b95e5e"}
           onChange={(ev) => onChangeColor(note.id, ev.target.value)}
         />
         <button onClick={() => onEditNote(note)}>Edit</button>{" "}

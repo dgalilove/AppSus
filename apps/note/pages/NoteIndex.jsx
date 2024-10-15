@@ -13,7 +13,7 @@ export function NoteIndex() {
   const [filterBy, setFilterBy] = useState(
     noteService.getFilterFromSearchParams(searchParams)
   )
-  const [selectedNote, setSelectedNote] = useState(null) 
+  const [selectedNote, setSelectedNote] = useState(null)
 
   useEffect(() => {
     setSearchParams(utilService.getTruthyValues(filterBy))
@@ -50,6 +50,7 @@ export function NoteIndex() {
     } else {
       setNotes((prevNotes) => [...prevNotes, newNote])
     }
+    loadNotes()
     setSelectedNote(null) 
   }
 
@@ -72,7 +73,7 @@ export function NoteIndex() {
   }
 
   function onEditNote(note) {
-    setSelectedNote(note) 
+    setSelectedNote(note)
   }
 
   if (!notes) return <h1>Loading...</h1>
