@@ -48,7 +48,6 @@ export function NoteAdd({ selectedNote, onNoteAdded }) {
       })
   }
 
-  const { style } = noteToEdit
 
   return (
     <section

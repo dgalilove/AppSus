@@ -1,4 +1,5 @@
 const { useState, useEffect, useRef } = React
+const { useSearchParams } = ReactRouterDOM
 
 export function NotePreview({
   note,
@@ -9,15 +10,31 @@ export function NotePreview({
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const noteRef = useRef(null)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const toggleExpanded = () => {
-    setIsExpanded(!isExpanded)
+    const newState = !isExpanded
+    setIsExpanded(newState)
+
+    if (newState) {
+      // Add note ID to query params when expanded
+      searchParams.set("noteId", note.id)
+      setSearchParams(searchParams)
+    } else {
+      // Remove note ID from query params when collapsed
+      searchParams.delete("noteId")
+      setSearchParams(searchParams)
+    }
   }
 
   const closeExpanded = () => {
     setIsExpanded(false)
+    // Remove note ID from query params when collapsed
+    searchParams.delete("noteId")
+    setSearchParams(searchParams)
   }
 
+  // Close note when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (noteRef.current && !noteRef.current.contains(event.target)) {
@@ -39,6 +56,7 @@ export function NotePreview({
       ref={noteRef}
       className={`note-preview ${isExpanded ? "expanded" : ""}`}
       onClick={!isExpanded ? toggleExpanded : undefined}
+      style={{ backgroundColor: note.style.backgroundColor }}
     >
       <div className="note-preview-scrollable">
         {note.type === "NoteTxt" && note.info.txt && (

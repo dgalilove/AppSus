@@ -16,7 +16,6 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
       case "range":
         value = +value
         break
-
       case "checkbox":
         value = target.checked
         break
@@ -24,22 +23,18 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
   }
 
-  function onSubmit(ev) {
-    ev.preventDefault()
-    onSetFilterBy(filterByToEdit)
-  }
-
-  const { title, txt, type } = filterByToEdit
+  const { title, type } = filterByToEdit
 
   return (
     <section className="note-filter">
-      <form onSubmit={onSubmit}>
+      <form>
         <input
-          value={title || txt}
+          value={title || ''}
           onChange={handleChange}
-          type="txt"
+          type="text"
           name="title"
           id="title"
+          placeholder="Filter by title"
         />
         <select name="type" value={type} onChange={handleChange}>
           <option value="">All</option>
