@@ -144,16 +144,13 @@
      width: 40px;
      height: 40px;
 
+
  }
 
  .mail-list ul li .tool-bar i:hover {
      background-color: var(--clr-mail-list-btn-shadow);
      border-radius: 50%;
 
-
-
-     width: 40px;
-     height: 40px;
 
  }
 

@@ -39,10 +39,13 @@ export function MailIndex() {
             .catch(err => console.log(err))
     }
 
-    function countUnreadMails(mails) {
-
-        const unreadMails = mails.filter(mail => !mail.isRead)
-        setUnreadMails(unreadMails.length)
+    function countUnreadMails() {
+        mailService.query({ status: 'inbox' })
+            .then(mails => {
+                mails = mails.filter(mail => !mail.isRead)
+                setUnreadMails(mails.length)
+            })
+            .catch(err => console.log(err))
     }
 
     function onSetFilterBy(filterByToEdit) {
