@@ -1,5 +1,4 @@
 const { useEffect, useState } = React;
-const { useSearchParams } = ReactRouterDOM;
 export function NoteFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
 

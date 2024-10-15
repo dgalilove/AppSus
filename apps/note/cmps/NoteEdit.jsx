@@ -11,21 +11,21 @@ export function NoteEdit({
 }) {
   const accordionRef = useRef(null)
 
-  const handleTitleChange = (event) => {
+  const titleEdit = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, title: event.target.value },
     }))
   }
 
-  const handleTextChange = (event) => {
+  const textEdit = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, txt: event.target.value },
     }))
   }
 
-  const handleTodoChange = (idx, newTodo) => {
+  const toDoEdit = (idx, newTodo) => {
     const updatedTodos = note.info.todos.map((todo, i) =>
       i === idx ? { ...todo, txt: newTodo } : todo
     )
@@ -43,7 +43,6 @@ export function NoteEdit({
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside)
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
@@ -54,12 +53,12 @@ export function NoteEdit({
       ? note.style.backgroundColor
       : "#b95e5e"
 
-  const handleDelete = () => {
+  const deleteInEdit = () => {
     onRemoveNote(note.id) 
     onClose() 
   }
 
-  const handlePinToggle = () => {
+  const pinInEdit = () => {
     setNote((prevNote) => ({
       ...prevNote,
       isPinned: !prevNote.isPinned, 
@@ -76,14 +75,14 @@ export function NoteEdit({
       <input
         type="text"
         value={note.info.title}
-        onChange={handleTitleChange}
+        onChange={titleEdit}
         placeholder="Edit title"
       />
 
       {note.type === "NoteTxt" && (
         <textarea
           value={note.info.txt}
-          onChange={handleTextChange}
+          onChange={textEdit}
           placeholder="Edit content"
         />
       )}
@@ -95,7 +94,7 @@ export function NoteEdit({
               key={idx}
               type="text"
               value={todo.txt}
-              onChange={(e) => handleTodoChange(idx, e.target.value)}
+              onChange={(e) => toDoEdit(idx, e.target.value)}
             />
           ))}
         </div>
@@ -108,7 +107,7 @@ export function NoteEdit({
       )}
 
       <div className="note-buttons">
-        <button onClick={handlePinToggle}>
+        <button onClick={pinInEdit}>
           {note.isPinned ? "Unpin" : "Pin"}
         </button>
         <input
@@ -116,7 +115,7 @@ export function NoteEdit({
           value={backgroundColor}
           onChange={(ev) => onChangeColor(note.id, ev.target.value)}
         />
-        <button onClick={handleDelete}>Delete</button>
+        <button onClick={deleteInEdit}>Delete</button>
       </div>
     </div>
   )

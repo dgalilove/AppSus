@@ -1,74 +1,126 @@
-const { useEffect, useState } = React;
-const { useSearchParams } = ReactRouterDOM;
+import { eventBusService } from "../../../services/event-bus.service.js"
+const { useState, useEffect, useRef } = React
 
-export function NotePreview({ note, onRemoveNote, onChangeColor, onTogglePin, onEditNote }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const noteRef = useRef(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+export const NotePreview = ({ note, setNote, onSaveNote }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [inputType, setInputType] = useState("text")
+  const [todos, setTodos] = useState(note.info.todos || [""])
+  const accordionRef = useRef(null)
 
-  const toggleExpanded = () => {
-    setIsExpanded((prev) => !prev);
-    if (!isExpanded) {
-      searchParams.set("noteId", note.id);
-    } else {
-      searchParams.delete("noteId");
+  const toggleAccordion = () => setIsOpen((prev) => !prev)
+
+  const handleChange = (field, value) => {
+    setNote((prevNote) => ({
+      ...prevNote,
+      info: { ...prevNote.info, [field]: value }
+    }))
+  }
+
+  const handleClickOutside = (event) => {
+    if (accordionRef.current && !accordionRef.current.contains(event.target)) {
+      setIsOpen(false)
     }
-    setSearchParams(searchParams);
-  };
-
-  const closeExpanded = () => {
-    setIsExpanded(false);
-    searchParams.delete("noteId");
-    setSearchParams(searchParams);
-  };
+  }
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (noteRef.current && !noteRef.current.contains(event.target)) {
-        closeExpanded();
-      }
-    };
-
-    if (isExpanded) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
+    const removeListener = eventBusService.on("close-all-accordions", () => setIsOpen(false))
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isExpanded]);
+      document.removeEventListener("mousedown", handleClickOutside)
+      removeListener()
+    }
+  }, [])
+
+  const handleInputTypeChange = (type) => {
+    setInputType(type)
+    setTodos(type === "list" ? note.info.todos || [""] : [""])
+  }
+
+  const handleSave = () => {
+    const filteredTodos = todos.filter(todo => todo.trim() !== "")
+    const newNote = {
+      ...note,
+      type: inputType === "image" ? "NoteImg" : inputType === "text" ? "NoteTxt" : "NoteTodos",
+      info: {
+        ...note.info,
+        url: inputType === "image" ? note.info.url : undefined,
+        todos: inputType === "list" ? filteredTodos.map(todo => ({ txt: todo, doneAt: null })) : undefined
+      }
+    }
+    onSaveNote(newNote)
+    setTodos([""])
+    setIsOpen(false)
+  }
+
+  const handleAddTodo = () => setTodos((prev) => [...prev, ""])
+
+  const handleTodoChange = (index, value) => {
+    const updatedTodos = [...todos]
+    updatedTodos[index] = value
+    setTodos(updatedTodos)
+  }
 
   return (
-    <section
-      ref={noteRef}
-      className={`note-preview ${isExpanded ? "expanded" : ""}`}
-      onClick={!isExpanded ? toggleExpanded : undefined}
-      style={{ backgroundColor: note.style?.backgroundColor || "#b95e5e" }}
-    >
-      <div className="note-preview-scrollable">
-        <h2 className="note-title">{note.info.title || "Untitled"}</h2>
-        {note.type === "NoteTxt" && <p>{note.info.txt}</p>}
-        {note.type === "NoteTodos" && (
-          <ul>
-            {note.info.todos.map((todo, idx) => (
-              <li key={idx}>{todo.txt}</li>
-            ))}
-          </ul>
-        )}
-        {note.type === "NoteImg" && <img src={note.info.url} alt={note.info.title} />}
+    <div className={`note-accordion ${isOpen ? "accordion-open" : ""}`} ref={accordionRef}>
+      <div className="accordion-header" onClick={toggleAccordion}>
+        <input
+          type="text"
+          placeholder="New Note"
+          value={note.info.title}
+          onChange={(e) => handleChange("title", e.target.value)}
+          className={`accordion-title ${isOpen ? "active" : ""}`}
+        />
       </div>
-      {isExpanded && (
-        <div className="note-buttons">
-          <button onClick={() => onTogglePin(note.id)}>{note.isPinned ? "Unpin" : "Pin"}</button>
-          <input
-            type="color"
-            value={note.style?.backgroundColor || "#b95e5e"}
-            onChange={(ev) => onChangeColor(note.id, ev.target.value)}
-          />
-          <button onClick={() => onEditNote(note)}>Edit</button>
-          <button onClick={() => onRemoveNote(note.id)}>Remove</button>
+      {isOpen && (
+        <div className="accordion-body">
+          {inputType === "text" && (
+            <textarea
+              placeholder="Type note here..."
+              value={note.info.txt}
+              onChange={(e) => handleChange("txt", e.target.value)}
+              className="accordion-text"
+              rows="4"
+              cols="50"
+            />
+          )}
+          {inputType === "image" && (
+            <input
+              type="text"
+              placeholder="Image URL"
+              onChange={(e) => handleChange("url", e.target.value)}
+              className="image-url-input"
+            />
+          )}
+          {inputType === "list" && (
+            <div>
+              {todos.map((todo, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  value={todo}
+                  onChange={(e) => handleTodoChange(index, e.target.value)}
+                  placeholder={`Todo ${index + 1}`}
+                />
+              ))}
+              <button type="button" onClick={handleAddTodo}>Add Todo</button>
+            </div>
+          )}
+          <div className="accordion-buttons">
+            <button onClick={handleSave}>Save</button>
+          </div>
+          <div className="icon-container">
+            <span className="icon-text" title="Text" onClick={() => handleInputTypeChange("text")}>
+              <i className="fa-solid fa-t"></i>
+            </span>
+            <span className="icon-image" title="Image" onClick={() => handleInputTypeChange("image")}>
+              <i className="fa-regular fa-image"></i>
+            </span>
+            <span className="icon-list" title="List" onClick={() => handleInputTypeChange("list")}>
+              <i className="fa-solid fa-list-ul"></i>
+            </span>
+          </div>
         </div>
       )}
-    </section>
-  );
+    </div>
+  )
 }

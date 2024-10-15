@@ -1,102 +1,188 @@
 export const utilService = {
-    makeId,
-    makeLorem,
-    getRandomIntInclusive,
-    getRandomColor,
-    padNum,
-    getDayName,
-    getMonthName,
-    animateCSS,
-    debounce,
-    getTruthyValues
+  makeId,
+  makeLorem,
+  getRandomIntInclusive,
+  getRandomColor,
+  padNum,
+  getDayName,
+  getMonthName,
+  animateCSS,
+  debounce,
+  getTruthyValues,
 }
 
 function makeId(length = 6) {
-    var txt = ''
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  var txt = ""
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
-    for (var i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length))
-    }
+  for (var i = 0; i < length; i++) {
+    txt += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
 
-    return txt
+  return txt
 }
 
 function makeLorem(size = 100) {
-    var words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn']
-    var txt = ''
-    while (size > 0) {
-        size--
-        txt += words[Math.floor(Math.random() * words.length)] + ' '
-    }
-    return txt
+  var words = [
+    "The sky",
+    "above",
+    "the port",
+    "was",
+    "the color of television",
+    "tuned",
+    "to",
+    "a dead channel",
+    ".",
+    "All",
+    "this happened",
+    "more or less",
+    ".",
+    "I",
+    "had",
+    "the story",
+    "bit by bit",
+    "from various people",
+    "and",
+    "as generally",
+    "happens",
+    "in such cases",
+    "each time",
+    "it",
+    "was",
+    "a different story",
+    ".",
+    "It",
+    "was",
+    "a pleasure",
+    "to",
+    "burn",
+  ]
+  var txt = ""
+  while (size > 0) {
+    size--
+    txt += words[Math.floor(Math.random() * words.length)] + " "
+  }
+  return txt
 }
 
 function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive
 }
 
 function padNum(num) {
-    return (num > 9) ? num + '' : '0' + num
+  return num > 9 ? num + "" : "0" + num
 }
 
 function getRandomColor() {
-    const letters = '0123456789ABCDEF'
-    var color = '#'
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
+  const letters = "0123456789ABCDEF"
+  var color = "#"
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
 }
 
 function getDayName(date, locale) {
-    date = new Date(date)
-    return date.toLocaleDateString(locale, { weekday: 'long' })
+  date = new Date(date)
+  return date.toLocaleDateString(locale, { weekday: "long" })
 }
-
 
 function getMonthName(date) {
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ]
-    return monthNames[date.getMonth()]
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]
+  return monthNames[date.getMonth()]
 }
 
+function animateCSS(el, animation = "bounce") {
+  const prefix = "animate__"
+  return new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`
+    el.classList.add(`${prefix}animated`, animationName)
+    function handleAnimationEnd(event) {
+      event.stopPropagation()
+      el.classList.remove(`${prefix}animated`, animationName)
+      resolve("Animation ended")
+    }
 
-function animateCSS(el, animation = 'bounce') {
-    const prefix = 'animate__'
-    return new Promise((resolve, reject) => {
-        const animationName = `${prefix}${animation}`
-        el.classList.add(`${prefix}animated`, animationName)
-        function handleAnimationEnd(event) {
-            event.stopPropagation()
-            el.classList.remove(`${prefix}animated`, animationName)
-            resolve('Animation ended')
-        }
-
-        el.addEventListener('animationend', handleAnimationEnd, { once: true })
-    })
+    el.addEventListener("animationend", handleAnimationEnd, { once: true })
+  })
 }
 
 function getTruthyValues(obj) {
-    const newObj = {}
-    for (const key in obj) {
-        const value = obj[key]
-        if (value || value === 0) {
-            newObj[key] = value
-        }
+  const newObj = {}
+  for (const key in obj) {
+    const value = obj[key]
+    if (value || value === 0) {
+      newObj[key] = value
     }
-    return newObj
+  }
+  return newObj
 }
 
 function debounce(callback, delay = 300) {
-    let timer
-    return function (...args) {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            callback(...args)
-        }, delay)
+  let timer
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      callback(...args)
+    }, delay)
+  }
+}
+
+export const handleChange = (setNote, field, value) => {
+  setNote((prevNote) => ({
+    ...prevNote,
+    info: { ...prevNote.info, [field]: value },
+  }))
+}
+
+export const handleClickOutside = (ref, callback) => {
+  const handleOutsideClick = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      callback()
     }
+  }
+  return handleOutsideClick
+}
+
+export const getBackgroundColor = (note) => {
+  return note.style && note.style.backgroundColor
+    ? note.style.backgroundColor
+    : "#b95e5e"
+}
+
+export const createNotePayload = (note, inputType, todos) => {
+  const filteredTodos = todos.filter((todo) => todo.trim() !== "")
+  return {
+    ...note,
+    type:
+      inputType === "image"
+        ? "NoteImg"
+        : inputType === "text"
+        ? "NoteTxt"
+        : "NoteTodos",
+    info: {
+      ...note.info,
+      url: inputType === "image" ? note.info.url : undefined,
+      todos:
+        inputType === "list"
+          ? filteredTodos.map((todo) => ({ txt: todo, doneAt: null }))
+          : undefined,
+    },
+  }
 }

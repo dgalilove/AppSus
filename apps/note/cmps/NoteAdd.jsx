@@ -1,8 +1,8 @@
-const { useNavigate, useParams } = ReactRouterDOM
-const { useState, useEffect } = React
-import { noteService } from "../services/note.service.js"
-import { NoteAccordion } from "./NoteAccordion.jsx"
+const { useEffect, useState } = React
+const { useParams, useNavigate } = ReactRouterDOM
 
+import { noteService } from "../services/note.service.js"
+import { NotePreview } from "./NotePreView.jsx"
 export function NoteAdd({ selectedNote, onNoteAdded }) {
   const [noteToEdit, setNoteToEdit] = useState(
     selectedNote || noteService.createEmptyNote()
@@ -34,10 +34,9 @@ export function NoteAdd({ selectedNote, onNoteAdded }) {
       })
   }
 
-  function onSaveNote(ev) {
-    ev.preventDefault()
+  function onSaveNote(newNote) {
     noteService
-      .save(noteToEdit)
+      .save(newNote)
       .then((note) => {
         if (onNoteAdded) onNoteAdded(note)
         setNoteToEdit(noteService.createEmptyNote())
@@ -48,15 +47,13 @@ export function NoteAdd({ selectedNote, onNoteAdded }) {
       })
   }
 
-
   return (
-    <section
-      className="note-edit"
-    >
-      <form onSubmit={onSaveNote}>
-        <NoteAccordion note={noteToEdit} setNote={setNoteToEdit}/>
-        
-      </form>
+    <section className="note-edit">
+      <NotePreview
+        note={noteToEdit}
+        setNote={setNoteToEdit}
+        onSaveNote={onSaveNote}
+      />
     </section>
   )
 }

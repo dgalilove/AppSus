@@ -21,39 +21,39 @@ export const noteService = {
 
 function query(filterBy = {}) {
   return storageService.query(NOTE_KEY).then((notes) => {
-    if (filterBy.title) {
-      const regExp = new RegExp(filterBy.title, "i")
+    const applyFilters = (note) => {
+      const titleMatch = filterBy.title ? new RegExp(filterBy.title, "i").test(note.info.title || "") : true
+      const txtMatch = filterBy.title ? new RegExp(filterBy.title, "i").test(note.info.txt || "") : true
+      const todosMatch = filterBy.title && note.info.todos
+        ? note.info.todos.some((todo) => new RegExp(filterBy.title, "i").test(todo.txt || ""))
+        : false
 
-      notes = notes.filter((note) => {
-        const titleMatch = regExp.test(note.info.title || "")
-        const txtMatch = regExp.test(note.info.txt || "")
-        const todosMatch = note.info.todos
-          ? note.info.todos.some((todo) => regExp.test(todo.txt || ""))
-          : false
+      const matchesTitleOrText = titleMatch || txtMatch || todosMatch
 
-        return titleMatch || txtMatch || todosMatch
-      })
+      const matchesType = filterBy.type ? note.type === mapFilterType(filterBy.type) : true
+
+      return matchesTitleOrText && matchesType
     }
 
-    if (filterBy.type) {
-      notes = notes.filter((note) => {
-        switch (filterBy.type) {
-          case "text":
-            return note.type === "NoteTxt"
-          case "image":
-            return note.type === "NoteImg"
-          case "video":
-            return note.type === "NoteVideo"
-          case "todos":
-            return note.type === "NoteTodos"
-          default:
-            return true
-        }
-      })
-    }
-    return notes
+    return notes.filter(applyFilters)
   })
 }
+
+function mapFilterType(type) {
+  switch (type) {
+    case "text":
+      return "NoteTxt"
+    case "image":
+      return "NoteImg"
+    case "video":
+      return "NoteVideo"
+    case "todos":
+      return "NoteTodos"
+    default:
+      return null
+  }
+}
+
 
 function get(noteId) {
   return storageService

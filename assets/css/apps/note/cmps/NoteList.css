@@ -1,10 +1,9 @@
-/* Note List */
 .note-list {
-  column-count: 5; /* Adjust the number of columns as needed */
-  column-gap: 1em; /* Gap between the columns */
+  column-count: 5; 
+  column-gap: 1em; 
   padding: 6em;
   height: 100%;
-  overflow: auto; /* Allow scrolling if content overflows */
+  overflow: auto; 
 }
 
 .note-item {
@@ -17,12 +16,12 @@
   cursor: pointer;
   margin-bottom: 1em;
   display: inline-block;
-  width: 100%; /* Ensures the note item takes up the full width of its column */
+  width: 100%; 
   transition: transform 0.2s ease-in-out;
 }
 
 .note-item:hover {
-  transform: scale(1.05); /* Scale the note slightly on hover */
+  transform: scale(1.05); 
 }
 
 .note-item img{
@@ -36,10 +35,7 @@
   padding: 1em;
   display: flex;
   justify-content: flex-end;
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
+
 }
 
 
