@@ -53,7 +53,6 @@
     overflow: hidden; /* Prevent content from overflowing out of the container */
   }
   
-  
   .accordion-title,
   .accordion-text {
     user-select: none;
@@ -67,4 +66,3 @@
   .accordion-body {
     padding: 10px;
   }
-  

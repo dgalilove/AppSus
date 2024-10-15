@@ -1,8 +1,7 @@
-import { NotePreview } from "./NotePreview.jsx";
+import { NotePreview } from "./NotePreview.jsx"
 
-NotePreview
 
-export function NoteList({ notes, onRemoveNote, onChangeColor, onTogglePin , onEditNote }) {
+export function NoteList({ notes, onRemoveNote, onChangeColor, onTogglePin, onEditNote }) {
   if (!notes || notes.length === 0) {
     return <p>No notes available.</p>;
   }
@@ -14,9 +13,9 @@ export function NoteList({ notes, onRemoveNote, onChangeColor, onTogglePin , onE
           key={note.id}
           note={note}
           onRemoveNote={onRemoveNote}
-          onEditNote={onEditNote}
           onChangeColor={onChangeColor}
           onTogglePin={onTogglePin}
+          onEditNote={onEditNote}
         />
       ))}
     </div>
