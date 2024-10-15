@@ -34,6 +34,20 @@ function query(filterBy = {}) {
         return titleMatch || txtMatch || todosMatch
       })
     }
+    if (filterBy.type) {
+      notes = notes.filter((note) => {
+        switch (filterBy.type) {
+          case "text":
+            return note.type === "NoteTxt"
+          case "image":
+            return note.type === "NoteImg"
+          case "video":
+            return note.type === "NoteVideo" 
+          case "todos":
+            return note.type === "NoteTodos"
+        }
+      })
+    }
     return notes
   })
 }
@@ -57,21 +71,19 @@ function save(note) {
 }
 function createEmptyNote() {
   return {
-      id: "",
-      createdAt: Date.now(),
-      type: "NoteTxt",
-      isPinned: false,
-      style: {
-          backgroundColor: "#b95e5e", 
-      },
-      info: {
-          title: "",
-          txt: "",
-      },
+    id: "",
+    createdAt: Date.now(),
+    type: "NoteTxt",
+    isPinned: false,
+    style: {
+      backgroundColor: "#b95e5e",
+    },
+    info: {
+      title: "",
+      txt: "",
+    },
   }
 }
-
-
 
 function getDefaultFilter() {
   return {
