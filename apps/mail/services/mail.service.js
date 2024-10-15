@@ -38,8 +38,6 @@ function query(filterBy = {}) {
             }
             else if (filterBy.status === 'sent') {
                 mails = mails.filter(mail => {
-                    console.log(mail.from)
-                    console.log(loggedUser.email)
                     return mail.from === loggedUser.email
                 })
             }
@@ -51,6 +49,25 @@ function query(filterBy = {}) {
             }
             else if (filterBy.status === 'stared') {
                 mails = mails.filter(mail => mail.isStar)
+            }
+
+            if (filterBy.isRead === 'unread') {
+                mails = mails.filter(mail => !mail.isRead)
+            }
+            if (filterBy.search) {
+                const regExp = new RegExp(filterBy.search, 'i')
+                mails = mails.filter(mail => regExp.test(mail.name) || regExp.test(mail.subject) || regExp.test(mail.body))
+            }
+            if (filterBy.sort) {
+                if (filterBy.sort === 'date') {
+                    mails.sort((c1, c2) => (c1.sentAt - c2.sentAt) * -1)
+                }
+                if (filterBy.sort === 'name') {
+                    mails.sort((c1, c2) => c1.name.localeCompare(c2.name))
+                }
+                if (filterBy.sort === 'subject') {
+                    mails.sort((c1, c2) => c1.subject.localeCompare(c2.subject))
+                }
             }
             return mails
         })

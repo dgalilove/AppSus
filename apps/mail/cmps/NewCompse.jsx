@@ -9,7 +9,6 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
     const [mailToAdd, setMailToAdd] = useState('')
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
-    const navigate = useNavigate()
 
     useEffect(() => {
         setMailToAdd(prevMail => ({ ...prevMail, to: filterByToEdit.to || '', subject: filterByToEdit.subject || '', body: filterByToEdit.body || '' }))

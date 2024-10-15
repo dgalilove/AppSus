@@ -21,7 +21,7 @@ export function MailIndex() {
 
 
     useEffect(() => {
-        setFilterBy(prevFilterBy => ({ ...prevFilterBy, status: 'inbox' }))
+        setFilterBy(prevFilterBy => ({ ...prevFilterBy, status: 'inbox', sort: 'date' }))
     }, [])
 
     useEffect(() => {
@@ -74,7 +74,7 @@ export function MailIndex() {
 
     return <div className="mail-index">
         <SideBar unreadMails={unreadMails} openCompose={openCompose} onSetFilterBy={onSetFilterBy} />
-        <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
+        <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} />
         {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
     </div>

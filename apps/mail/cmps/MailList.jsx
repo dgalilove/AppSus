@@ -1,15 +1,15 @@
 import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./MailPreview.jsx"
+import { SearchBar } from "./SearchBar.jsx"
 
 const { useNavigate } = ReactRouterDOM
 
 
-export function MailList({ mailList, onSetFilterBy, onRemoveMail }) {
+export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
 
     const navigate = useNavigate()
 
     if (!mailList) return <div>Loading...</div>
-    if (mailList.length === 0) return <div>No Such Data</div>
 
     function onMailOpen(mailId) {
         mailService.get(mailId)
@@ -20,22 +20,21 @@ export function MailList({ mailList, onSetFilterBy, onRemoveMail }) {
             })
     }
 
-
-
-
     return <div className="mail-list">
-        <ul>
-            {mailList.map(mail => {
-                const classIsRead = mail.isRead ? 'read' : ''
+        <SearchBar onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
+        {mailList.length === 0 ? <div>No Such Data</div> :
+            <ul>
+                {mailList.map(mail => {
+                    const classIsRead = mail.isRead ? 'read' : ''
+                    return (
+                        <li onClick={() => onMailOpen(mail.id)} key={mail.id} className={classIsRead}>
+                            <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
+                        </li>
+                    )
+                })}
+            </ul>
+        }
 
-
-                return (
-                    <li onClick={() => onMailOpen(mail.id)} key={mail.id} className={classIsRead}>
-                        <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
-                    </li>
-                )
-            })}
-        </ul>
 
     </div>
 }
