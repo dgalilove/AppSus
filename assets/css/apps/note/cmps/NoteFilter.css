@@ -1,0 +1,44 @@
+.note-filter {
+  display: flex;
+}
+
+.note-filter {
+  display: flex;
+  align-items: center; 
+  margin-bottom: 1.5em; 
+  padding: 0.6em;
+  border-bottom: white 1px solid;
+}
+
+.note-filter form {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+    margin-left: 2em;
+}
+
+
+.note-filter input[type="text"],.note-filter select{
+    background-color: transparent;
+    border-radius: 4px; /* Rounded corners for inputs */
+    border: white 1px solid;
+    padding: 1em;
+    margin-right: 10px;
+    color :white;
+}
+
+/* Input focus effect */
+
+
+/* Hover effect for the form */
+.note-filter form:hover {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7); /* Darker shadow on hover */
+}
+
+.keep-logo {
+  width: 3%;
+  margin-top: 0.5em;
+  margin-left: 1em;
+
+}

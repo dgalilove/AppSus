@@ -9,9 +9,11 @@
 
 .note-item {
   background-color: #f4f4f4;
+  border: white 1px solid;
   border-radius: 10px;
   padding: 1em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: white;
+  box-shadow: 0 2px 8px rgb(0, 0, 0);
   cursor: pointer;
   margin-bottom: 1em;
   display: inline-block;
@@ -67,6 +69,7 @@
 .note-accordion-edit input[type="text"] {
   background-color: transparent;
   user-select: none;
+  color: white;
   outline: none;
   border: #f4f4f4 1px solid ;
   resize: none;
@@ -83,3 +86,5 @@
 
 .note-accordion-edit img{
 } 
+
+

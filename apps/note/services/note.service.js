@@ -105,7 +105,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: true,
         style: {
-          backgroundColor: "#b95e5e",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Fullstack Me Baby!",
@@ -121,7 +121,7 @@ function _createNotes() {
           title: "Bobi and Me",
         },
         style: {
-          backgroundColor: "#b95e5e",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -135,7 +135,12 @@ function _createNotes() {
             { txt: "Driving license", doneAt: null },
             { txt: "Coding power", doneAt: 187111111 },
           ],
+          
         },
+        style: {
+          backgroundColor: "#212121",
+        },
+        
       },
       {
         id: "n104",
@@ -143,7 +148,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: true,
         style: {
-          backgroundColor: "#6a1b9a",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Learn React Hooks",
@@ -160,7 +165,7 @@ function _createNotes() {
           title: "Beautiful Sunset",
         },
         style: {
-          backgroundColor: "#ff7043",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -176,7 +181,7 @@ function _createNotes() {
           ],
         },
         style: {
-          backgroundColor: "#66bb6a",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -185,7 +190,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: false,
         style: {
-          backgroundColor: "#29b6f6",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Meeting with client at 2 PM.",
@@ -201,7 +206,7 @@ function _createNotes() {
           title: "Mountain Landscape",
         },
         style: {
-          backgroundColor: "#ffcc80",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -218,7 +223,7 @@ function _createNotes() {
           ],
         },
         style: {
-          backgroundColor: "#d32f2f",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -227,7 +232,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: false,
         style: {
-          backgroundColor: "#8e24aa",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Read JavaScript Patterns book.",
@@ -243,7 +248,7 @@ function _createNotes() {
           title: "Ocean Wave",
         },
         style: {
-          backgroundColor: "#00bfa5",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -260,7 +265,7 @@ function _createNotes() {
           ],
         },
         style: {
-          backgroundColor: "#ffd600",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -269,7 +274,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: false,
         style: {
-          backgroundColor: "#4caf50",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Prepare for presentation.",
@@ -285,7 +290,7 @@ function _createNotes() {
           title: "City Lights",
         },
         style: {
-          backgroundColor: "#ff8a65",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -301,7 +306,7 @@ function _createNotes() {
           ],
         },
         style: {
-          backgroundColor: "#c2185b",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -310,7 +315,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: true,
         style: {
-          backgroundColor: "#3949ab",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Learn GraphQL and Apollo.",
@@ -326,7 +331,7 @@ function _createNotes() {
           title: "Forest Path",
         },
         style: {
-          backgroundColor: "#7e57c2",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -343,7 +348,7 @@ function _createNotes() {
           ],
         },
         style: {
-          backgroundColor: "#009688",
+          backgroundColor: "#212121",
         },
       },
       {
@@ -352,7 +357,7 @@ function _createNotes() {
         type: "NoteTxt",
         isPinned: false,
         style: {
-          backgroundColor: "#ef5350",
+          backgroundColor: "#212121",
         },
         info: {
           txt: "Complete React course by end of the week.",
@@ -368,7 +373,7 @@ function _createNotes() {
           title: "Starry Sky",
         },
         style: {
-          backgroundColor: "#2196f3",
+          backgroundColor: "#212121",
         },
       },
     ]
