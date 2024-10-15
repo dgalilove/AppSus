@@ -22,18 +22,19 @@ export const noteService = {
 function query(filterBy = {}) {
   return storageService.query(NOTE_KEY).then((notes) => {
     if (filterBy.title) {
-      const regExp = new RegExp(filterBy.title, "i")
+      const regExp = new RegExp(filterBy.title, "i");
 
       notes = notes.filter((note) => {
-        const titleMatch = regExp.test(note.info.title || "")
-        const txtMatch = regExp.test(note.info.txt || "")
+        const titleMatch = regExp.test(note.info.title || "");
+        const txtMatch = regExp.test(note.info.txt || "");
         const todosMatch = note.info.todos
           ? note.info.todos.some((todo) => regExp.test(todo.txt || ""))
-          : false
+          : false;
 
         return titleMatch || txtMatch || todosMatch
       })
     }
+
     if (filterBy.type) {
       notes = notes.filter((note) => {
         switch (filterBy.type) {
@@ -42,15 +43,18 @@ function query(filterBy = {}) {
           case "image":
             return note.type === "NoteImg"
           case "video":
-            return note.type === "NoteVideo" 
+            return note.type === "NoteVideo"
           case "todos":
             return note.type === "NoteTodos"
+          default:
+            return true;
         }
       })
     }
     return notes
   })
 }
+
 
 function get(noteId) {
   return storageService

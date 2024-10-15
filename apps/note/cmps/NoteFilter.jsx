@@ -31,7 +31,6 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
 
   const { title, txt, type } = filterByToEdit
 
-  const isValid = !!title || !!txt || !!type
   return (
     <section className="note-filter">
       <form onSubmit={onSubmit}>
@@ -42,14 +41,13 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
           name="title"
           id="title"
         />
-        <select name="type" value={type || ""} onChange={handleChange}>
+        <select name="type" value={type} onChange={handleChange}>
           <option value="">All</option>
           <option value="text">Text</option>
           <option value="image">Image</option>
           <option value="video">Video</option>
           <option value="todos">Todos</option>
         </select>
-        <button disabled={!isValid}>Search</button>
       </form>
     </section>
   )
