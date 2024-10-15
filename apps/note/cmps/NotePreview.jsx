@@ -36,10 +36,10 @@ export function NotePreview({
           <img
             src={note.info.url}
             alt={note.info.title}
-            style={{ width: "100px", height: "100px" }}
           />
         </div>
       )}
+
       <div className="note-buttons">
         <button onClick={() => onTogglePin(note.id)}>
           {note.isPinned ? "Unpin" : "Pin"}

@@ -1,27 +1,70 @@
- /* note index */
-.note-index{
+.note-index {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
     background-color: #212121c0;
-}
-.note-edit{
+    height: 100vh;
+    padding: 10px;
+  }
+  
+  .note-edit {
     display: grid;
     justify-items: center;
-}
-
-.note-accordion{
+  }
+  
+  .note-accordion {
     display: grid;
     grid-auto-rows: auto;
-}
-.accordion-title {
-    width : 100%;
-    color : white;  
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: border 0.3s ease;
+  }
+  
+  .note-accordion.accordion-open {
+    border: 2px solid white;
+    border-radius: 5px;
+  }
+  
+  .accordion-title {
+    width: 100%;
+    color: white;
     background-color: transparent;
     font-size: 1.5em;
-    border: white 1px solid ;
-}
-.accordion-text{
-    color : white;  
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 0.7em;
+  }
+  
+  .accordion-title.active {
+    border: none;
+  }
+  
+  .accordion-text {
+    color: white;
     background-color: transparent;
     border: none;
     font-size: 1.3em;
-
-}
+    width: 100%;
+    height: auto; /* Automatically adjust the height of the textarea */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    resize: none; /* Prevent manual resizing */
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden; /* Prevent content from overflowing out of the container */
+  }
+  
+  
+  .accordion-title,
+  .accordion-text {
+    user-select: none;
+  }
+  
+  input:focus,
+  textarea:focus {
+    outline: none;
+  }
+  
+  .accordion-body {
+    padding: 10px;
+  }
+  

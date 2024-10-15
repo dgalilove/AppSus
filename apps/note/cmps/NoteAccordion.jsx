@@ -1,16 +1,12 @@
-import { eventBusService , showSuccessMsg} from "../../../services/event-bus.service.js"
-
+import { eventBusService, showSuccessMsg } from "../../../services/event-bus.service.js"
 const { useState, useEffect, useRef } = React
-
 
 export const NoteAccordion = ({ note, setNote }) => {
   const [isOpen, setIsOpen] = useState(false)
   const accordionRef = useRef(null)
 
   const toggleAccordion = () => {
-    if (!isOpen) {
-      setIsOpen(true)
-    }
+    setIsOpen(!isOpen)
   }
 
   const handleTitleChange = (event) => {
@@ -18,7 +14,7 @@ export const NoteAccordion = ({ note, setNote }) => {
       ...prevNote,
       info: { ...prevNote.info, title: event.target.value },
     }))
-    showSuccessMsg("Title updated successfully!") 
+    showSuccessMsg("Title updated successfully!")
   }
 
   const handleTextChange = (event) => {
@@ -31,15 +27,14 @@ export const NoteAccordion = ({ note, setNote }) => {
 
   const handleClickOutside = (event) => {
     if (accordionRef.current && !accordionRef.current.contains(event.target)) {
-      setIsOpen(false)
+      setIsOpen(false);
     }
-  }
+  };
 
   useEffect(() => {
     const removeListener = eventBusService.on("close-all-accordions", () => setIsOpen(false))
-  
     document.addEventListener("mousedown", handleClickOutside)
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
       removeListener()
@@ -47,8 +42,8 @@ export const NoteAccordion = ({ note, setNote }) => {
   }, [])
 
   function handleChange({ target }) {
-    const field = target.name;
-    let value = target.value;
+    const field = target.name
+    let value = target.value
 
     if (field === "backgroundColor") {
       setNote((prevNote) => ({
@@ -57,17 +52,16 @@ export const NoteAccordion = ({ note, setNote }) => {
       }));
     }
   }
-  
 
   return (
-    <div className="note-accordion" ref={accordionRef}>
+    <div className={`note-accordion ${isOpen ? "accordion-open" : ""}`} ref={accordionRef}>
       <div className="accordion-header" onClick={toggleAccordion}>
         <input
           type="text"
           placeholder="New Note"
           value={note.info.title}
           onChange={handleTitleChange}
-          className="accordion-title"
+          className={`accordion-title ${isOpen ? "active" : ""}`} 
         />
       </div>
       {isOpen && (
@@ -77,12 +71,13 @@ export const NoteAccordion = ({ note, setNote }) => {
             value={note.info.txt}
             onChange={handleTextChange}
             className="accordion-text"
-             rows="4" cols="50"
+            rows="4"
+            cols="50"
           />
           <div className="accordion-buttons">
-          <input
+            <input
               type="color"
-              value={(note.style && note.style.backgroundColor) || "#b95e5e"} 
+              value={(note.style && note.style.backgroundColor) || "#b95e5e"}
               onChange={handleChange}
               name="backgroundColor"
               id="backgroundColor"
@@ -92,5 +87,5 @@ export const NoteAccordion = ({ note, setNote }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

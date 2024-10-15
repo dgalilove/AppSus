@@ -1,23 +1,30 @@
- .note-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .note-preview{
-    display: grid;
-    grid-template-rows: 1fr auto  ;
-    background-color: rgba(185, 94, 94, 0.856);
-    border: none;
-    border-radius: 10px;
-    min-height: 10em;
-    padding: 1em;
-  }
+.note-list {
+  columns: 5;
+  column-gap: 10px;
+  padding: 6em;
+  height: 100%; 
+  overflow: hidden; 
+}
 
 
+.note-preview {
+  display: grid;
+  grid-template-rows: 1fr auto; 
+  background-color: rgba(185, 94, 94, 0.856);
+  border: none;
+  border-radius: 10px;
+  padding: 1.5em;
+  margin-bottom: 10px; 
+  break-inside: avoid; 
+  min-height: 10em;
+}
+.note-preview div:not(.note-buttons){
+  display: grid;
+  gap: 1em;
+}
 
   .note-buttons{
+    margin-top: 2em;
     justify-self: end;
     align-self: end;
   }
