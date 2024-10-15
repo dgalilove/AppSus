@@ -21,7 +21,9 @@ export function MailDetails() {
     const date = new Date(sentAt).toString().split(' ')
     return (
         <div className="mail-details">
-            <button ><Link to={'/mail'}>Back</Link></button>
+            <div className="tool-bar">
+                <Link to={'/mail'}><i class="fa-solid fa-arrow-left"></i></Link>
+            </div>
             <h2>{subject}</h2>
             <h3>{name}</h3>
             <p>{`<${from}>`}{`${date[1]} ${date[2]}, ${date[3]}, ${date[4]}`}</p>

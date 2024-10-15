@@ -51,7 +51,7 @@
 .mail-index .mail-index-header .burger-and-logo .gmail {
     height: 2.5em;
     width: 6.8125em;
-
+    cursor: pointer;
 }
 
 .mail-index .mail-index-header .search-bar {

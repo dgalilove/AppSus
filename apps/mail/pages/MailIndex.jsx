@@ -7,7 +7,8 @@ import { SideBar } from "../cmps/SideBar.jsx"
 import { mailService } from "../services/mail.service.js"
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams, useParams } = ReactRouterDOM
+const { useSearchParams, useParams, useNavigate } = ReactRouterDOM
+
 
 
 
@@ -21,20 +22,10 @@ export function MailIndex() {
     const defaultFilter = mailService.getFilterFromSearchParams(searchParams)
     const [filterBy, setFilterBy] = useState(defaultFilter)
     const [isOpen, setIsOpen] = useState(false)
+    const navigate = useNavigate()
 
-    const [mail, setMail] = useState(null)
+
     const { mailId } = useParams()
-
-    useEffect(() => {
-        mailService.get(mailId)
-            .then(mail => {
-                setMail(mail)
-            })
-    }, [mailId])
-
-
-
-
 
     useEffect(() => {
         setFilterBy(prevFilterBy => ({ ...prevFilterBy, status: 'inbox', sort: 'date' }))
@@ -92,13 +83,17 @@ export function MailIndex() {
         setIsOpen(!isOpen)
     }
 
+    function onLogo() {
+        navigate('/mail')
+    }
+
     const isOpenClass = isOpen ? 'open' : ''
 
     return <div className="mail-index">
         <div className="mail-index-header">
             <div className="burger-and-logo">
                 <svg onClick={onBurgerMenu} className={`burger ${isOpenClass}`} xmlns="http://www.w3.org/2000/svg" focusable="false" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
-                <img className="gmail" src="/assets/css/apps/mail/mail-svgs/Gmail-with-Text.svg" alt="" />
+                <img onClick={onLogo} className="gmail" src="/assets/css/apps/mail/mail-svgs/Gmail-with-Text.svg" alt="" />
             </div>
             <SearchBar onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
 
@@ -110,12 +105,10 @@ export function MailIndex() {
         </div>
         <div className="mail-index-body">
             <SideBar unreadMails={unreadMails} openCompose={openCompose} onSetFilterBy={onSetFilterBy} filterBy={filterBy} isOpen={isOpen} />
-            {mail ? <MailDetails /> : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} />}
-
+            {mailId ? <MailDetails /> : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} />}
             {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
         </div>
-
     </div>
 }
 

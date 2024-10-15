@@ -15,7 +15,7 @@
     transition: 0.4s;
 }
 
-.side-bar:hover,
+.side-bar.hover,
 .side-bar.open {
     width: 256px;
 }
@@ -52,21 +52,19 @@
 .side-bar .compose-container .compose-btn::after {
     content: 'Compose';
     margin-left: 0.6em;
-    opacity: 0;
-    width: 0;
+    display: none;
     transition: 0.1s;
 }
 
-.side-bar:hover .compose-btn,
+.side-bar.hover .compose-btn,
 .side-bar.open .compose-btn {
     min-width: 8.428571em;
     padding-right: 1.71428857em;
 }
 
-.side-bar:hover .compose-btn:after,
+.side-bar.hover .compose-btn:after,
 .side-bar.open .compose-btn:after {
-    opacity: 1;
-    width: fit-content;
+    display: block;
 }
 
 
@@ -114,13 +112,13 @@
 
 }
 
-.side-bar:hover .btn::before,
+.side-bar.hover .btn::before,
 .side-bar.open .btn::before {
     display: block;
 
 }
 
-.side-bar:hover .btn::after,
+.side-bar.hover .btn::after,
 .side-bar.open .btn::after {
     display: block;
 
@@ -151,7 +149,7 @@
 }
 
 
-.side-bar:hover .btn,
+.side-bar.hover .btn,
 .side-bar.open .btn {
     justify-content: flex-start;
 
@@ -185,7 +183,7 @@
 }
 
 
-.side-bar:hover .btn .unread-mails,
+.side-bar.hover .btn .unread-mails,
 .side-bar.open .btn .unread-mails {
     opacity: 0;
     width: 0;
