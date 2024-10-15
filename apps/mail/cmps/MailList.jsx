@@ -5,7 +5,7 @@ import { SearchBar } from "./SearchBar.jsx"
 const { useNavigate } = ReactRouterDOM
 
 
-export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
+export function MailList({ mailList, onSetFilterBy, onRemoveMail }) {
 
     const navigate = useNavigate()
 
@@ -21,7 +21,6 @@ export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
     }
 
     return <div className="mail-list">
-        <SearchBar onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
         {mailList.length === 0 ? <div>No Such Data</div> :
             <ul>
                 {mailList.map(mail => {

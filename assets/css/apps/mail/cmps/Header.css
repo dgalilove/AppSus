@@ -1,0 +1,156 @@
+.mail-index .mail-index-header {
+    display: flex;
+    align-items: center;
+    height: 63px;
+    padding: 0.5em;
+    background-color: var(--clr-bg-side-bar);
+}
+
+.mail-index .mail-index-header .burger-and-logo {
+    display: flex;
+    align-items: center;
+    padding: 0 1.875em 0 0;
+    height: 3em;
+
+}
+
+.mail-index .mail-index-header .dots-and-account {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    height: 3em;
+    gap: 8px;
+    margin-left: 7.875em;
+
+}
+
+.mail-index .mail-index-header .burger-and-logo .burger {
+    width: 3em;
+    margin: 0 4px;
+    padding: 12px;
+
+    border-radius: 50%;
+
+    fill: #5f6368;
+
+    background: none;
+
+    cursor: pointer;
+}
+
+.mail-index .mail-index-header .burger-and-logo .burger:hover {
+    background: var(--clr-search-bar-shadow-read-filter);
+
+}
+
+.mail-index .mail-index-header .burger-and-logo .gmail {
+    height: 2.5em;
+    width: 6.8125em;
+
+}
+
+.mail-index .mail-index-header .search-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 3em;
+    padding: 0.875em 2.75em;
+    padding-right: 0.5em;
+
+    border-radius: 1.5em;
+    border: none;
+    outline: none;
+
+    background: var(--clr-search-bg);
+    width: 100%;
+}
+
+.mail-index .mail-index-header input {
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    width: 100%;
+    background: var(--clr-search-bg);
+}
+
+.mail-index .mail-index-header .search-bar:has(input:focus) {
+    background: var(--clr-mail);
+    box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+
+.mail-index .mail-index-header .search-bar input:focus {
+    background: var(--clr-mail);
+}
+
+
+.mail-index .mail-index-header button {
+    font-size: 1rem;
+
+    border: none;
+    outline: none;
+    border-radius: 50%;
+
+    width: 40px;
+    height: 40px;
+    background: none;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.mail-index .mail-index-header button.active {
+    font-size: 1rem;
+
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background: var(--clr-search-bar-shadow-read-filter);
+
+    width: 40px;
+    height: 40px;
+
+}
+
+.mail-index .mail-index-header button:hover {
+    background: var(--clr-search-bar-shadow-read-filter-hover);
+}
+
+.mail-index .mail-index-header .dots-and-account .dots {
+    display: flex;
+    align-items: center;
+    width: 1.5em;
+    padding: 8px;
+
+    border-radius: 50%;
+
+
+    width: 40px;
+    height: 40px;
+    background: none;
+
+    cursor: pointer;
+}
+
+
+.mail-index .mail-index-header .dots-and-account .dots:hover {
+    background: var(--clr-search-bar-shadow-read-filter);
+}
+
+.mail-index .mail-index-header .dots-and-account .account-logo {
+    display: flex;
+    align-items: center;
+
+    border-radius: 50%;
+
+
+    width: 2em;
+    height: 2em;
+    background: none;
+
+    cursor: pointer;
+}
+
+.mail-index .mail-index-header .dots-and-account .account-logo:hover {
+    outline: 3px solid var(--clr-search-bar-shadow-read-filter);
+}
