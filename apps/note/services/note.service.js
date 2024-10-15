@@ -67,11 +67,12 @@ function remove(noteId) {
 
 function save(note) {
   if (note.id) {
-    return storageService.put(NOTE_KEY, note)
+    return storageService.put(NOTE_KEY, note).then(() => note)
   } else {
-    return storageService.post(NOTE_KEY, note)
+    return storageService.post(NOTE_KEY, note).then(() => note)
   }
 }
+
 function createEmptyNote() {
   return {
     id: "",

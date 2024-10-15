@@ -3,10 +3,10 @@ const { useSearchParams } = ReactRouterDOM
 
 import { utilService } from "../../../services/util.service.js"
 import { NoteAdd } from "../cmps/NoteAdd.jsx"
-import { NoteEdit } from "../cmps/NoteEdit.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { noteService } from "../services/note.service.js"
+import { NoteEdit } from "../cmps/NoteEdit.jsx"
 
 export function NoteIndex() {
   const [notes, setNotes] = useState(null)
@@ -14,7 +14,7 @@ export function NoteIndex() {
   const [filterBy, setFilterBy] = useState(
     noteService.getFilterFromSearchParams(searchParams)
   )
-  const [selectedNote, setSelectedNote] = useState(null) 
+  const [selectedNote, setSelectedNote] = useState(null)
 
   useEffect(() => {
     setSearchParams(utilService.getTruthyValues(filterBy))
@@ -42,18 +42,19 @@ export function NoteIndex() {
   function updateNote(noteId, updateCallback) {
     const updatedNotes = notes.map((note) =>
       note.id === noteId ? updateCallback(note) : note
-    )
-    const updatedNote = updatedNotes.find((note) => note.id === noteId)
-
+    );
+    const updatedNote = updatedNotes.find((note) => note.id === noteId);
+  
     noteService
       .save(updatedNote)
       .then(() => {
-        setNotes(sortNotes(updatedNotes))
+        setNotes(sortNotes(updatedNotes));
       })
       .catch((err) => {
-        console.log("Failed to update note", err)
-      })
+        console.log("Failed to update note", err);
+      });
   }
+  
 
   function onRemoveNote(noteId) {
     noteService
@@ -82,11 +83,12 @@ export function NoteIndex() {
     updateNote(noteId, (note) => ({
       ...note,
       style: { ...note.style, backgroundColor: color },
-    }))
+    }));
   }
+  
 
   function onTogglePin(noteId) {
-    updateNote(noteId, (note) => ({ ...note, isPinned: !note.isPinned })) 
+    updateNote(noteId, (note) => ({ ...note, isPinned: !note.isPinned }))
   }
 
   function onSetFilterBy(filterBy) {
@@ -94,20 +96,20 @@ export function NoteIndex() {
   }
 
   function onEditNote(note) {
-    setSelectedNote(note) 
+    setSelectedNote(note)
     searchParams.set("noteId", note.id)
     setSearchParams(searchParams)
   }
 
   function closeAccordion() {
-    searchParams.delete("noteId") 
+    searchParams.delete("noteId")
     setSearchParams(searchParams)
-    setSelectedNote(null) 
+    setSelectedNote(null)
   }
 
   function saveNoteChanges(updatedNote) {
     updateNote(updatedNote.id, () => updatedNote)
-    closeAccordion() 
+    closeAccordion()
   }
 
   if (!notes) return <h1>Loading...</h1>
@@ -126,13 +128,13 @@ export function NoteIndex() {
       {selectedNote && (
         <div className="note-edit-wrapper">
           <NoteEdit
-            note={selectedNote} 
-            setNote={setSelectedNote} 
-            onClose={closeAccordion} 
-            onSave={saveNoteChanges} 
-            onRemoveNote={onRemoveNote} 
-            onChangeColor={onChangeColor} 
-            onTogglePin={onTogglePin}   
+            note={selectedNote}
+            setNote={setSelectedNote}
+            onClose={closeAccordion}
+            onSave={saveNoteChanges}
+            onRemoveNote={onRemoveNote}
+            onChangeColor={onChangeColor}
+            onTogglePin={onTogglePin}
           />
         </div>
       )}
