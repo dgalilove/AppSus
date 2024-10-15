@@ -1,4 +1,4 @@
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect, useRef } = React
 
 export function NoteEdit({
   note,
@@ -7,65 +7,65 @@ export function NoteEdit({
   onRemoveNote,
   onChangeColor,
   onTogglePin,
-  onClose, // Receive the onClose function to close the edit mode
+  onClose,
 }) {
-  const accordionRef = useRef(null);
+  const accordionRef = useRef(null)
 
   const handleTitleChange = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, title: event.target.value },
-    }));
-  };
+    }))
+  }
 
   const handleTextChange = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, txt: event.target.value },
-    }));
-  };
+    }))
+  }
 
   const handleTodoChange = (idx, newTodo) => {
     const updatedTodos = note.info.todos.map((todo, i) =>
       i === idx ? { ...todo, txt: newTodo } : todo
-    );
+    )
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, todos: updatedTodos },
-    }));
-  };
+    }))
+  }
 
   const handleClickOutside = (event) => {
     if (accordionRef.current && !accordionRef.current.contains(event.target)) {
-      onSave(note); // Save changes when clicking outside   
+      onSave(note) 
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [note]);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [note])
 
   const backgroundColor =
     note.style && note.style.backgroundColor
       ? note.style.backgroundColor
-      : "#b95e5e";
+      : "#b95e5e"
 
   const handleDelete = () => {
-    onRemoveNote(note.id); // Call the remove function
-    onClose(); // Close the edit mode immediately after deleting
-  };
+    onRemoveNote(note.id) 
+    onClose() 
+  }
 
   const handlePinToggle = () => {
     setNote((prevNote) => ({
       ...prevNote,
-      isPinned: !prevNote.isPinned, // Toggle the pinned status
-    }));
-    onTogglePin(note.id); // Update the parent component
-  };
+      isPinned: !prevNote.isPinned, 
+    }))
+    onTogglePin(note.id) 
+  }
 
   return (
     <div
@@ -119,5 +119,5 @@ export function NoteEdit({
         <button onClick={handleDelete}>Delete</button>
       </div>
     </div>
-  );
+  )
 }

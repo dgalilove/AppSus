@@ -383,11 +383,6 @@ function _createNotes() {
   }
 }
 
-// function _createNote(title, txt) {
-//   const note = getEmptyNote(title, txt)
-//   note.id = utilService.makeId()
-//   return note
-// }
 
 function getFilterFromSearchParams(searchParams) {
   const title = searchParams.get("title") || ""

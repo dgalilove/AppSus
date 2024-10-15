@@ -1,30 +1,31 @@
 /* Setup */
 
-@import './setup/variables.css';
+@import "./setup/variables.css";
 /* @import './setup/fonts.css'; */
 
 /* Basics */
 
-@import './basics/base.css';
-@import './basics/helpers.css';
+@import "./basics/base.css";
+@import "./basics/helpers.css";
 /* @import './basics/layout.css'; */
 
 /* Pages */
-@import './pages/home.css';
+@import "./pages/home.css";
 
 /* @import './apps/note/pages/NoteIndex.css'; */
 
-@import './apps/mail/pages/MailIndex.css';
+@import "./apps/mail/pages/MailIndex.css";
 
 /* Cmps */
-@import './apps/note/cmps/NoteFilter.css';
-@import './apps/note/cmps/NoteList.css';
-@import './apps/note/pages/NoteIndex.css';
-@import './cmps/UserMsg.css';
-@import './cmps/AppHeader.css';
+@import "./apps/note/cmps/NoteAccord.css";
+@import "./apps/note/cmps/NoteFilter.css";
+@import "./apps/note/cmps/NoteList.css";
+@import "./apps/note/pages/NoteIndex.css";
+@import "./cmps/UserMsg.css";
+@import "./cmps/AppHeader.css";
 
-@import './apps/mail/cmps/MailList.css';
-@import './apps/mail/cmps/SideBar.css';
-@import './apps/mail/cmps/NewCompose.css';
-@import './apps/mail/cmps/Header.css';
-@import './apps/mail/cmps/MailDetails.css';
+@import "./apps/mail/cmps/MailList.css";
+@import "./apps/mail/cmps/SideBar.css";
+@import "./apps/mail/cmps/NewCompose.css";
+@import "./apps/mail/cmps/Header.css";
+@import "./apps/mail/cmps/MailDetails.css";

@@ -55,6 +55,7 @@ export function NoteAdd({ selectedNote, onNoteAdded }) {
     >
       <form onSubmit={onSaveNote}>
         <NoteAccordion note={noteToEdit} setNote={setNoteToEdit}/>
+        
       </form>
     </section>
   )

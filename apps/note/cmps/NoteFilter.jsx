@@ -1,5 +1,5 @@
-const { useState, useEffect } = React;
-
+const { useEffect, useState } = React;
+const { useSearchParams } = ReactRouterDOM;
 export function NoteFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
 
@@ -9,8 +9,7 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
 
   const handleChange = ({ target }) => {
     const { name, value, type, checked } = target;
-    const newValue = type === 'checkbox' ? checked : type === 'number' || type === 'range' ? +value : value;
-
+    const newValue = type === "checkbox" ? checked : type === "number" || type === "range" ? +value : value;
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [name]: newValue }));
   };
 
@@ -18,13 +17,10 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
 
   return (
     <section className="note-filter">
-      <svg className='keep-logo' id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370.86 509.93">
+      <svg className="keep-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370.86 509.93">
         <defs>
-          <style>
-            {`.cls-1{fill:#ffba00;}.cls-2{fill:#ff9500;}.cls-3{fill:#fff;}`}
-          </style>
+          <style>{`.cls-1{fill:#ffba00;}.cls-2{fill:#ff9500;}.cls-3{fill:#fff;}`}</style>
         </defs>
-        <title>google-keep</title>
         <path className="cls-1" d="M336.09,509.93H34.77A34.72,34.72,0,0,1,0,475.16V34.77A34.72,34.72,0,0,1,34.77,0H243.38L370.86,127.48V475.16A34.72,34.72,0,0,1,336.09,509.93Z"/>
         <path className="cls-2" d="M243.38,0,370.86,127.48H243.38Z"/>
         <path className="cls-3" d="M226,341.88H144.87v29H226Z"/>
@@ -32,13 +28,12 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
       </svg>
       <form>
         <input
-          value={title || ''}
+          value={title || ""}
           onChange={handleChange}
           type="text"
           name="title"
           className="title-filter"
           placeholder="Filter by title"
-          aria-label="Filter by title" // Accessibility improvement
         />
         <select name="type" value={type} onChange={handleChange} aria-label="Filter by type">
           <option value="">All</option>

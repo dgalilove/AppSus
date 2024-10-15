@@ -1,7 +1,4 @@
-export function NoteList({
-  notes,
-  onEditNote,
-}) {
+export function NoteList({ notes, onEditNote }) {
   if (!notes || notes.length === 0) {
     return <p>No notes available.</p>
   }
@@ -18,8 +15,8 @@ export function NoteList({
           <div
             key={note.id}
             className="note-item"
-            style={{ backgroundColor }} 
-            onClick={() => onEditNote(note)} 
+            style={{ backgroundColor }}
+            onClick={() => onEditNote(note)}
           >
             <h3>{note.info.title || "Untitled"}</h3>
             {note.type === "NoteTxt" && <p>{note.info.txt}</p>}

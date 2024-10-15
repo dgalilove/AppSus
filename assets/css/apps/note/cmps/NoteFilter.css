@@ -1,9 +1,5 @@
 .note-filter {
   display: flex;
-}
-
-.note-filter {
-  display: flex;
   align-items: center; 
   margin-bottom: 1.5em; 
   padding: 0.6em;
@@ -14,31 +10,49 @@
   display: flex;
   background-color: transparent;
   border: none;
-  border-radius: 8px; /* Rounded corners */
-    margin-left: 2em;
+  border-radius: 8px; 
+  margin-left: 2em;
 }
 
-
-.note-filter input[type="text"],.note-filter select{
-    background-color: transparent;
-    border-radius: 4px; /* Rounded corners for inputs */
-    border: white 1px solid;
-    padding: 1em;
-    margin-right: 10px;
-    color :white;
+.note-filter input[type="text"],
+.note-filter select {
+  background-color: transparent;
+  border-radius: 4px; 
+  border: white 1px solid;
+  padding: 1em;
+  margin-right: 10px;
+  color: white;
+  position: relative; /* Ensure positioning context for pseudo-elements */
 }
 
-/* Input focus effect */
+.note-filter input[type="text"]{
+  width: 30em;
+}
 
+.icon-text{
+  color: white;
+}
+.icon-list{
+  color: white;
 
-/* Hover effect for the form */
+}
+
+.icon-image {
+  left: calc(100% - 100px); 
+  color: white;
+
+}
+
 .note-filter form:hover {
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7); /* Darker shadow on hover */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7); 
 }
 
 .keep-logo {
   width: 3%;
   margin-top: 0.5em;
   margin-left: 1em;
+}
 
+.note-filter form select option {
+  background-color: #212121;
 }
