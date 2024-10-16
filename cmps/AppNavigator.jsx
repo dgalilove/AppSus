@@ -1,8 +1,10 @@
 const { useNavigate } = ReactRouterDOM
 
-export function AppNavigator() {
+
+export function AppNavigator({ isHidden }) {
 
     const navigate = useNavigate()
+
 
     function onClickPage(page) {
         if (page === 'gamil') {
@@ -15,8 +17,9 @@ export function AppNavigator() {
         }
     }
 
+    const hiddenClass = isHidden ? 'hidden' : ''
     return (
-        <div className="app-navigator">
+        <div className={`app-navigator ${hiddenClass}`}>
             <div onClick={() => onClickPage('home')} className="box">
                 <img src="/assets/css/apps/mail/mail-svgs/icons8-home-50(1).png" alt="home" />
                 <h4>Home</h4>

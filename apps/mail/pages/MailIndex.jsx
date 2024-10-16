@@ -18,7 +18,7 @@ export function MailIndex() {
     const [mails, setMails] = useState('')
     const [unreadMails, setUnreadMails] = useState('')
     const [isComposeOpen, setIsComposeOpen] = useState(false)
-
+    const [isHidden, setIsHidden] = useState(true)
     const [searchParams, setSearchParams] = useSearchParams()
     const defaultFilter = mailService.getFilterFromSearchParams(searchParams)
     const [filterBy, setFilterBy] = useState(defaultFilter)
@@ -114,10 +114,9 @@ export function MailIndex() {
 
             <div className="dots-and-account">
                 <div className="navigator-container">
-                    <img className="dots" src="/assets/css/apps/mail/mail-svgs/dot-library.svg" alt="" />
-                    <AppNavigator />
+                    <img onClick={() => setIsHidden(!isHidden)} className="dots" src="/assets/css/apps/mail/mail-svgs/dot-library.svg" alt="" />
+                    <AppNavigator isHidden={isHidden} />
                 </div>
-
                 <img className="account-logo" src="/assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
 
             </div>
