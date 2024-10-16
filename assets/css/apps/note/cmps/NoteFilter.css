@@ -1,9 +1,11 @@
 .note-filter {
   display: flex;
   align-items: center; 
-  margin-bottom: 1.5em; 
-  padding: 0.3em;
+  height: 63px;
+  padding :0.5em;
   border-bottom: var(--clr-note-border) 1px solid;
+  padding: 5px 10px 5px 40px;
+  justify-content: space-between;
 }
 
 .note-filter form {
@@ -12,6 +14,7 @@
   border: none;
   border-radius: 8px; 
   margin-left: 2em;
+  height: 100%;
 }
 
 .note-filter input[type="text"],
@@ -24,7 +27,9 @@
   color: white;
   position: relative; /* Ensure positioning context for pseudo-elements */
 }
-
+.title-filter{
+  margin-left: 30px;
+}
 .note-filter input[type="text"]{
   width: 30em;
 }
@@ -48,11 +53,42 @@
 }
 
 .keep-logo {
-  width: 3%;
-  margin-top: 0.5em;
-  margin-left: 1em;
+  width: 2em;
 }
 
 .note-filter form select option {
   background-color: #212121;
+}
+
+.note-filter .dots-and-account{
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  height: 3em;
+  gap: 8px;
+  margin-left: 7.875em;
+}
+
+.note-filter .dots-and-account .account-logo{
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  background: none;
+  cursor: pointer;
+}
+.note-filter .dots-and-account .dots{
+  display: flex;
+  align-items: center;
+  width: 1.5em;
+  padding: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: none;
+  cursor: pointer;
+}
+.logo-and-search{
+  display: flex;
 }

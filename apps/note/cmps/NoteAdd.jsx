@@ -2,7 +2,7 @@ const { useEffect, useState } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
 import { noteService } from "../services/note.service.js"
-import { NotePreview } from "./NotePreView.jsx"
+import { NotePreview } from "./NotePreview.jsx"
 export function NoteAdd({ selectedNote, onNoteAdded }) {
   const [noteToEdit, setNoteToEdit] = useState(
     selectedNote || noteService.createEmptyNote()
@@ -48,7 +48,7 @@ export function NoteAdd({ selectedNote, onNoteAdded }) {
   }
 
   return (
-    <section className="note-edit">
+    <section className="note-add">
       <NotePreview
         note={noteToEdit}
         setNote={setNoteToEdit}

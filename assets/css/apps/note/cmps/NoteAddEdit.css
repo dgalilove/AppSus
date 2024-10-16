@@ -1,19 +1,28 @@
+.note-add{
+  margin-top: 20px;
+}
+
 .note-accordion.accordion-open {
     border: 1px solid var(--clr-note-border);
     border-radius: 5px;
+    box-shadow: 0 1em 1em rgba(0, 0, 0, 1);
+    height: fit-content;
   }
   
   .accordion-title {
-    width: 100%;
+    width: 25em;
     color: white;
     background-color: transparent;
-    font-size: 1.5em;
+    font-size: 1.2em;
+    box-shadow: 0 1em 1em rgba(0, 0, 0, 1);
     border: 1px solid var(--clr-note-border);
-    border-radius: 5px;
+    border-radius: 15px;
     padding: 0.7em;
   }
   .accordion-title.active {
     border: none;
+    box-shadow: none;
+
   }
 
   

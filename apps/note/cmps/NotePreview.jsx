@@ -80,7 +80,7 @@ export const NotePreview = ({ note, setNote, onSaveNote }) => {
               onChange={(e) => handleChange("txt", e.target.value)}
               className="accordion-text"
               rows="4"
-              cols="50"
+              cols='54'
             />
           )}
           {inputType === "image" && (

@@ -1,12 +1,9 @@
 .note-index {
-    display: grid;
-    grid-template-rows: auto auto 1fr;
     background-color: var(--clr-note-main-bcg);
-    height: 100%;
     font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
   }
   
-  .note-edit {
+  .note-add {
     display: grid;
     justify-items: center;
   }
