@@ -1,8 +1,8 @@
 const { useState, useEffect, useRef } = React
 import { eventBusService } from "../../../services/event-bus.service.js"
 
-export const NotePreview = ({ note, setNote, onSaveNote, inputType, setInputType, todos, setTodos, updateQueryParams }) => {
-  const [isOpen, setIsOpen] = useState(false)
+export const NotePreview = ({ note, setNote, onSaveNote, inputType, setInputType, todos, setTodos, isAdding }) => {
+  const [isOpen, setIsOpen] = useState(isAdding) // Initialize based on `isAdding`
   const accordionRef = useRef(null)
 
   const toggleAccordion = () => setIsOpen((prev) => !prev)
@@ -12,7 +12,6 @@ export const NotePreview = ({ note, setNote, onSaveNote, inputType, setInputType
       ...prevNote,
       info: { ...prevNote.info, [field]: value },
     }))
-    updateQueryParams(field, value)
   }
 
   const handleClickOutside = (event) => {
@@ -41,7 +40,11 @@ export const NotePreview = ({ note, setNote, onSaveNote, inputType, setInputType
     const updatedTodos = [...todos]
     updatedTodos[index] = value
     setTodos(updatedTodos)
-    updateQueryParams("todos", updatedTodos)
+  }
+
+  const handleSave = () => {
+    onSaveNote()
+    setIsOpen(false) // Close the accordion after saving
   }
 
   return (
@@ -101,7 +104,7 @@ export const NotePreview = ({ note, setNote, onSaveNote, inputType, setInputType
             </div>
           )}
           <div className="accordion-buttons">
-            <button onClick={onSaveNote}>Save</button>
+            <button onClick={handleSave}>Save</button>
           </div>
         </div>
       )}

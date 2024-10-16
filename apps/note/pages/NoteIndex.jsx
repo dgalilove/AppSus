@@ -1,5 +1,5 @@
 const { useEffect, useState } = React
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams, useNavigate, useParams } = ReactRouterDOM
 
 import { utilService } from "../../../services/util.service.js"
 import { NoteAdd } from "../cmps/NoteAdd.jsx"
@@ -15,149 +15,74 @@ export function NoteIndex() {
     noteService.getFilterFromSearchParams(searchParams)
   )
   const [selectedNote, setSelectedNote] = useState(null)
+  const [isAdding, setIsAdding] = useState(false)
+  const navigate = useNavigate()
+  const { noteId } = useParams()
 
   useEffect(() => {
-    const filterParams = {
-      search: filterBy.title,
-      filterType: filterBy.type,
-    }
-    setSearchParams(utilService.getTruthyValues(filterParams))
     loadNotes()
-  }, [filterBy])
-
-
-  function sortNotes(notes) {
-    return notes.sort((a, b) => {
-      if (a.isPinned && !b.isPinned) return -1
-      if (!a.isPinned && b.isPinned) return 1
-      return 0
-    })
-  }
+    if (noteId) {
+      // Load selected note for editing or adding based on URL
+      noteService.get(noteId).then(setSelectedNote).catch(() => {
+        console.log("Failed to load the note.")
+        navigate("/note")
+      })
+    }
+  }, [noteId, filterBy])
 
   function loadNotes() {
-    noteService
-      .query(filterBy)
-      .then((notes) => {
-        setNotes(sortNotes(notes))
-      })
-      .catch((err) => {
-        console.log("Problems getting notes:", err)
-      })
-  }
-
-  function updateQueryParams(field, value) {
-    const newSearchParams = new URLSearchParams(searchParams)
-    if (field === "title") {
-      newSearchParams.set("title", value)
-    } else if (field === "txt") {
-      newSearchParams.set("text", value)
-    } else if (field === "url") {
-      newSearchParams.set("image", value)
-    } else if (field === "todos") {
-      const todosString = value.join(",")
-      newSearchParams.set("todos", todosString)
-    }
-    setSearchParams(newSearchParams)
-  }
-
-  function updateNote(noteId, updateCallback) {
-    const updatedNotes = notes.map((note) =>
-      note.id === noteId ? updateCallback(note) : note
-    )
-    const updatedNote = updatedNotes.find((note) => note.id === noteId)
-
-    noteService
-      .save(updatedNote)
-      .then(() => {
-        setNotes(sortNotes(updatedNotes))
-      })
-      .catch((err) => {
-        console.log("Failed to update note", err)
-      })
-  }
-
-  function onRemoveNote(noteId) {
-    noteService
-      .remove(noteId)
-      .then(() => {
-        setNotes((notes) => notes.filter((note) => note.id !== noteId))
-      })
-      .catch((err) => {
-        console.log("Problems removing note:", err)
-      })
-  }
-
-  function onNoteAdded(newNote) {
-    if (newNote.id) {
-      setNotes((prevNotes) =>
-        prevNotes.map((note) => (note.id === newNote.id ? newNote : note))
-      )
-    } else {
-      setNotes((prevNotes) => [...prevNotes, newNote])
-    }
-    loadNotes()
-    setSelectedNote(null)
-  }
-
-  function onChangeColor(noteId, color) {
-    updateNote(noteId, (note) => ({
-      ...note,
-      style: { ...note.style, backgroundColor: color },
-    }))
-  }
-
-  function onTogglePin(noteId) {
-    updateNote(noteId, (note) => ({ ...note, isPinned: !note.isPinned }))
-  }
-
-  function onSetFilterBy(filterBy) {
-    setFilterBy((preFilter) => ({ ...preFilter, ...filterBy }))
+    noteService.query(filterBy).then((notes) => {
+      setNotes(notes)
+    }).catch((err) => console.log("Problems getting notes:", err))
   }
 
   function onEditNote(note) {
     setSelectedNote(note)
-    searchParams.set("noteId", note.id)
-    setSearchParams(searchParams)
+    navigate(`/note/edit/${note.id}`, { replace: true }) // Use consistent edit URL
   }
 
-  function closeAccordion() {
-    searchParams.delete("noteId")
-    setSearchParams(searchParams)
+  function onAddNote() {
+    // Create a temporary new note with a generated ID
+    const newNote = { ...noteService.createEmptyNote(), id: utilService.makeId() }
+    setSelectedNote(newNote)
+    setIsAdding(true)
+    navigate(`/note/edit/${newNote.id}`, { replace: true }) // Use the same edit URL format
+  }
+
+  function closeEdit() {
+    navigate("/note", { replace: true }) // Reset URL after adding or editing
     setSelectedNote(null)
+    setIsAdding(false)
   }
 
   function saveNoteChanges(updatedNote) {
-    updateNote(updatedNote.id, () => updatedNote)
-    closeAccordion()
+    noteService.save(updatedNote).then(() => {
+      loadNotes()
+      closeEdit()
+    }).catch((err) => console.log("Failed to update note", err))
   }
 
   if (!notes) return <h1>Loading...</h1>
 
   return (
     <section className="note-index">
-      <NoteFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+      <NoteFilter filterBy={filterBy} onSetFilterBy={(filterBy) => setFilterBy(filterBy)} />
       <NoteAdd
         selectedNote={selectedNote}
-        onNoteAdded={onNoteAdded}
-        updateQueryParams={updateQueryParams}
+        onNoteAdded={loadNotes}
+        onClose={closeEdit}
+        isAdding={isAdding}
       />
 
-      <NoteList
-        notes={notes}
-        onRemoveNote={onRemoveNote}
-        onEditNote={onEditNote}
-      />
+      <NoteList notes={notes} onEditNote={onEditNote} />
 
       {selectedNote && (
         <div className="note-edit-wrapper">
           <NoteEdit
             note={selectedNote}
             setNote={setSelectedNote}
-            onClose={closeAccordion}
+            onClose={closeEdit}
             onSave={saveNoteChanges}
-            onRemoveNote={onRemoveNote}
-            onChangeColor={onChangeColor}
-            onTogglePin={onTogglePin}
           />
         </div>
       )}

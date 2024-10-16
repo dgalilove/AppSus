@@ -71,7 +71,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30%; /* You can adjust the size */
+    width: 30%; 
     z-index: 1000;
   }
   

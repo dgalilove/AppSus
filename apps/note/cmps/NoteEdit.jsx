@@ -9,62 +9,67 @@ export function NoteEdit({
   onTogglePin,
   onClose,
 }) {
-  const accordionRef = useRef(null);
+  const accordionRef = useRef(null)
 
   const titleEdit = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, title: event.target.value },
-    }));
-  };
+    }))
+  }
 
   const textEdit = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, txt: event.target.value },
-    }));
-  };
+    }))
+  }
 
   const toDoEdit = (idx, newTodo) => {
     const updatedTodos = note.info.todos.map((todo, i) =>
       i === idx ? { ...todo, txt: newTodo } : todo
-    );
+    )
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, todos: updatedTodos },
-    }));
-  };
+    }))
+  }
 
   const handleClickOutside = (event) => {
     if (accordionRef.current && !accordionRef.current.contains(event.target)) {
-      onSave(note);
+      onSave(note)
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [note]);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [note])
 
-  const backgroundColor =
-    note.style && note.style.backgroundColor
-      ? note.style.backgroundColor
-      : "#b95e5e";
+  const backgroundColor = (note.style && note.style.backgroundColor) ? note.style.backgroundColor : "#b95e5e"
 
   const deleteInEdit = () => {
-    onRemoveNote(note.id);
-    onClose();
-  };
+    onRemoveNote(note.id)
+    onClose()
+  }
 
   const pinInEdit = () => {
     setNote((prevNote) => ({
       ...prevNote,
       isPinned: !prevNote.isPinned,
-    }));
-    onTogglePin(note.id);
-  };
+    }))
+    onTogglePin(note.id)
+  }
+
+  const handleColorChange = (ev) => {
+    const newColor = ev.target.value
+    setNote((prevNote) => ({
+      ...prevNote,
+      style: { ...prevNote.style, backgroundColor: newColor },
+    }))
+  }
 
   return (
     <div
@@ -95,7 +100,6 @@ export function NoteEdit({
               key={idx}
               type="text"
               placeholder='Edit content'
-
               value={todo.txt}
               onChange={(e) => toDoEdit(idx, e.target.value)}
             />
@@ -119,18 +123,11 @@ export function NoteEdit({
             type="color"
             value={backgroundColor}
             className='color-input'
-            onChange={(ev) => {
-              const newColor = ev.target.value;
-              onChangeColor(note.id, newColor);
-              setNote((prevNote) => ({
-                ...prevNote,
-                style: { ...prevNote.style, backgroundColor: newColor },
-              }));
-            }}
+            onChange={handleColorChange}
           />
         </label>
         <button onClick={deleteInEdit}><i className="fa-solid fa-trash-can"></i></button>
       </div>
     </div>
-  );
+  )
 }

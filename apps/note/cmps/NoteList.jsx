@@ -6,11 +6,7 @@ export function NoteList({ notes, onEditNote }) {
   return (
     <div className="note-list">
       {notes.map((note) => {
-        const backgroundColor =
-          note.style && note.style.backgroundColor
-            ? note.style.backgroundColor
-            : "#b95e5e"
-
+        const backgroundColor = (note.style && note.style.backgroundColor) || "#b95e5e";
         return (
           <div
             key={note.id}
@@ -27,9 +23,7 @@ export function NoteList({ notes, onEditNote }) {
                 ))}
               </ul>
             )}
-            {note.type === "NoteImg" && (
-              <img src={note.info.url} alt={note.info.title} />
-            )}
+            {note.type === "NoteImg" && <img src={note.info.url} alt={note.info.title} />}
           </div>
         )
       })}
