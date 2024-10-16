@@ -43,13 +43,16 @@ export function MailIndex() {
 
     useEffect(() => {
         loadMails()
+        if (!filterBy.sort) {
+            setFilterBy(prevFilterBy => ({ ...prevFilterBy, sort: 'date' }))
+        }
     }, [status])
 
 
 
     function loadMails() {
-        filterBy.status = status
-        mailService.query(filterBy)
+
+        mailService.query(filterBy, status)
             .then(mails => {
                 setMails(mails)
                 countUnreadMails(mails)
@@ -95,7 +98,7 @@ export function MailIndex() {
     }
 
     function onLogo() {
-        navigate('/mail')
+        navigate('/mail/inbox')
     }
 
     const isOpenClass = isOpen ? 'open' : ''
