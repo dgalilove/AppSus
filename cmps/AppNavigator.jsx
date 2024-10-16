@@ -7,7 +7,7 @@ export function AppNavigator({ isHidden }) {
 
 
     function onClickPage(page) {
-        if (page === 'gamil') {
+        if (page === 'gmail') {
             navigate('/mail/inbox')
         }
         else if (page === 'note') {

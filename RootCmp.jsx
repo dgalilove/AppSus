@@ -12,7 +12,7 @@ import { MailDetails } from "./apps/mail/cmps/MailDetails.jsx"
 export function App() {
     return <Router>
         <section className="app">
-            <AppHeader />
+            {/* <AppHeader /> */}
             <Routes>
                 <Route path="/" element={<Navigate to="/home" />} />
                 <Route path="/home" element={<Home />} />

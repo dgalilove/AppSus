@@ -2,9 +2,11 @@
 
  .mail-index {
      display: grid;
-     grid-template-rows: 73px 1fr;
+     grid-template-rows: 63px 1fr;
      grid-template-columns: 1fr;
      background-color: var(--clr-bg-side-bar);
+     height: 100vh;
+     overflow: hidden;
  }
 
 

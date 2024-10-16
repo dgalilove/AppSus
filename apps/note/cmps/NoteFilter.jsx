@@ -1,6 +1,11 @@
+import { AppNavigator } from "../../../cmps/AppNavigator";
+
 const { useEffect, useState } = React;
 export function NoteFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
+
+  const [isHidden, setIsHidden] = useState(true)
+
 
   useEffect(() => {
     onSetFilterBy(filterByToEdit);
@@ -45,9 +50,13 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
         </form>
       </div>
       <div className="dots-and-account">
-        <img className="dots" src="/assets/css/apps/note/note-svgs/dot-library-light.svg" alt="" />
+        <div className="navigator-container">
+          <img onClick={() => setIsHidden(!isHidden)} className="dots" src="/assets/css/apps/note/note-svgs/dot-library-light.svg" alt="" />
+          <AppNavigator isHidden={isHidden} />
+        </div>
         <img className="account-logo" src="/assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
       </div>
+
     </section>
   );
 }
