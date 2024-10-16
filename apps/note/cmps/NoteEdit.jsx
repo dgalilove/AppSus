@@ -76,6 +76,7 @@ export function NoteEdit({
         type="text"
         value={note.info.title}
         onChange={titleEdit}
+        name='title'
         placeholder="Edit title"
       />
 
@@ -93,6 +94,8 @@ export function NoteEdit({
             <input
               key={idx}
               type="text"
+              placeholder='Edit content'
+
               value={todo.txt}
               onChange={(e) => toDoEdit(idx, e.target.value)}
             />
@@ -108,21 +111,25 @@ export function NoteEdit({
 
       <div className="note-buttons">
         <button onClick={pinInEdit}>
-          {note.isPinned ? "Unpin" : "Pin"}
+          {note.isPinned ? <i className="fa-solid fa-thumbtack-slash"></i> : <i className="fa-solid fa-thumbtack"></i>}
         </button>
-        <input
-          type="color"
-          value={backgroundColor}
-          onChange={(ev) => {
-            const newColor = ev.target.value;
-            onChangeColor(note.id, newColor);
-            setNote((prevNote) => ({
-              ...prevNote,
-              style: { ...prevNote.style, backgroundColor: newColor },
-            }));
-          }}
-        />
-        <button onClick={deleteInEdit}>Delete</button>
+        <label>
+          <i className="fa-solid fa-palette"></i>
+          <input
+            type="color"
+            value={backgroundColor}
+            className='color-input'
+            onChange={(ev) => {
+              const newColor = ev.target.value;
+              onChangeColor(note.id, newColor);
+              setNote((prevNote) => ({
+                ...prevNote,
+                style: { ...prevNote.style, backgroundColor: newColor },
+              }));
+            }}
+          />
+        </label>
+        <button onClick={deleteInEdit}><i className="fa-solid fa-trash-can"></i></button>
       </div>
     </div>
   );
