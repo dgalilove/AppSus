@@ -21,6 +21,11 @@ export function MailDetails() {
         navigate(`/mail/${status}`)
     }
 
+    function onOpenNewWindow() {
+        const url = `#/mail/${status}/${mailId}`;
+        window.open(url, '_blank');
+    }
+
     if (!mail) return <div>Loading...</div>
 
     const { subject, body, from, sentAt, name } = mail
@@ -34,8 +39,7 @@ export function MailDetails() {
                 <div className="header">
                     <h2>{subject}</h2>
                     <div className="header-tool-bar">
-                        <button><i className="fa-solid fa-print"></i></button>
-                        <button><i className="fa-solid fa-up-right-from-square"></i></button>
+                        <button onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
                     </div>
                 </div>
                 <div className="sender-details">

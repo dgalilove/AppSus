@@ -18,14 +18,15 @@
     --clr-compose-header: #041e49;
     --clr-compose-send-btn: #0b57d0;
 
+    --clr-search-bar-shadow-read-filter-2: rgb(255, 239, 239);
     --clr-search-bar-shadow-read-filter: rgba(60, 64, 67, .1);
     --clr-search-bar-shadow-read-filter-hover: rgba(60, 64, 67, 0.229);
 
     --clr-from-mail: #5e5e5e;
 
 
-    --clr-note-main-bcg : #1f2224;
-    --clr-note-filter-bcg : #525456;
-    --clr-note-border : #606368;
+    --clr-note-main-bcg: #1f2224;
+    --clr-note-filter-bcg: #525456;
+    --clr-note-border: #606368;
 
 }

@@ -6,7 +6,6 @@
     display: grid;
     grid-template-columns: 80px 1fr 1em;
     grid-template-rows: repeat(3, 48px) 1fr;
-    margin-left: 72px;
     height: calc(100vh - 143px);
     margin-bottom: 1em;
     padding-bottom: 2em;

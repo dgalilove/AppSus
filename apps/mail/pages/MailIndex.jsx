@@ -1,3 +1,4 @@
+import { AppNavigator } from "../../../cmps/AppNavigator.jsx"
 import { utilService } from "../../../services/util.service.js"
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailList } from "../cmps/MailList.jsx"
@@ -112,7 +113,11 @@ export function MailIndex() {
             <SearchBar onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
 
             <div className="dots-and-account">
-                <img className="dots" src="/assets/css/apps/mail/mail-svgs/dot-library.svg" alt="" />
+                <div className="navigator-container">
+                    <img className="dots" src="/assets/css/apps/mail/mail-svgs/dot-library.svg" alt="" />
+                    <AppNavigator />
+                </div>
+
                 <img className="account-logo" src="/assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
 
             </div>
@@ -123,6 +128,8 @@ export function MailIndex() {
             {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
         </div>
+
+
     </div>
 }
 

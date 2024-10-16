@@ -29,3 +29,6 @@
 @import "./apps/mail/cmps/NewCompose.css";
 @import "./apps/mail/cmps/Header.css";
 @import "./apps/mail/cmps/MailDetails.css";
+
+
+@import "./cmps/AppNavigator.css";

@@ -1,14 +1,23 @@
  /* mail index  */
 
-
- .mail-index .mail-index-body {
-     display: flex;
-     line-height: 20px;
+ .mail-index {
+     display: grid;
+     grid-template-rows: 73px 1fr;
+     grid-template-columns: 1fr;
      background-color: var(--clr-bg-side-bar);
-     font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
  }
 
- .mail-index-body:has(.side-bar.open) .mail-list,
- .mail-index-body:has(.side-bar.open) .mail-details {
-     margin-left: 256px;
+
+ .mail-index .mail-index-body {
+     display: grid;
+     grid-template-columns: 73px 1fr;
+
+     line-height: 20px;
+     font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+
+     transition: 0.2s;
+ }
+
+ .mail-index:has(.side-bar.open) .mail-index-body {
+     grid-template-columns: 256px 1fr;
  }

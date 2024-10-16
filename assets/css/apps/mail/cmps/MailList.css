@@ -5,10 +5,9 @@
      width: 100%;
      overflow-y: hidden;
      border-radius: 1em;
-     margin-left: 72px;
      height: calc(100vh - 143px);
      margin-bottom: 1em;
-     transition: 0.4s;
+     transition: 0.1s;
  }
 
 
