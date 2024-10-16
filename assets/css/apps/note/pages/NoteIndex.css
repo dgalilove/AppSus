@@ -1,7 +1,14 @@
 .note-index {
-    background-color: var(--clr-note-main-bcg);
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
-  }
+  background-color: var(--clr-note-main-bcg);
+  font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: none; /* Disable horizontal scrolling */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
   
   .note-add {
     display: grid;

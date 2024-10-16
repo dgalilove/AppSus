@@ -2,8 +2,6 @@
   column-count: 5; 
   column-gap: 1em; 
   padding: 2em 4em 1em 4em;
-  height: 100%;
-  overflow: auto; 
 }
 
 .note-item {
@@ -32,8 +30,13 @@
   margin-top: 20px;
 }
 
+.note-item ul {
+  padding-left: em;
+}
 
-
+.note-item ul li:not(:last-child){
+  margin-bottom: 0.6em;
+}
 
 
 
