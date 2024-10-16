@@ -17,9 +17,14 @@ export function NoteIndex() {
   const [selectedNote, setSelectedNote] = useState(null)
 
   useEffect(() => {
-    setSearchParams(utilService.getTruthyValues(filterBy))
+    const filterParams = {
+      search: filterBy.title,
+      filterType: filterBy.type,
+    }
+    setSearchParams(utilService.getTruthyValues(filterParams))
     loadNotes()
   }, [filterBy])
+
 
   function sortNotes(notes) {
     return notes.sort((a, b) => {

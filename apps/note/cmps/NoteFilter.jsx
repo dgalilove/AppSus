@@ -8,11 +8,12 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    const titleFromParams = searchParams.get("filterTitle") || ""
+    // Use 'search' from query parameters
+    const searchFromParams = searchParams.get("search") || ""
     const typeFromParams = searchParams.get("filterType") || ""
     setFilterByToEdit((prevFilter) => ({
       ...prevFilter,
-      title: titleFromParams,
+      title: searchFromParams,
       type: typeFromParams,
     }))
   }, [])
@@ -20,7 +21,7 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   useEffect(() => {
     onSetFilterBy(filterByToEdit)
     const newSearchParams = new URLSearchParams()
-    if (filterByToEdit.title) newSearchParams.set("filterTitle", filterByToEdit.title)
+    if (filterByToEdit.title) newSearchParams.set("search", filterByToEdit.title)
     if (filterByToEdit.type) newSearchParams.set("filterType", filterByToEdit.type)
     setSearchParams(newSearchParams, { replace: true })
   }, [filterByToEdit])
