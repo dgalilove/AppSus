@@ -25,6 +25,7 @@ export function NoteIndex() {
     return notes.sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1
       if (!a.isPinned && b.isPinned) return 1
+      return 0
     })
   }
 
@@ -39,22 +40,36 @@ export function NoteIndex() {
       })
   }
 
+  function updateQueryParams(field, value) {
+    const newSearchParams = new URLSearchParams(searchParams)
+    if (field === "title") {
+      newSearchParams.set("title", value)
+    } else if (field === "txt") {
+      newSearchParams.set("text", value)
+    } else if (field === "url") {
+      newSearchParams.set("image", value)
+    } else if (field === "todos") {
+      const todosString = value.join(",")
+      newSearchParams.set("todos", todosString)
+    }
+    setSearchParams(newSearchParams)
+  }
+
   function updateNote(noteId, updateCallback) {
     const updatedNotes = notes.map((note) =>
       note.id === noteId ? updateCallback(note) : note
-    );
-    const updatedNote = updatedNotes.find((note) => note.id === noteId);
-  
+    )
+    const updatedNote = updatedNotes.find((note) => note.id === noteId)
+
     noteService
       .save(updatedNote)
       .then(() => {
-        setNotes(sortNotes(updatedNotes));
+        setNotes(sortNotes(updatedNotes))
       })
       .catch((err) => {
-        console.log("Failed to update note", err);
-      });
+        console.log("Failed to update note", err)
+      })
   }
-  
 
   function onRemoveNote(noteId) {
     noteService
@@ -83,9 +98,8 @@ export function NoteIndex() {
     updateNote(noteId, (note) => ({
       ...note,
       style: { ...note.style, backgroundColor: color },
-    }));
+    }))
   }
-  
 
   function onTogglePin(noteId) {
     updateNote(noteId, (note) => ({ ...note, isPinned: !note.isPinned }))
@@ -117,7 +131,11 @@ export function NoteIndex() {
   return (
     <section className="note-index">
       <NoteFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <NoteAdd selectedNote={selectedNote} onNoteAdded={onNoteAdded} />
+      <NoteAdd
+        selectedNote={selectedNote}
+        onNoteAdded={onNoteAdded}
+        updateQueryParams={updateQueryParams}
+      />
 
       <NoteList
         notes={notes}
