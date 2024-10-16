@@ -3,6 +3,7 @@ const { useParams, useNavigate } = ReactRouterDOM
 
 import { noteService } from "../services/note.service.js"
 import { NotePreview } from "./NotePreview.jsx"
+
 export function NoteAdd({ selectedNote, onNoteAdded }) {
   const [noteToEdit, setNoteToEdit] = useState(
     selectedNote || noteService.createEmptyNote()

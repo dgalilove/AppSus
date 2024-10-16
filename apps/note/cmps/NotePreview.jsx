@@ -1,19 +1,39 @@
-import { eventBusService } from "../../../services/event-bus.service.js"
+
 const { useState, useEffect, useRef } = React
+const { useNavigate, useLocation } = ReactRouterDOM
+import { eventBusService } from "../../../services/event-bus.service.js"
 
 export const NotePreview = ({ note, setNote, onSaveNote }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [inputType, setInputType] = useState("text")
   const [todos, setTodos] = useState(note.info.todos || [""])
   const accordionRef = useRef(null)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const toggleAccordion = () => setIsOpen((prev) => !prev)
 
   const handleChange = (field, value) => {
     setNote((prevNote) => ({
       ...prevNote,
-      info: { ...prevNote.info, [field]: value }
+      info: { ...prevNote.info, [field]: value },
     }))
+    updateQueryParams(field, value)
+  }
+
+  const updateQueryParams = (field, value) => {
+    const searchParams = new URLSearchParams(location.search)
+    if (field === "title") {
+      searchParams.set("title", value)
+    } else if (field === "txt") {
+      searchParams.set("text", value)
+    } else if (field === "url") {
+      searchParams.set("image", value)
+    } else if (field === "todos") {
+      const todosString = value.join(",")
+      searchParams.set("todos", todosString)
+    }
+    navigate({ search: searchParams.toString() }, { replace: true })
   }
 
   const handleClickOutside = (event) => {
@@ -37,15 +57,23 @@ export const NotePreview = ({ note, setNote, onSaveNote }) => {
   }
 
   const handleSave = () => {
-    const filteredTodos = todos.filter(todo => todo.trim() !== "")
+    const filteredTodos = todos.filter((todo) => todo.trim() !== "")
     const newNote = {
       ...note,
-      type: inputType === "image" ? "NoteImg" : inputType === "text" ? "NoteTxt" : "NoteTodos",
+      type:
+        inputType === "image"
+          ? "NoteImg"
+          : inputType === "text"
+            ? "NoteTxt"
+            : "NoteTodos",
       info: {
         ...note.info,
         url: inputType === "image" ? note.info.url : undefined,
-        todos: inputType === "list" ? filteredTodos.map(todo => ({ txt: todo, doneAt: null })) : undefined
-      }
+        todos:
+          inputType === "list"
+            ? filteredTodos.map((todo) => ({ txt: todo, doneAt: null }))
+            : undefined,
+      },
     }
     onSaveNote(newNote)
     setTodos([""])
@@ -58,6 +86,7 @@ export const NotePreview = ({ note, setNote, onSaveNote }) => {
     const updatedTodos = [...todos]
     updatedTodos[index] = value
     setTodos(updatedTodos)
+    updateQueryParams("todos", updatedTodos)
   }
 
   return (
@@ -91,7 +120,7 @@ export const NotePreview = ({ note, setNote, onSaveNote }) => {
               onChange={(e) => handleChange("txt", e.target.value)}
               className="accordion-text"
               rows="4"
-              cols='54'
+              cols="54"
             />
           )}
           {inputType === "image" && (
