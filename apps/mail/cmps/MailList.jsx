@@ -1,13 +1,19 @@
 import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./MailPreview.jsx"
-import { SearchBar } from "./SearchBar.jsx"
 
-const { useNavigate } = ReactRouterDOM
+const { useParams, useNavigate } = ReactRouterDOM
+const { useEffect } = React
 
 
 export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
 
     const navigate = useNavigate()
+    const { status } = useParams()
+
+    useEffect(() => {
+        onSetFilterBy(prev => ({ ...prev }))
+    }, [])
+
 
     if (!mailList) return <div>Loading...</div>
 
@@ -16,7 +22,7 @@ export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
             .then(mail => {
                 mail = { ...mail, isRead: true }
                 mailService.save(mail)
-                navigate(`/mail/${mailId}`)
+                navigate(`/mail/${status}/${mailId}`)
             })
     }
 

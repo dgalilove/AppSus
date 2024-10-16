@@ -30,24 +30,24 @@ const loggedUser = {
 //     labels: []
 // }
 
-function query(filterBy = {}) {
+function query(filterBy = {}, status) {
     return storageService.query(ZMAIL_DB)
         .then(mails => {
-            if (filterBy.status === 'inbox') {
+            if (status === 'inbox') {
                 mails = mails.filter(mail => !mail.removeAt && mail.to === loggedUser.email)
             }
-            else if (filterBy.status === 'sent') {
+            else if (status === 'sent') {
                 mails = mails.filter(mail => {
                     return mail.from === loggedUser.email
                 })
             }
-            else if (filterBy.status === 'trash') {
+            else if (status === 'trash') {
                 mails = mails.filter(mail => mail.removeAt)
             }
-            else if (filterBy.status === 'draft') {
+            else if (status === 'draft') {
                 mails = mails.filter(mail => !mail.sentAt && mail.openAt)
             }
-            else if (filterBy.status === 'stared') {
+            else if (status === 'stared') {
                 mails = mails.filter(mail => mail.isStar)
             }
 
@@ -103,7 +103,7 @@ function save(mail) {
 
 
 function getDefaultFilter() {
-    return { txt: '', status: 'inbox', compose: '', to: '', subject: '', body: '' }
+    return { txt: '', compose: '', to: '', subject: '', body: '' }
 }
 
 
@@ -111,7 +111,10 @@ function getFilterFromSearchParams(searchParams) {
     const defaultFilter = getDefaultFilter()
     const filterBy = {}
     for (const field in defaultFilter) {
-        filterBy[field] = searchParams.get(field) || ''
+        if (filterBy.status) continue
+        else {
+            filterBy[field] = searchParams.get(field) || ''
+        }
     }
     return filterBy
 }

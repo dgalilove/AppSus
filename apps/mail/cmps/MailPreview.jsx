@@ -13,7 +13,7 @@ export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
                 mail = { ...mail, isStar: !mail.isStar }
                 mailService.save(mail)
                     .then(mails => {
-                        onSetFilterBy({})
+                        onSetFilterBy(prev => ({ ...prev }))
                     })
 
             })
@@ -26,7 +26,7 @@ export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
                 mail = { ...mail, isRead: !mail.isRead }
                 mailService.save(mail)
                     .then(mails => {
-                        onSetFilterBy({})
+                        onSetFilterBy(prev => ({ ...prev }))
                     })
 
             })

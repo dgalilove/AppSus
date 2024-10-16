@@ -17,8 +17,8 @@ export function App() {
                 <Route path="/" element={<Navigate to="/home" />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/mail" element={<MailIndex />} />
-                <Route path="/mail/:mailId" element={<MailIndex />} />
+                <Route path="/mail/:status" element={<MailIndex />} />
+                <Route path="/mail/:status/:mailId" element={<MailIndex />} />
                 <Route path="/note" element={<NoteIndex />} />
             </Routes>
         </section>
