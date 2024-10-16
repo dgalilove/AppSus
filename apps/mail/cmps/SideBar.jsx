@@ -10,8 +10,8 @@ export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy, isO
     const timeOutRef = useRef()
 
     function onSideBarBtn(status) {
-        onSetFilterBy({ status })
-        navigate('/mail')
+        // onSetFilterBy({ status })
+        navigate('/mail/' + status)
     }
 
     function onHover(hover) {

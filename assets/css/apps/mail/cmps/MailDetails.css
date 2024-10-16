@@ -1,10 +1,12 @@
 .mail-details {
     width: 100%;
-    overflow-y: hidden;
     border-radius: 1em;
     margin-left: 72px;
+    overflow-y: hidden;
+
     height: calc(100vh - 143px);
     margin-bottom: 1em;
+    padding-bottom: 2em;
     transition: 0.4s;
     background-color: white;
 }
@@ -18,7 +20,7 @@
     height: 3em;
 }
 
-.mail-details .tool-bar a {
+.mail-details .tool-bar button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,4 +35,59 @@
 
 .mail-details .tool-bar a:hover {
     background-color: var(--clr-search-bar-shadow-read-filter);
+}
+
+.mail-details .body-details {
+    overflow-y: scroll;
+}
+
+.mail-details .body-details {
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 1em;
+}
+
+.mail-details .body-details .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.mail-details .body-details .header h2 {
+    font-weight: 300;
+    font-size: 1.375rem;
+    padding: 20px 0 0 72px;
+}
+
+.mail-details .body-details .sender-details {
+    display: flex;
+    align-items: center;
+    padding-top: 1.25em;
+    padding-left: 1em;
+}
+
+.mail-details .body-details .sender-details img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mail-details .body-details .sender-details img:hover {
+    outline: 3px solid var(--clr-search-bar-shadow-read-filter);
+}
+
+.mail-details .body-details .sender-details>div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.75rem;
+
+}
+
+.mail-details .body-details .sender-details>div h3 {}
+
+.mail-details .body-details .sender-details>div p {
+    margin: 0;
 }

@@ -26,9 +26,12 @@ export function MailIndex() {
 
 
     const { mailId } = useParams()
+    const { status } = useParams()
+
 
     useEffect(() => {
-        setFilterBy(prevFilterBy => ({ ...prevFilterBy, status: 'inbox', sort: 'date' }))
+        if (!status) status = 'inbox'
+        setFilterBy(prevFilterBy => ({ ...prevFilterBy, sort: 'date' }))
     }, [])
 
     useEffect(() => {
@@ -37,7 +40,15 @@ export function MailIndex() {
         loadMails()
     }, [filterBy])
 
+
+    useEffect(() => {
+        loadMails()
+    }, [status])
+
+
+
     function loadMails() {
+        filterBy.status = status
         mailService.query(filterBy)
             .then(mails => {
                 setMails(mails)

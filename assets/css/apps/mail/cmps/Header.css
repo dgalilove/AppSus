@@ -52,6 +52,7 @@
     height: 2.5em;
     width: 6.8125em;
     cursor: pointer;
+    margin-left: 3em;
 }
 
 .mail-index .mail-index-header .search-bar {

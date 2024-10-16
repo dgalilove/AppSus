@@ -103,7 +103,7 @@ function save(mail) {
 
 
 function getDefaultFilter() {
-    return { txt: '', status: 'inbox', compose: '', to: '', subject: '', body: '' }
+    return { txt: '', compose: '', to: '', subject: '', body: '' }
 }
 
 
