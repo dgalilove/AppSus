@@ -2,28 +2,33 @@ import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./MailPreview.jsx"
 
 const { useParams, useNavigate } = ReactRouterDOM
-const { useEffect } = React
 
 
-export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
+export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy, openCompose }) {
 
     const navigate = useNavigate()
     const { status } = useParams()
 
-    useEffect(() => {
-        onSetFilterBy(prev => ({ ...prev }))
-    }, [])
-
-
     if (!mailList) return <div>Loading...</div>
 
-    function onMailOpen(mailId) {
-        mailService.get(mailId)
-            .then(mail => {
-                mail = { ...mail, isRead: true }
-                mailService.save(mail)
-                navigate(`/mail/${status}/${mailId}`)
-            })
+    function onMailOpen(mail) {
+        if (status === 'draft') {
+            // navigate = ({
+            //     pathname: `/mail/${status}`,
+            //     // search: `?title=${mail.subject}&text=${mail.body}`
+            // })
+            navigate(`/mail/${status}/${mail.id}?compose=new&to=${mail.to}&subject=${mail.subject}&body=${mail.body}`)
+            openCompose()
+
+
+        } else {
+            mailService.get(mail.id)
+                .then(mail => {
+                    mail = { ...mail, isRead: true }
+                    mailService.save(mail)
+                    navigate(`/mail/${status}/${mail.id}`)
+                })
+        }
     }
 
 
@@ -37,9 +42,10 @@ export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy }) {
             <ul>
                 {mailList.map(mail => {
                     const classIsRead = mail.isRead ? 'read' : ''
+                    const draftClass = status === 'draft' ? 'draft' : ''
                     return (
-                        <li onClick={() => onMailOpen(mail.id)} key={mail.id} className={classIsRead}>
-                            <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} />
+                        <li onClick={() => onMailOpen(mail)} key={mail.id} className={status === 'draft' ? draftClass : classIsRead}>
+                            <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} status={status} />
                         </li>
                     )
                 })}

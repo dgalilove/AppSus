@@ -76,6 +76,18 @@
 
  .mail-list ul li.read {
      background-color: var(--clr-mail-read);
+     font-weight: 400;
+ }
+
+ .mail-list ul li.draft {
+     background-color: var(--clr-mail-read);
+     font-weight: 300;
+ }
+
+ .mail-list ul li.draft h2 {
+     color: red;
+     font-weight: 300;
+
  }
 
  .mail-list ul li h2 {
@@ -199,4 +211,9 @@
 
  .mail-list ul li:hover h4 {
      display: none;
+ }
+
+ .mail-list ul li.read * {
+     background-color: var(--clr-mail-read);
+     font-weight: 400;
  }

@@ -26,6 +26,13 @@ export function MailDetails() {
         window.open(url, '_blank');
     }
 
+    function onCrateNote() {
+        navigate({
+            pathname: '/note',
+            search: `?title=${mail.subject}&txt=${mail.body}`
+        })
+    }
+
     if (!mail) return <div>Loading...</div>
 
     const { subject, body, from, sentAt, name } = mail
@@ -40,6 +47,7 @@ export function MailDetails() {
                     <h2>{subject}</h2>
                     <div className="header-tool-bar">
                         <button onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
+                        <button onClick={onCrateNote}><i className="fa-solid fa-notes-medical"></i></button>
                     </div>
                 </div>
                 <div className="sender-details">

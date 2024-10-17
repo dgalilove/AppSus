@@ -2,7 +2,7 @@ import { mailService } from "../services/mail.service.js"
 
 const { useRef, useState, useEffect } = React
 
-export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
+export function MailPreview({ mail, onSetFilterBy, onRemoveMail, status }) {
 
     const starRef = useRef()
 
@@ -38,8 +38,9 @@ export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
     }
 
 
-    const { name, subject, sentAt, isStar, body, isRead } = mail
+    const { name, subject, sentAt, isStar, body, isRead, createdAt } = mail
     const date = new Date(sentAt).toDateString().split(' ')
+    const createdDate = new Date(createdAt).toDateString().split(' ')
     const staredClass = isStar ? 'stared' : ''
     const starStyle = {
         cursor: 'pointer',
@@ -58,9 +59,9 @@ export function MailPreview({ mail, onSetFilterBy, onRemoveMail }) {
                 <span>{isStar ? '★' : '☆'}</span>
             </button>
 
-            <h2>{name}</h2>
+            <h2>{status === 'draft' ? 'Draft ' : name}</h2>
             <h3>{subject} - <span className="gray">{body}</span></h3>
-            <h4>{date[1]} {date[2]}</h4>
+            <h4>{status === 'draft' ? `${createdDate[1]} ${createdDate[2]}` : `${date[1]} ${date[2]}`}</h4>
 
             <div className="tool-bar">
                 <i className="fa-regular fa-trash-can" onClick={(event) => onRemove(event, mail.id)}></i>

@@ -13,6 +13,7 @@ const { useSearchParams, useParams, useNavigate } = ReactRouterDOM
 
 
 
+
 export function MailIndex() {
 
     const [mails, setMails] = useState('')
@@ -33,11 +34,16 @@ export function MailIndex() {
     useEffect(() => {
         if (!status) status = 'inbox'
         setFilterBy(prevFilterBy => ({ ...prevFilterBy, sort: 'date' }))
+
     }, [])
 
     useEffect(() => {
         setSearchParams(utilService.getTruthyValues(filterBy))
-        setIsComposeOpen(filterBy.compose)
+        if (filterBy.compose === 'new') {
+            setIsComposeOpen(filterBy.compose)
+        } else {
+            setIsComposeOpen(false)
+        }
         loadMails()
     }, [filterBy])
 
@@ -123,7 +129,7 @@ export function MailIndex() {
         </div>
         <div className="mail-index-body">
             <SideBar unreadMails={unreadMails} openCompose={openCompose} onSetFilterBy={onSetFilterBy} filterBy={filterBy} isOpen={isOpen} />
-            {mailId ? <MailDetails /> : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} />}
+            {mailId && status !== 'draft' ? <MailDetails /> : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} openCompose={openCompose} />}
             {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
         </div>

@@ -5,7 +5,6 @@ import { loadFromStorage, saveToStorage } from "../../../services/storage.servic
 import { utilService } from "../../../services/util.service.js"
 
 const ZMAIL_DB = 'zmail_db'
-const ZMAIL_REMOVED_DB = 'zmail_removed_db'
 
 _createMails()
 
@@ -38,14 +37,14 @@ function query(filterBy = {}, status) {
             }
             else if (status === 'sent') {
                 mails = mails.filter(mail => {
-                    return mail.from === loggedUser.email
+                    return mail.from === loggedUser.email && mail.sentAt
                 })
             }
             else if (status === 'trash') {
                 mails = mails.filter(mail => mail.removeAt)
             }
             else if (status === 'draft') {
-                mails = mails.filter(mail => !mail.sentAt && mail.openAt)
+                mails = mails.filter(mail => !mail.sentAt && !mail.removeAt)
             }
             else if (status === 'stared') {
                 mails = mails.filter(mail => mail.isStar)
@@ -60,7 +59,8 @@ function query(filterBy = {}, status) {
             }
             if (filterBy.sort) {
                 if (filterBy.sort === 'date') {
-                    mails.sort((c1, c2) => (c1.sentAt - c2.sentAt) * -1)
+                    if (status === 'draft') mails.sort((c1, c2) => (c1.createdAt - c2.createdAt) * -1)
+                    else mails.sort((c1, c2) => (c1.sentAt - c2.sentAt) * -1)
                 }
                 if (filterBy.sort === 'name') {
                     mails.sort((c1, c2) => c1.name.localeCompare(c2.name))
@@ -81,7 +81,7 @@ function get(mailId) {
 
 function remove(mailId) {
     return get(mailId).then(mail => {
-        if (!mail.removeAt) {
+        if (!mail.removeAt && mail.sentAt) {
             mail.removeAt = Date.now()
             return storageService.put(ZMAIL_DB, mail)
         } else {
@@ -92,8 +92,10 @@ function remove(mailId) {
 
 }
 
-function save(mail) {
+function save(mail, dateNow = '') {
     if (mail.id) {
+        if (!mail.sentAt) mail.sentAt = dateNow
+
         return storageService.put(ZMAIL_DB, mail)
     } else {
         const newMail = _createMail(mail.to, mail.subject, mail.body)
@@ -130,7 +132,7 @@ function _createMails() {
                 subject: 'New Gear Available for the Upcoming Season!',
                 body: 'Check out the latest team jerseys and merchandise just in time for the new season!',
                 isRead: false,
-                sentAt: new Date("2024-10-11T14:20:00").getTime(),
+                sentAt: null,
                 removeAt: null,
                 name: 'Sports Merch',
                 isStar: false,
@@ -438,7 +440,7 @@ function _createMail(to, subject, body) {
         subject,
         body,
         isRead: false,
-        sentAt: Date.now(),
+        sentAt: null,
         removeAt: null,
         name: loggedUser.fullName,
         isStar: false,
