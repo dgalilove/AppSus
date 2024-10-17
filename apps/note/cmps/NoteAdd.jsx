@@ -10,45 +10,30 @@ export function NoteAdd({ selectedNote, onNoteAdded, onClose, isAdding }) {
   const [todos, setTodos] = useState(noteToEdit.info.todos || [""])
   const navigate = useNavigate()
 
-  // Navigate to edit URL when adding a new note
-  useEffect(() => {
-    if (isAdding) {
-      navigate(`/note/edit/${noteToEdit.id}`, { replace: true })
-    }
-  }, [isAdding, noteToEdit.id])
-
   function onSaveNote() {
-    const filteredTodos = todos.filter((todo) => todo.trim() !== "")
+    const filteredTodos = todos.filter((todo) => todo.trim() !== "");
     const updatedNote = {
       ...noteToEdit,
-      type: getNoteType(inputType),
+      // Directly set type based on inputType
+      type: inputType === "image" ? "NoteImg" : inputType === "list" ? "NoteTodos" : "NoteTxt",
       info: {
         ...noteToEdit.info,
+        txt: inputType === "text" ? noteToEdit.info.txt : undefined,
         url: inputType === "image" ? noteToEdit.info.url : undefined,
         todos: inputType === "list" ? filteredTodos.map((todo) => ({ txt: todo, doneAt: null })) : undefined,
       },
-    }
+    };
 
-    noteService.save(updatedNote)
+    noteService
+      .save(updatedNote)
       .then((note) => {
-        if (typeof onNoteAdded === 'function') {
+        if (typeof onNoteAdded === "function") {
           onNoteAdded(note);
         }
         resetForm()
         onClose()
       })
-      .catch((err) => console.log("Error saving note:", err))
-  }
-
-  function getNoteType(type) {
-    switch (type) {
-      case "image":
-        return "NoteImg"
-      case "list":
-        return "NoteTodos"
-      default:
-        return "NoteTxt"
-    }
+      .catch((err) => console.log("Error saving note:", err));
   }
 
   function resetForm() {
