@@ -1,14 +1,28 @@
  /* home */
 
  .home{
-  background: hsla(68, 61%, 68%, 1);
-  background: radial-gradient(circle, hsla(68, 61%, 68%, 1) 0%, hsla(45, 100%, 76%, 1) 100%);
-  background: -moz-radial-gradient(circle, hsla(68, 61%, 68%, 1) 0%, hsla(45, 100%, 76%, 1) 100%);
-  background: -webkit-radial-gradient(circle, hsla(68, 61%, 68%, 1) 0%, hsla(45, 100%, 76%, 1) 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#D2DF7B", endColorstr="#FFE185", GradientType=1 );
+  background-color: #c5bbab;
   height: 100vh;
  }
  
  .home nav img {
-  width: 20em;
+  width: 10em;
+ }
+ .home nav {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  gap: 2em;
+ }
+ .apps-nav , .pixel-char{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10em;
+ }
+
+ nav .header-title{
+  font-family: "VT323", monospace;
+  font-size: 5em;
+  text-align: center;
+  color: #ae966f;
  }
