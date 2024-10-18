@@ -10,6 +10,17 @@ export function NoteEdit({
   onClose,
 }) {
   const accordionRef = useRef(null);
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+  const colorOptions = ['#ff4757', '#1e90ff', '#2ed573', '#ffa502', '#3742fa', '#ff6348', '#7bed9f', '#70a1ff'];
+
+  const selectColor = (color) => {
+    onChangeColor(note.id, color);  // Update note's background color in the service
+    setNote((prevNote) => ({
+      ...prevNote,
+      style: { ...prevNote.style, backgroundColor: color }, // Update local note's color
+    }));
+    setIsColorPaletteOpen(false);  // Close the palette after selection
+  };
 
   const titleEdit = (event) => {
     setNote((prevNote) => ({
@@ -59,11 +70,12 @@ export function NoteEdit({
   };
 
   const pinInEdit = () => {
-    setNote((prevNote) => ({
-      ...prevNote,
-      isPinned: !prevNote.isPinned,
-    }));
-    onTogglePin(note.id);
+    setNote((prevNote) => {
+      const updatedNote = { ...prevNote, isPinned: !prevNote.isPinned };
+      // Update local state first
+      onTogglePin(updatedNote.id);  // Pass the updated note's state to onTogglePin
+      return updatedNote;
+    });
   };
 
   return (
@@ -113,22 +125,22 @@ export function NoteEdit({
         <button onClick={pinInEdit}>
           {note.isPinned ? <i className="fa-solid fa-thumbtack-slash"></i> : <i className="fa-solid fa-thumbtack"></i>}
         </button>
-        <label>
+        <button onClick={() => setIsColorPaletteOpen(!isColorPaletteOpen)}>
           <i className="fa-solid fa-palette"></i>
-          <input
-            type="color"
-            value={backgroundColor}
-            className='color-input'
-            onChange={(ev) => {
-              const newColor = ev.target.value;
-              onChangeColor(note.id, newColor);
-              setNote((prevNote) => ({
-                ...prevNote,
-                style: { ...prevNote.style, backgroundColor: newColor },
-              }));
-            }}
-          />
-        </label>
+        </button>
+
+        {isColorPaletteOpen && (
+          <div className="color-palette">
+            {colorOptions.map((color) => (
+              <div
+                key={color}
+                className="color-option"
+                style={{ backgroundColor: color }}
+                onClick={() => selectColor(color)}
+              />
+            ))}
+          </div>
+        )}
         <button onClick={deleteInEdit}><i className="fa-solid fa-trash-can"></i></button>
       </div>
     </div>

@@ -1,68 +1,126 @@
-const { useEffect, useState } = React
-const { useSearchParams, useNavigate, useParams } = ReactRouterDOM
+const { useEffect, useState } = React;
+const { useSearchParams, useNavigate, useParams } = ReactRouterDOM;
 
-import { utilService } from "../../../services/util.service.js"
-import { NoteAdd } from "../cmps/NoteAdd.jsx"
-import { NoteFilter } from "../cmps/NoteFilter.jsx"
-import { NoteList } from "../cmps/NoteList.jsx"
-import { noteService } from "../services/note.service.js"
-import { NoteEdit } from "../cmps/NoteEdit.jsx"
+import { NoteAdd } from "../cmps/NoteAdd.jsx";
+import { NoteFilter } from "../cmps/NoteFilter.jsx";
+import { NoteList } from "../cmps/NoteList.jsx";
+import { noteService } from "../services/note.service.js";
+import { NoteEdit } from "../cmps/NoteEdit.jsx";
 
 export function NoteIndex() {
-  const [notes, setNotes] = useState(null)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [filterBy, setFilterBy] = useState(
-    noteService.getFilterFromSearchParams(searchParams)
-  )
-  const [selectedNote, setSelectedNote] = useState(null)
-  const [isAdding, setIsAdding] = useState(false)
-  const navigate = useNavigate()
-  const { noteId } = useParams()
+  const [notes, setNotes] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filterBy, setFilterBy] = useState(noteService.getFilterFromSearchParams(searchParams));
+  const [selectedNote, setSelectedNote] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const navigate = useNavigate();
+  const { noteId } = useParams();
 
   useEffect(() => {
-    loadNotes()
+    loadNotes();
     if (noteId) {
-      // Load selected note for editing or adding based on URL
-      noteService.get(noteId).then(setSelectedNote).catch(() => {
-        console.log("Failed to load the note.")
-        navigate("/note")
-      })
+      noteService.get(noteId)
+        .then(setSelectedNote)
+        .catch(() => {
+          console.log("Failed to load the note.");
+          navigate("/note");
+        });
     }
-  }, [noteId, filterBy])
+  }, [noteId, filterBy]);
 
   function loadNotes() {
     noteService.query(filterBy).then((notes) => {
-      setNotes(notes)
-    }).catch((err) => console.log("Problems getting notes:", err))
+      setNotes(notes);
+    }).catch((err) => console.log("Problems getting notes:", err));
   }
 
   function onEditNote(note) {
-    setSelectedNote(note)
-    navigate(`/note/edit/${note.id}`, { replace: true }) // Use consistent edit URL
+    setSelectedNote(note);
+    navigate(`/note/edit/${note.id}`, { replace: true });
   }
 
-  function onAddNote() {
-    // Create a temporary new note with a generated ID
-    const newNote = { ...noteService.createEmptyNote(), id: utilService.makeId() }
-    setSelectedNote(newNote)
-    setIsAdding(true)
-    navigate(`/note/edit/${newNote.id}`, { replace: true }) // Use the same edit URL format
+
+  function saveNoteChanges(updatedNote) {
+    noteService.save(updatedNote)
+      .then(() => {
+        const updatedNotes = notes.map((note) => note.id === updatedNote.id ? updatedNote : note);
+        setNotes(sortNotes(updatedNotes));  // Reapply sorting
+        onClose();  // Close the edit mode
+      })
+      .catch((err) => console.log("Failed to update note", err));
   }
 
-  function closeEdit() {
-    navigate("/note", { replace: true }) // Reset URL after adding or editing
+  function sortNotes(notes) {
+    return notes.sort((a, b) => {
+      if (a.isPinned && !b.isPinned) return -1
+      if (!a.isPinned && b.isPinned) return 1
+      return 0
+    })
+  }
+
+  function updateNote(noteId, updateCallback) {
+    const updatedNotes = notes.map((note) => (note.id === noteId ? updateCallback(note) : note));
+    const updatedNote = updatedNotes.find((note) => note.id === noteId);
+
+    noteService.save(updatedNote)
+      .then(() => setNotes(sortNotes(updatedNotes)))
+      .catch((err) => console.log("Failed to update note", err));
+  }
+
+  function onRemoveNote(noteId) {
+    noteService.remove(noteId)
+      .then(() => {
+        setNotes((notes) => notes.filter((note) => note.id !== noteId));
+        loadNotes()
+      })
+      .catch((err) => console.log("Problems removing note:", err));
+  }
+
+  function onChangeColor(noteId, color) {
+    updateNote(noteId, (note) => ({
+      ...note,
+      style: { ...note.style, backgroundColor: color },
+    }));
+  }
+  useEffect(() => {
+    loadNotes();
+    if (noteId) {
+      noteService.get(noteId)
+        .then(setSelectedNote)
+        .catch(() => {
+          console.log("Failed to load the note.");
+          navigate("/note");
+        });
+    }
+  }, [noteId, filterBy]);
+
+  function loadNotes() {
+    noteService.query(filterBy).then((notes) => {
+      // Ensure the notes are sorted after loading
+      setNotes(sortNotes(notes));
+    }).catch((err) => console.log("Problems getting notes:", err));
+  }
+
+  function onTogglePin(noteId) {
+    updateNote(noteId, (note) => {
+      const updatedNote = { ...note, isPinned: !note.isPinned };
+      noteService.save(updatedNote)
+        .then(() => {
+          // Re-sort the list after pinning/unpinning
+          const updatedNotes = notes.map(n => n.id === updatedNote.id ? updatedNote : n);
+          setNotes(sortNotes(updatedNotes));
+        })
+        .catch((err) => console.log("Failed to update pin state", err));
+      return updatedNote;
+    });
+  }
+  function onClose() {
+    navigate("/note", { replace: true })
     setSelectedNote(null)
     setIsAdding(false)
   }
 
-  function saveNoteChanges(updatedNote) {
-    noteService.save(updatedNote).then(() => {
-      loadNotes()
-      closeEdit()
-    }).catch((err) => console.log("Failed to update note", err))
-  }
-
-  if (!notes) return <h1>Loading...</h1>
+  if (!notes) return <h1>Loading...</h1>;
 
   return (
     <section className="note-index">
@@ -70,7 +128,7 @@ export function NoteIndex() {
       <NoteAdd
         selectedNote={selectedNote}
         onNoteAdded={loadNotes}
-        onClose={closeEdit}
+        onClose={onClose}
         isAdding={isAdding}
       />
 
@@ -81,11 +139,14 @@ export function NoteIndex() {
           <NoteEdit
             note={selectedNote}
             setNote={setSelectedNote}
-            onClose={closeEdit}
             onSave={saveNoteChanges}
+            onRemoveNote={onRemoveNote}
+            onChangeColor={onChangeColor}
+            onTogglePin={onTogglePin}
+            onClose={onClose}
           />
         </div>
       )}
     </section>
-  )
+  );
 }

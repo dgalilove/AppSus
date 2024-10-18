@@ -7,6 +7,8 @@ import { NoteTxt } from "./NoteTxt.jsx";
 export function NotePreview({ note, setNote, onSaveNote, inputType, setInputType, todos, setTodos, isAdding }) {
   const [isOpen, setIsOpen] = useState(isAdding);
   const accordionRef = useRef(null);
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+  const colorOptions = ['#ff4757', '#1e90ff', '#2ed573', '#ffa502', '#3742fa', '#ff6348', '#7bed9f', '#70a1ff'];
 
   function toggleAccordion() {
     setIsOpen((prev) => !prev);
@@ -53,6 +55,14 @@ export function NotePreview({ note, setNote, onSaveNote, inputType, setInputType
     onSaveNote();
     setIsOpen(false);
   }
+  const selectColor = (color) => {
+    onChangeColor(note.id, color);  // Update note's background color in the service
+    setNote((prevNote) => ({
+      ...prevNote,
+      style: { ...prevNote.style, backgroundColor: color }, // Update local note's color
+    }));
+    setIsColorPaletteOpen(false);  // Close the palette after selection
+  };
 
   return (
     <div className={`note-accordion ${isOpen ? "accordion-open" : ""}`} ref={accordionRef}>
@@ -88,6 +98,22 @@ export function NotePreview({ note, setNote, onSaveNote, inputType, setInputType
             <NoteTodos todos={todos} onAddTodo={handleAddTodo} onTodoChange={handleTodoChange} />
           )}
           <div className="accordion-buttons">
+            <button onClick={() => setIsColorPaletteOpen(!isColorPaletteOpen)}>
+              <i className="fa-solid fa-palette"></i>
+            </button>
+
+            {isColorPaletteOpen && (
+              <div className="color-palette">
+                {colorOptions.map((color) => (
+                  <div
+                    key={color}
+                    className="color-option"
+                    style={{ backgroundColor: color }}
+                    onClick={() => selectColor(color)}
+                  />
+                ))}
+              </div>
+            )}
             <button onClick={handleSave}>Save</button>
           </div>
         </div>
