@@ -1,0 +1,89 @@
+@media (width < 640px) {
+   .note-list{
+        column-count: 2;
+        column-gap: 0.6em;
+        padding: 2em 1em 1em 1em;
+    }
+    .note-filter{
+        padding: 5px 10px;
+        justify-content: none;
+    }
+    .note-filter input[type="text"] {
+        width: 10em;
+    }
+    .title-filter{
+        margin-left: 15px;
+    }
+    .note-filter .dots-and-account{
+        margin-left: 0;
+    }
+    .note-filter form {
+        margin-left: 0;
+    }
+    .note-index .note-add{
+        justify-items:unset ;
+        padding: 0 1em;
+    }
+    .accordion-header{
+        display: grid;
+        justify-items: center;
+        grid-template-rows: 1fr 1fr;
+    }
+    .accordion-header.active{
+        justify-content: unset;
+    }
+    .accordion-title {
+        width: 17em;
+    }
+    .accordion-text{
+        width: 98%;
+    }
+    .icon-container{
+        display: flex;
+        gap: 50px;
+    }
+    .icon-container span{
+        margin-right: 0;
+    }
+
+    .note-accordion-edit{
+        width: 85%;
+    }
+    .note-edit-wrapper {
+        position: fixed;
+        top: 25%;
+        left: 8%;
+        transform: unset;
+        width: 100%;
+        z-index: 1000;
+    }
+    .accordion-title{
+        padding: 0.7em 0;
+    }
+    .note-accordion-edit textarea, .note-accordion-edit input[type="text"] {
+        width: 100%;
+    }
+    .accordion-body {
+        padding: 0em 1em 1em 1.5em;
+    }
+    .color-palette {
+        display: flex;
+        gap: 10px;
+        padding: 6px;
+        background-color: #f4f4f4;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        z-index: 100;
+        bottom: 60px;
+        left: unset;
+        right: 91px;
+    }
+
+    .note-item:hover .note-action-buttons {
+        display: none;
+    }
+    .note-item:hover .pinInAdd {
+        display: none;
+    }
+}
