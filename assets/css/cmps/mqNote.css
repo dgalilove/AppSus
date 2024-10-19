@@ -94,4 +94,14 @@
     .note-item:hover .pinInAdd {
         display: none;
     }
+    .todo-item{
+        word-break:break-word;
+    }
+    .todo-item.completed{
+        justify-content: space-between;
+    }
+    .todo-toggle{
+        margin-left: 0;
+    }
+  
 }
