@@ -27,8 +27,12 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
                 .then(mail => {
                     mail = { ...mail, isRead: true }
                     mailService.save(mail)
-                    navigate(`/mail/${status}/${mail.id}`)
-                    setIsMobileHeaderHidden(true)
+                        .then(() => {
+                            navigate(`/mail/${status}/${mail.id}`)
+                            setIsMobileHeaderHidden(true)
+                            onSetFilterBy({})
+                        })
+
                 })
         }
     }
@@ -46,7 +50,7 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
                     const classIsRead = mail.isRead || status === 'sent' ? 'read' : ''
                     const draftClass = status === 'draft' ? 'draft' : ''
                     return (
-                        <li onClick={() => onMailOpen(mail)} key={mail.id} className={status === 'draft' ? draftClass : classIsRead}>
+                        <li onClick={() => onMailOpen(mail)} key={mail.id} className={`  ${status === 'draft' ? draftClass : classIsRead}`}>
                             <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} status={status} />
                         </li>
                     )
