@@ -13,7 +13,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   justify-items: center;
-  gap: 6em;
+  gap: 2em;
 }
 
 .apps-nav,
@@ -41,6 +41,7 @@ nav .header-title {
     justify-items: center;
     overflow: hidden;
     gap: 0;
+    height: 100%;
   }
 
   .apps-nav,
