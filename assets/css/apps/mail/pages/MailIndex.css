@@ -82,5 +82,5 @@
  }
 
  .mobile-navigator i.active {
-     background-color: rgba(199, 199, 199, 0.46);
+     color: red;
  }
