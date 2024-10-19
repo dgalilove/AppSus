@@ -5,8 +5,6 @@
      height: 100vh;
  }
 
-
-
  .home nav img {
      width: 10em;
  }
@@ -33,13 +31,31 @@
  }
 
  @media (width < 640px) {
-     .home .header-title {
-         font-size: 3rem;
+
+     .home nav img {
+         width: 10em;
+     }
+
+     .home nav {
+         display: grid;
+         grid-template-rows: auto 1fr;
+         justify-items: center;
+         gap: 2em;
+         height: 100%;
+         overflow: hidden;
      }
 
      .apps-nav,
      .pixel-char {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
          gap: 0;
      }
 
+     nav .header-title {
+         font-family: "VT323", monospace;
+         font-size: 3em;
+         text-align: center;
+         color: #ae966f;
+     }
  }
