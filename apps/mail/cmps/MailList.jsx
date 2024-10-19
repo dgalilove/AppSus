@@ -43,7 +43,7 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
         {mailList.length === 0 ? <NoMailsFound /> :
             <ul>
                 {mailList.map(mail => {
-                    const classIsRead = mail.isRead ? 'read' : ''
+                    const classIsRead = mail.isRead || status === 'sent' ? 'read' : ''
                     const draftClass = status === 'draft' ? 'draft' : ''
                     return (
                         <li onClick={() => onMailOpen(mail)} key={mail.id} className={status === 'draft' ? draftClass : classIsRead}>

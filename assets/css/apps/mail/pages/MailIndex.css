@@ -67,6 +67,10 @@
      overflow: hidden;
  }
 
+ .mobile-navigator.hidden {
+     display: hidden;
+ }
+
  .mobile-navigator i {
      display: flex;
      align-items: center;
