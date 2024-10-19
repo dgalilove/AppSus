@@ -181,7 +181,8 @@ export function MailIndex() {
         </div>
         <div className="mail-index-body">
             <SideBar setIsMobileBackDrop={setIsMobileBackDrop} setIsMobileSideBarOpen={setIsMobileSideBarOpen} isMobileSideBarOpen={isMobileSideBarOpen} unreadMails={unreadMails} openCompose={openCompose} isOpen={isOpen} />
-            {mailId && status !== 'draft' ? <MailDetails setIsMobileHeaderHidden={setIsMobileHeaderHidden} /> : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} openCompose={openCompose} setIsMobileHeaderHidden={setIsMobileHeaderHidden} />}
+            {mailId && status !== 'draft' ? <MailDetails onSetFilterBy={onSetFilterBy} setIsMobileHeaderHidden={setIsMobileHeaderHidden} onRemoveMail={onRemoveMail} />
+                : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} openCompose={openCompose} setIsMobileHeaderHidden={setIsMobileHeaderHidden} />}
             {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
         </div>

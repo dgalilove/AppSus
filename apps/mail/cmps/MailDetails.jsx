@@ -4,7 +4,7 @@ import { mailService } from "../services/mail.service.js"
 const { useParams, useNavigate, Link } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function MailDetails({ setIsMobileHeaderHidden }) {
+export function MailDetails({ setIsMobileHeaderHidden, onRemoveMail, onSetFilterBy }) {
 
     const [mail, setMail] = useState(null)
     const { mailId } = useParams()
@@ -24,6 +24,18 @@ export function MailDetails({ setIsMobileHeaderHidden }) {
             })
     }, [mailId])
 
+    useEffect(() => {
+        mailService.get(mailId)
+            .then(mail => {
+                setMail(mail)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [mail])
+
+
+
     function onBack() {
         navigate(`/mail/${status}`)
         setIsMobileHeaderHidden(false)
@@ -41,6 +53,27 @@ export function MailDetails({ setIsMobileHeaderHidden }) {
         })
     }
 
+    function onMailReadMark(ev, mailId) {
+        ev.stopPropagation()
+        mailService.get(mailId)
+            .then(mail => {
+                mail = { ...mail, isRead: !mail.isRead }
+                mailService.save(mail)
+                    .then(mails => {
+                        onSetFilterBy(prev => ({ ...prev }))
+                    })
+
+            })
+    }
+
+
+    function onRemove(ev, mailId) {
+        ev.stopPropagation()
+        onRemoveMail(mailId)
+        navigate(`/mail/${status}`)
+    }
+
+
     if (!mail) return <div>Loading...</div>
 
     const { subject, body, from, sentAt, name } = mail
@@ -51,6 +84,11 @@ export function MailDetails({ setIsMobileHeaderHidden }) {
                 <button onClick={onBack} ><i className="fa-solid fa-arrow-left"></i></button>
                 <button onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
                 <button onClick={onCrateNote}><i className="fa-solid fa-notes-medical"></i></button>
+                <button onClick={(event) => onRemove(event, mail.id)}> <i className="fa-regular fa-trash-can" ></i></button>
+                {mail.isRead ?
+                    <button onClick={(event) => onMailReadMark(event, mail.id)}><i className="fa-regular fa-envelope" ></i></button>
+                    : <button onClick={(event) => onMailReadMark(event, mail.id)}> <i className="fa-regular fa-envelope-open"></i></button>}
+
 
             </div>
 

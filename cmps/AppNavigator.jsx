@@ -12,6 +12,8 @@ export function AppNavigator({ isHidden }) {
         }
         else if (page === 'note') {
             navigate('/note')
+        } else if (page === 'books') {
+            navigate('/books')
         } else {
             navigate('/home')
         }
@@ -31,6 +33,10 @@ export function AppNavigator({ isHidden }) {
             <div onClick={() => onClickPage('note')} className="box">
                 <img src="assets/css/apps/mail/mail-svgs/icons8-google-keep-new-48.png" alt="keep" />
                 <h4>Keep</h4>
+            </div>
+            <div onClick={() => onClickPage('books')} className="box">
+                <img src="assets/css/apps/mail/mail-svgs/icons8-books-48.png" alt="books" />
+                <h4>Books</h4>
             </div>
         </div>
     )
