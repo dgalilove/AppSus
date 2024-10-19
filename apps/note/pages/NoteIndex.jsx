@@ -181,10 +181,10 @@ export function NoteIndex() {
           onClick={() => onClickPage("note")}
           className="fa-solid fa-pager active"
         ></i>
-        <i
+        {/* <i
           onClick={() => onClickPage("books")}
           className="fa-solid fa-book"
-        ></i>
+        ></i> */}
       </div>
       <NoteFilter
         filterBy={filterBy}

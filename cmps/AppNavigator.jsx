@@ -34,10 +34,10 @@ export function AppNavigator({ isHidden }) {
                 <img src="assets/css/apps/mail/mail-svgs/icons8-google-keep-new-48.png" alt="keep" />
                 <h4>Keep</h4>
             </div>
-            <div onClick={() => onClickPage('books')} className="box">
+            {/* <div onClick={() => onClickPage('books')} className="box">
                 <img src="assets/css/apps/mail/mail-svgs/icons8-books-48.png" alt="books" />
                 <h4>Books</h4>
-            </div>
+            </div> */}
         </div>
     )
 }

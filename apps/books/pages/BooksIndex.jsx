@@ -57,7 +57,7 @@ export function BooksIndex() {
                 <i onClick={() => onClickPage('home')} className={`fa-solid fa-house `}></i>
                 <i onClick={() => onClickPage('gmail')} className={`fa-solid fa-at`}></i>
                 <i onClick={() => onClickPage('note')} className="fa-solid fa-pager"></i>
-                <i onClick={() => onClickPage('books')} className="fa-solid fa-book active"></i>
+                {/* <i onClick={() => onClickPage('books')} className="fa-solid fa-book active"></i> */}
             </div>
             <div className="navigator-container">
                 <img onClick={() => setIsHidden(!isHidden)} className="dots" src="./assets/css/apps/note/note-svgs/dot-library-light.svg" alt="" />

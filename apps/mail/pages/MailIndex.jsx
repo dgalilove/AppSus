@@ -153,7 +153,7 @@ export function MailIndex() {
             <i onClick={() => onClickPage('home')} className={`fa-solid fa-house `}></i>
             <i onClick={() => onClickPage('gmail')} className={`fa-solid fa-at active`}></i>
             <i onClick={() => onClickPage('note')} className="fa-solid fa-pager"></i>
-            <i onClick={() => onClickPage('books')} className="fa-solid fa-book"></i>
+            {/* <i onClick={() => onClickPage('books')} className="fa-solid fa-book"></i> */}
         </div>
 
         <div onClick={() => setIsComposeOpen(true)} className="new-compose-mobile"><i className="fa-solid fa-pencil"></i></div>

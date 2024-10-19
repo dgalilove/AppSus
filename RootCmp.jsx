@@ -11,24 +11,24 @@ import { BookAdd } from "./apps/books/pages/BookAdd.jsx"
 import { BookEdit } from "./apps/books/pages/BookEdit.jsx"
 
 export function App() {
-  return (
-    <Router>
-      <section className="app">
-        <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/mail/:status" element={<MailIndex />} />
-          <Route path="/mail/:status/:mailId" element={<MailIndex />} />
-          <Route path="/note" element={<NoteIndex />} />
-          <Route path="/note/edit/:noteId" element={<NoteIndex />} />
-          <Route path="/books" element={<BooksIndex />} />
+    return (
+        <Router>
+            <section className="app">
+                <Routes>
+                    <Route path="/" element={<Navigate to="/home" />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/mail/:status" element={<MailIndex />} />
+                    <Route path="/mail/:status/:mailId" element={<MailIndex />} />
+                    <Route path="/note" element={<NoteIndex />} />
+                    <Route path="/note/edit/:noteId" element={<NoteIndex />} />
+                    {/* <Route path="/books" element={<BooksIndex />} />
           <Route path="/books/Add" element={<BookAdd />} />
           <Route path="/books/:bookId" element={<BookDetails />} />
           <Route path="/books/edit" element={<BookEdit />} />
-          <Route path="/books/edit/:bookId" element={<BookEdit />} />
-        </Routes>
-      </section>
-    </Router>
-  )
+          <Route path="/books/edit/:bookId" element={<BookEdit />} /> */}
+                </Routes>
+            </section>
+        </Router>
+    )
 }
