@@ -1,7 +1,13 @@
-@media (width > 740px) {
+@media (width > 640px) {
     .books-index .book-list ul {
         grid-template-columns: 1fr 1fr;
     }
+
+
+    .books-index .dots {
+        display: flex;
+    }
+
 }
 
 
