@@ -4,7 +4,7 @@ import { MailPreview } from "./MailPreview.jsx"
 const { useParams, useNavigate } = ReactRouterDOM
 
 
-export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy, openCompose }) {
+export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onRemoveMail, filterBy, openCompose }) {
 
     const navigate = useNavigate()
     const { status } = useParams()
@@ -27,6 +27,8 @@ export function MailList({ mailList, onSetFilterBy, onRemoveMail, filterBy, open
                     mail = { ...mail, isRead: true }
                     mailService.save(mail)
                     navigate(`/mail/${status}/${mail.id}`)
+                    setIsMobileHeaderHidden(true)
+
                 })
         }
     }

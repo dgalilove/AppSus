@@ -9,7 +9,6 @@
 /* @import './basics/layout.css'; */
 
 /* Pages */
-@import "./pages/home.css";
 
 /* @import './apps/note/pages/NoteIndex.css'; */
 
@@ -32,3 +31,7 @@
 @import "./cmps/mqNote.css";
 
 @import "./cmps/AppNavigator.css";
+
+@import "./apps/mail/setup/mqMail.css";
+
+@import "./pages/Home.css";

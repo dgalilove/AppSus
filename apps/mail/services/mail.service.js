@@ -33,7 +33,7 @@ function query(filterBy = {}, status) {
     return storageService.query(ZMAIL_DB)
         .then(mails => {
             if (status === 'inbox') {
-                mails = mails.filter(mail => !mail.removeAt && mail.to === loggedUser.email)
+                mails = mails.filter(mail => !mail.removeAt && mail.to === loggedUser.email && mail.sentAt)
             }
             else if (status === 'sent') {
                 mails = mails.filter(mail => {
