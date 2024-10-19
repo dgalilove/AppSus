@@ -1,12 +1,13 @@
 .mail-details {
-    position: relative;
-    z-index: 2;
+    position: absolute;
+    top: 0;
+    z-index: 6;
     width: 100%;
     border-radius: 1em;
     overflow-y: hidden;
     display: grid;
     grid-template-columns: 80px 1fr 1em;
-    grid-template-rows: repeat(3, 48px) 1fr;
+    grid-template-rows: repeat(3, 3em) 1fr;
     height: 100vh;
     margin-bottom: 1em;
     padding-bottom: 2em;
@@ -36,8 +37,8 @@
 
     border-radius: 50%;
     background-color: transparent;
-    width: 40px;
-    height: 40px;
+    width: 2.857143em;
+    height: 2.857143em;
 }
 
 .mail-details .tool-bar button:hover {

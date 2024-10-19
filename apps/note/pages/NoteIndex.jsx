@@ -179,7 +179,7 @@ export function NoteIndex() {
         <i onClick={() => onClickPage("gmail")} className="fa-solid fa-at"></i>
         <i
           onClick={() => onClickPage("note")}
-          className="fa-solid fa-pager"
+          className="fa-solid fa-pager active"
         ></i>
         <i
           onClick={() => onClickPage("books")}

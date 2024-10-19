@@ -178,8 +178,8 @@
     outline: none;
     border-radius: 50%;
 
-    width: 40px;
-    height: 40px;
+    width: 2.5em;
+    height: 2.5em;
     background: none;
 
     cursor: pointer;
@@ -194,8 +194,8 @@
     border-radius: 50%;
     background: var(--clr-search-bar-shadow-read-filter);
 
-    width: 40px;
-    height: 40px;
+    width: 2.5em;
+    height: 2.5em;
 
 }
 
@@ -207,13 +207,13 @@
     display: flex;
     align-items: center;
     width: 1.5em;
-    padding: 8px;
+    padding: 0.5em;
 
     border-radius: 50%;
 
 
-    width: 40px;
-    height: 40px;
+    width: 2.5em;
+    height: 2.5em;
     background: none;
 
     cursor: pointer;

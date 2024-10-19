@@ -1,4 +1,6 @@
 import { AppNavigator } from "../../../cmps/AppNavigator.jsx"
+import { UserMsg } from "../../../cmps/UserMsg.jsx"
+import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { utilService } from "../../../services/util.service.js"
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailList } from "../cmps/MailList.jsx"
@@ -48,6 +50,7 @@ export function MailIndex() {
             setIsComposeOpen(false)
         }
         loadMails()
+
     }, [filterBy])
 
 
@@ -65,13 +68,16 @@ export function MailIndex() {
         mailService.query(filterBy, status)
             .then(mails => {
                 setMails(mails)
-                countUnreadMails(mails)
+                countUnreadMails()
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                showErrorMsg(`Cannot load mails`)
+            })
     }
 
     function countUnreadMails() {
-        mailService.query({ status: 'inbox' })
+        mailService.query()
             .then(mails => {
                 mails = mails.filter(mail => !mail.isRead)
                 setUnreadMails(mails.length)
@@ -86,20 +92,24 @@ export function MailIndex() {
     function openCompose() {
         setIsComposeOpen(true)
         onSetFilterBy({ compose: 'new' })
+        setIsMobileHeaderHidden(true)
     }
 
     function closeCompose() {
         setIsComposeOpen(false)
         onSetFilterBy({ compose: '', to: '', subject: '', body: '' })
+        setIsMobileHeaderHidden(false)
     }
 
     function onRemoveMail(mailId) {
         mailService.remove(mailId)
             .then(() => {
                 setMails(prevMails => prevMails.filter(mail => mail.id !== mailId))
+                showSuccessMsg(`Mail {${mailId}} removed `)
             })
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg(`Cannot remove mail {${mailId}}`)
             })
     }
 
@@ -111,6 +121,7 @@ export function MailIndex() {
 
     function onLogo() {
         navigate('/mail/inbox')
+        showSuccessMsg(`Mails {${status}} loaded `)
     }
 
     function onMobileBackDrop() {
@@ -136,12 +147,15 @@ export function MailIndex() {
     }
 
     return <div className={`mail-index`}>
+        <UserMsg />
+
         <div className='mobile-navigator'>
-            <i onClick={() => onClickPage('home')} className="fa-solid fa-house"></i>
-            <i onClick={() => onClickPage('gmail')} className="fa-solid fa-at"></i>
+            <i onClick={() => onClickPage('home')} className={`fa-solid fa-house `}></i>
+            <i onClick={() => onClickPage('gmail')} className={`fa-solid fa-at active`}></i>
             <i onClick={() => onClickPage('note')} className="fa-solid fa-pager"></i>
             <i onClick={() => onClickPage('books')} className="fa-solid fa-book"></i>
         </div>
+
         <div onClick={() => setIsComposeOpen(true)} className="new-compose-mobile"><i className="fa-solid fa-pencil"></i></div>
         <div onClick={onMobileBackDrop} className={`mobile-backdrop ${isMobileBackDropClass}`}></div>
         <div className={`mobile-header ${mobileHeaderHiddenClass}`}>
@@ -169,7 +183,8 @@ export function MailIndex() {
         </div>
         <div className="mail-index-body">
             <SideBar setIsMobileBackDrop={setIsMobileBackDrop} setIsMobileSideBarOpen={setIsMobileSideBarOpen} isMobileSideBarOpen={isMobileSideBarOpen} unreadMails={unreadMails} openCompose={openCompose} isOpen={isOpen} />
-            {mailId && status !== 'draft' ? <MailDetails setIsMobileHeaderHidden={setIsMobileHeaderHidden} /> : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} openCompose={openCompose} setIsMobileHeaderHidden={setIsMobileHeaderHidden} />}
+            {mailId && status !== 'draft' ? <MailDetails onSetFilterBy={onSetFilterBy} setIsMobileHeaderHidden={setIsMobileHeaderHidden} onRemoveMail={onRemoveMail} />
+                : <MailList mailList={mails} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} filterBy={filterBy} openCompose={openCompose} setIsMobileHeaderHidden={setIsMobileHeaderHidden} />}
             {isComposeOpen && <NewCompose onSetFilterBy={onSetFilterBy} closeCompose={closeCompose} filterBy={filterBy} />}
 
         </div>

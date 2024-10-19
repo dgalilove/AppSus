@@ -1,5 +1,7 @@
+import { showSuccessMsg } from "../../../services/event-bus.service.js"
 import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./MailPreview.jsx"
+import { NoMailsFound } from "./NoMailsFound.jsx"
 
 const { useParams, useNavigate } = ReactRouterDOM
 
@@ -13,21 +15,20 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
 
     function onMailOpen(mail) {
         if (status === 'draft') {
-            // navigate = ({
-            //     pathname: `/mail/${status}`,
-            //     // search: `?title=${mail.subject}&text=${mail.body}`
-            // })
             navigate(`/mail/${status}/${mail.id}?compose=new&to=${mail.to}&subject=${mail.subject}&body=${mail.body}`)
             openCompose()
-
-
+            showSuccessMsg(`Mail {${mail.id}} draft opened`)
         } else {
             mailService.get(mail.id)
                 .then(mail => {
                     mail = { ...mail, isRead: true }
                     mailService.save(mail)
-                    navigate(`/mail/${status}/${mail.id}`)
-                    setIsMobileHeaderHidden(true)
+                        .then(() => {
+                            navigate(`/mail/${status}/${mail.id}`)
+                            setIsMobileHeaderHidden(true)
+                            onSetFilterBy({})
+
+                        })
 
                 })
         }
@@ -40,13 +41,13 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
             <button className={filterBy.sort === 'name' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'name' })}>name</button>
             <button className={filterBy.sort === 'subject' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'subject' })}>subject</button>
         </div>
-        {mailList.length === 0 ? <div>No Such Data</div> :
+        {mailList.length === 0 ? <NoMailsFound /> :
             <ul>
                 {mailList.map(mail => {
-                    const classIsRead = mail.isRead ? 'read' : ''
+                    const classIsRead = mail.isRead || status === 'sent' ? 'read' : ''
                     const draftClass = status === 'draft' ? 'draft' : ''
                     return (
-                        <li onClick={() => onMailOpen(mail)} key={mail.id} className={status === 'draft' ? draftClass : classIsRead}>
+                        <li onClick={() => onMailOpen(mail)} key={mail.id} className={`  ${status === 'draft' ? draftClass : classIsRead}`}>
                             <MailPreview mail={mail} onSetFilterBy={onSetFilterBy} onRemoveMail={onRemoveMail} status={status} />
                         </li>
                     )

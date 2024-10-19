@@ -71,6 +71,7 @@
     }
 
     .mail-details {
+        position: static;
         margin-top: 0;
         transition: 0.4s;
 

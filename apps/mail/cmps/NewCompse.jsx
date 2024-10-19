@@ -1,3 +1,4 @@
+import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { mailService } from "../services/mail.service.js"
 
 const { useState, useEffect, useRef } = React
@@ -13,9 +14,6 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
 
     const { mailId } = useParams()
     const { status } = useParams()
-
-    const timeOutRef = useRef()
-
 
 
     useEffect(() => {
@@ -36,20 +34,16 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
         if (filterByToEdit.to !== '' ||
             filterByToEdit.subject !== '' ||
             filterByToEdit.body !== '') {
-            clearTimeout(timeOutRef.current)
-            timeOutRef.current = setTimeout(() => {
-                mailService.save(mailToAdd)
-                    .then(mail => {
-                        onSetFilterBy(filterByToEdit)
-                        setMailToAdd(mail)
-                        setDraftedMail(mail)
-                    })
-                    .catch(err => {
-                        console.log('err:', err)
-                    })
-            }, 5000)
+            if (!mailToAdd) return
 
-
+            mailService.save(mailToAdd)
+                .then(mail => {
+                    setMailToAdd(mail)
+                    setDraftedMail(mail)
+                })
+                .catch(err => {
+                    console.log('err:', err)
+                })
         }
     }, [filterByToEdit])
 
@@ -77,6 +71,7 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
         mailService.save(mailToAdd, date)
             .then(mail => {
                 closeCompose()
+                showSuccessMsg(`Mail sent`)
             })
             .catch(err => {
                 console.log('err:', err)

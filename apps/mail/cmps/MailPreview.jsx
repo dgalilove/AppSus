@@ -51,6 +51,7 @@ export function MailPreview({ mail, onSetFilterBy, onRemoveMail, status }) {
 
     return (
         <React.Fragment >
+
             <button className={`star-btn ${staredClass}`}
                 ref={starRef}
                 onClick={(event) => onStarClick(event, mail.id)}
