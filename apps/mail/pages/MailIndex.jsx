@@ -147,23 +147,23 @@ export function MailIndex() {
         <div className={`mobile-header ${mobileHeaderHiddenClass}`}>
             <svg onClick={onBurgerMenu} className={`burger ${isOpenClass}`} xmlns="http://www.w3.org/2000/svg" focusable="false" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
             <SearchBar onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
-            <img className="account-logo" src="/assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
+            <img className="account-logo" src="./assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
         </div>
 
 
         <div className="mail-index-header">
             <div className="burger-and-logo">
                 <svg onClick={onBurgerMenu} className={`burger ${isOpenClass}`} xmlns="http://www.w3.org/2000/svg" focusable="false" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
-                <img onClick={onLogo} className="gmail" src="/assets/css/apps/mail/mail-svgs/Gmail-with-Text.svg" alt="" />
+                <img onClick={onLogo} className="gmail" src="./assets/css/apps/mail/mail-svgs/Gmail-with-Text.svg" alt="" />
             </div>
             <SearchBar onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
 
             <div className="dots-and-account">
                 <div className="navigator-container">
-                    <img onClick={() => setIsHidden(!isHidden)} className="dots" src="/assets/css/apps/mail/mail-svgs/dot-library.svg" alt="" />
+                    <img onClick={() => setIsHidden(!isHidden)} className="dots" src="./assets/css/apps/mail/mail-svgs/dot-library.svg" alt="" />
                     <AppNavigator isHidden={isHidden} />
                 </div>
-                <img className="account-logo" src="/assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
+                <img className="account-logo" src="./assets/css/apps/mail/mail-svgs/account-logo.jpeg" alt="" />
 
             </div>
         </div>
