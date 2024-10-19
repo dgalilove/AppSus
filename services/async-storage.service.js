@@ -19,9 +19,9 @@ function get(entityType, entityId) {
     })
 }
 
-function post(entityType, newEntity) {
+function post(entityType, newEntity, isGoogleBook) {
     newEntity = { ...newEntity }
-    newEntity.id = _makeId()
+    if (!isGoogleBook) newEntity.id = _makeId()
     return query(entityType).then(entities => {
         entities.push(newEntity)
         _save(entityType, entities)

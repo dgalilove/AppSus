@@ -1,0 +1,15 @@
+:root {
+    --clr-header-bg: #3B3030;
+    --clr-main-bg: #FFF0D1;
+    --clr-about-bg: #8282824e;
+    --clr-filter-bg: #3B3030;
+    --clr-book-bg: #3B3030;
+
+    --clr-font-1: #FFF0D1;
+    --clr-font-2: #f38181;
+    --clr-font-3: #3B3030;
+    --clr-font-4: #664343;
+    --clr-font-5: #795757;
+    --clr-font-6: #e2c07b;
+    --clr-font-7: #3b3030e0;
+}

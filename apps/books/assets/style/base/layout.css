@@ -1,0 +1,15 @@
+.main-layout {
+    display: grid;
+    grid-template-columns: minmax(20px, 1fr) 20fr minmax(20px, 1fr);
+
+}
+
+.main-layout>* {
+    grid-column: 2;
+}
+
+.books-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr 3fr;
+    row-gap: 20px;
+}

@@ -80,8 +80,8 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
             aria-label="Filter by type"
           >
             <option value="">All</option>
-            <option value="text">Text</option>
-            <option value="image">Image</option>
+            <option value="txt">Text</option>
+            <option value="img">Image</option>
             <option value="video">Video</option>
             <option value="todos">Todos</option>
           </select>

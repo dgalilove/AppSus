@@ -1,0 +1,25 @@
+@media (width > 740px) {
+    .books-index .book-list ul {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+@media (width > 940px) {
+    .books-index .book-list ul {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+
+    .book-details .img-and-rev {
+        flex-direction: row;
+    }
+
+}
+
+
+@media (width > 1140px) {
+    .books-index .book-list ul {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}

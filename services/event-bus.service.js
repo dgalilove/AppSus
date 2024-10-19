@@ -19,6 +19,9 @@ function createEventEmitter() {
 }
 
 export const eventBusService = createEventEmitter()
+window.evBus = eventBusService
+window.showSuccessMsg = showSuccessMsg
+window.showErrorMsg = showErrorMsg
 
 export function showUserMsg(msg) {
   eventBusService.emit("show-user-msg", msg)

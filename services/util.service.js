@@ -1,9 +1,11 @@
 export const utilService = {
+  loadFromStorage,
+  saveToStorage,
+  getRandomColor,
+  padNum,
   makeId,
   makeLorem,
   getRandomIntInclusive,
-  getRandomColor,
-  padNum,
   getDayName,
   getMonthName,
   animateCSS,
@@ -21,6 +23,14 @@ function makeId(length = 6) {
   }
 
   return txt
+}
+function saveToStorage(key, value) {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
+function loadFromStorage(key) {
+  const data = localStorage.getItem(key)
+  return (data) ? JSON.parse(data) : undefined
 }
 
 function makeLorem(size = 100) {
@@ -144,45 +154,3 @@ function debounce(callback, delay = 300) {
   }
 }
 
-export const handleChange = (setNote, field, value) => {
-  setNote((prevNote) => ({
-    ...prevNote,
-    info: { ...prevNote.info, [field]: value },
-  }))
-}
-
-export const handleClickOutside = (ref, callback) => {
-  const handleOutsideClick = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      callback()
-    }
-  }
-  return handleOutsideClick
-}
-
-export const getBackgroundColor = (note) => {
-  return note.style && note.style.backgroundColor
-    ? note.style.backgroundColor
-    : "#b95e5e"
-}
-
-export const createNotePayload = (note, inputType, todos) => {
-  const filteredTodos = todos.filter((todo) => todo.trim() !== "")
-  return {
-    ...note,
-    type:
-      inputType === "image"
-        ? "NoteImg"
-        : inputType === "text"
-        ? "NoteTxt"
-        : "NoteTodos",
-    info: {
-      ...note.info,
-      url: inputType === "image" ? note.info.url : undefined,
-      todos:
-        inputType === "list"
-          ? filteredTodos.map((todo) => ({ txt: todo, doneAt: null }))
-          : undefined,
-    },
-  }
-}

@@ -22,24 +22,32 @@ export const noteService = {
 function query(filterBy = {}) {
   return storageService.query(NOTE_KEY).then((notes) => {
     const applyFilters = (note) => {
-      const titleMatch = filterBy.title ? new RegExp(filterBy.title, "i").test(note.info.title || "") : true
-      const txtMatch = filterBy.title ? new RegExp(filterBy.title, "i").test(note.info.txt || "") : true
-      const todosMatch = filterBy.title && note.info.todos
-        ? note.info.todos.some((todo) => new RegExp(filterBy.title, "i").test(todo.txt || ""))
-        : false
+      const titleMatch = filterBy.title
+        ? new RegExp(filterBy.title, "i").test(note.info.title || "")
+        : true
+      const txtMatch = filterBy.title
+        ? new RegExp(filterBy.title, "i").test(note.info.txt || "")
+        : true
+      const todosMatch =
+        filterBy.title && note.info.todos
+          ? note.info.todos.some((todo) =>
+              new RegExp(filterBy.title, "i").test(todo.txt || "")
+            )
+          : false
 
-      const matchesTitleOrText = titleMatch || txtMatch || todosMatch
+      const titleOrTxt = titleMatch || txtMatch || todosMatch
 
-      const matchesType = filterBy.type ? note.type === mapFilterType(filterBy.type) : true
+      const type = filterBy.type
+        ? note.type.toLowerCase() === `note${filterBy.type.toLowerCase()}`
+        : true
 
-      return matchesTitleOrText && matchesType
+      return titleOrTxt && type
     }
 
-    return notes.filter(applyFilters)
+    const filteredNotes = notes.filter(applyFilters)
+    return filteredNotes
   })
 }
-
-
 
 function get(noteId) {
   return storageService
@@ -85,7 +93,7 @@ function getDefaultFilter() {
 function _createNotes() {
   let notes = loadFromStorage(NOTE_KEY)
   if (!notes || !notes.length) {
-     const notes = [
+    const notes = [
       {
         id: "n101",
         createdAt: 1112222,
@@ -122,12 +130,10 @@ function _createNotes() {
             { txt: "Driving license", doneAt: null },
             { txt: "Coding power", doneAt: 187111111 },
           ],
-          
         },
         style: {
           backgroundColor: "#212121",
         },
-        
       },
       {
         id: "n104",
@@ -147,8 +153,7 @@ function _createNotes() {
         type: "NoteImg",
         isPinned: false,
         info: {
-          url: "https://images.unsplash.com/photo-1542080255-e564af7ae266?q=80&w=2719&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-,
+          url: "https://images.unsplash.com/photo-1542080255-e564af7ae266?q=80&w=2719&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           title: "Beautiful Sunset",
         },
         style: {
@@ -364,12 +369,10 @@ function _createNotes() {
         },
       },
     ]
-    
-    
+
     saveToStorage(NOTE_KEY, notes)
   }
 }
-
 
 function getFilterFromSearchParams(searchParams) {
   const title = searchParams.get("title") || ""
