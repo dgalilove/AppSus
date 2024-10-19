@@ -31,6 +31,7 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
                             navigate(`/mail/${status}/${mail.id}`)
                             setIsMobileHeaderHidden(true)
                             onSetFilterBy({})
+
                         })
 
                 })
