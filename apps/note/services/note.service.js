@@ -39,20 +39,6 @@ function query(filterBy = {}) {
   })
 }
 
-function mapFilterType(type) {
-  switch (type) {
-    case "text":
-      return "NoteTxt"
-    case "image":
-      return "NoteImg"
-    case "video":
-      return "NoteVideo"
-    case "todos":
-      return "NoteTodos"
-    default:
-      return null
-  }
-}
 
 
 function get(noteId) {
@@ -80,7 +66,7 @@ function createEmptyNote() {
     type: "NoteTxt",
     isPinned: false,
     style: {
-      backgroundColor: "#b95e5e",
+      backgroundColor: "rgb(33, 33, 33)",
     },
     info: {
       title: "",

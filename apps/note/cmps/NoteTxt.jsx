@@ -8,5 +8,5 @@ export function NoteTxt({ text, onChange }) {
       rows="4"
       cols="54"
     />
-  );
+  )
 }

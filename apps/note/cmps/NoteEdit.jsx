@@ -9,74 +9,82 @@ export function NoteEdit({
   onTogglePin,
   onClose,
 }) {
-  const accordionRef = useRef(null);
-  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
-  const colorOptions = ['#ff4757', '#1e90ff', '#2ed573', '#ffa502', '#3742fa', '#ff6348', '#7bed9f', '#70a1ff'];
+  const accordionRef = useRef(null)
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false)
+  const colorOptions = [
+    "#621708",
+    "#96897B",
+    "#156064",
+    "#364652",
+    "#63372C",
+    "#55038C",
+    "#2C0735",
+    "rgb(33, 33, 33)",
+  ]
 
   const selectColor = (color) => {
-    onChangeColor(note.id, color);  // Update note's background color in the service
+    onChangeColor(note.id, color)
     setNote((prevNote) => ({
       ...prevNote,
-      style: { ...prevNote.style, backgroundColor: color }, // Update local note's color
-    }));
-    setIsColorPaletteOpen(false);  // Close the palette after selection
-  };
+      style: { ...prevNote.style, backgroundColor: color },
+    }))
+    setIsColorPaletteOpen(false)
+  }
 
   const titleEdit = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, title: event.target.value },
-    }));
-  };
+    }))
+  }
 
   const textEdit = (event) => {
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, txt: event.target.value },
-    }));
-  };
+    }))
+  }
 
   const toDoEdit = (idx, newTodo) => {
     const updatedTodos = note.info.todos.map((todo, i) =>
       i === idx ? { ...todo, txt: newTodo } : todo
-    );
+    )
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, todos: updatedTodos },
-    }));
-  };
+    }))
+  }
 
   const handleClickOutside = (event) => {
     if (accordionRef.current && !accordionRef.current.contains(event.target)) {
-      onSave(note);
+      onSave(note)
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [note]);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [note])
 
   const backgroundColor =
     note.style && note.style.backgroundColor
       ? note.style.backgroundColor
-      : "#b95e5e";
+      : "rgb(33, 33, 33)"
 
   const deleteInEdit = () => {
-    onRemoveNote(note.id);
-    onClose();
-  };
+    onRemoveNote(note.id)
+    onClose()
+  }
 
   const pinInEdit = () => {
     setNote((prevNote) => {
-      const updatedNote = { ...prevNote, isPinned: !prevNote.isPinned };
-      // Update local state first
-      onTogglePin(updatedNote.id);  // Pass the updated note's state to onTogglePin
-      return updatedNote;
-    });
-  };
+      const updatedNote = { ...prevNote, isPinned: !prevNote.isPinned }
+      onTogglePin(updatedNote.id)
+      return updatedNote
+    })
+  }
 
   return (
     <div
@@ -88,7 +96,7 @@ export function NoteEdit({
         type="text"
         value={note.info.title}
         onChange={titleEdit}
-        name='title'
+        name="title"
         placeholder="Edit title"
       />
 
@@ -106,8 +114,7 @@ export function NoteEdit({
             <input
               key={idx}
               type="text"
-              placeholder='Edit content'
-
+              placeholder="Edit content"
               value={todo.txt}
               onChange={(e) => toDoEdit(idx, e.target.value)}
             />
@@ -123,7 +130,11 @@ export function NoteEdit({
 
       <div className="note-buttons">
         <button onClick={pinInEdit}>
-          {note.isPinned ? <i className="fa-solid fa-thumbtack-slash"></i> : <i className="fa-solid fa-thumbtack"></i>}
+          {note.isPinned ? (
+            <i className="fa-solid fa-thumbtack-slash"></i>
+          ) : (
+            <i className="fa-solid fa-thumbtack"></i>
+          )}
         </button>
         <button onClick={() => setIsColorPaletteOpen(!isColorPaletteOpen)}>
           <i className="fa-solid fa-palette"></i>
@@ -141,8 +152,10 @@ export function NoteEdit({
             ))}
           </div>
         )}
-        <button onClick={deleteInEdit}><i className="fa-solid fa-trash-can"></i></button>
+        <button onClick={deleteInEdit}>
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
       </div>
     </div>
-  );
+  )
 }

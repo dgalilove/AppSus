@@ -4,64 +4,78 @@ import { noteService } from "../services/note.service.js"
 import { NotePreview } from "./NotePreview.jsx"
 
 export function NoteAdd({ selectedNote, onNoteAdded, onClose, isAdding }) {
-  const [noteToEdit, setNoteToEdit] = useState(selectedNote || noteService.createEmptyNote())
+  const [noteToAdd, setNoteToAdd] = useState(
+    selectedNote || noteService.createEmptyNote()
+  )
   const [inputType, setInputType] = useState("text")
-  const [todos, setTodos] = useState(noteToEdit.info.todos || [""])
+  const [todos, setTodos] = useState(noteToAdd.info.todos || [""])
   const [searchParams, setSearchParams] = useSearchParams()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const title = searchParams.get("title") || ""
     const txt = searchParams.get("txt") || ""
     const url = searchParams.get("url") || ""
+    const video = searchParams.get("video") || ""
     const todosParam = searchParams.get("todos")
     const loadedTodos = todosParam ? JSON.parse(todosParam) : [""]
 
     const updatedNote = {
-      ...noteToEdit,
+      ...noteToAdd,
       info: {
-        ...noteToEdit.info,
+        ...noteToAdd.info,
         title,
         txt,
         url,
+        video,
         todos: loadedTodos,
       },
     }
 
-    setNoteToEdit(updatedNote)
+    setNoteToAdd(updatedNote)
     setTodos(loadedTodos)
-    setInputType(url ? "image" : loadedTodos.length > 1 ? "list" : "text")
+    setInputType(
+      url ? "image" : video ? "video" : loadedTodos.length > 1 ? "list" : "text"
+    )
   }, [])
 
   useEffect(() => {
     const params = new URLSearchParams()
-    if (noteToEdit.info.title) params.set("title", noteToEdit.info.title)
-    if (noteToEdit.info.txt) params.set("txt", noteToEdit.info.txt)
-    if (noteToEdit.info.url) params.set("url", noteToEdit.info.url)
-    if (todos.length > 1 || todos[0] !== "") params.set("todos", JSON.stringify(todos))
+    if (noteToAdd.info.title) params.set("title", noteToAdd.info.title)
+    if (noteToAdd.info.txt) params.set("txt", noteToAdd.info.txt)
+    if (noteToAdd.info.url) params.set("url", noteToAdd.info.url)
+    if (noteToAdd.info.video) params.set("video", noteToAdd.info.video)
+
+    if (todos.length > 1 || todos[0] !== "")
+      params.set("todos", JSON.stringify(todos))
 
     setSearchParams(params)
-  }, [noteToEdit, todos, setSearchParams])
+  }, [noteToAdd, todos, setSearchParams])
 
   function onSaveNote() {
     const filteredTodos = todos.filter((todo) => todo.trim() !== "")
     const updatedNote = {
-      ...noteToEdit,
-      type: inputType === "image" ? "NoteImg" : inputType === "list" ? "NoteTodos" : "NoteTxt",
+      ...noteToAdd,
+      type:
+        inputType === "image"
+          ? "NoteImg"
+          : inputType === "list"
+          ? "NoteTodos"
+          : inputType === "video"
+          ? "NoteVideo"
+          : "NoteTxt",
       info: {
-        ...noteToEdit.info,
-        txt: inputType === "text" ? noteToEdit.info.txt : undefined,
-        url: inputType === "image" ? noteToEdit.info.url : undefined,
-        todos: inputType === "list" ? filteredTodos.map((todo) => ({ txt: todo, doneAt: null })) : undefined,
+        ...noteToAdd.info,
+        todos:
+          inputType === "list"
+            ? filteredTodos.map((todo) => ({ txt: todo }))
+            : undefined,
       },
     }
 
     noteService
       .save(updatedNote)
       .then((note) => {
-        if (typeof onNoteAdded === "function") {
-          onNoteAdded(note)
-        }
+        onNoteAdded(note)
         resetForm()
         onClose()
       })
@@ -69,28 +83,29 @@ export function NoteAdd({ selectedNote, onNoteAdded, onClose, isAdding }) {
   }
 
   function resetForm() {
-    setNoteToEdit(noteService.createEmptyNote())
+    setNoteToAdd(noteService.createEmptyNote())
     setTodos([""])
     setInputType("text")
     setSearchParams({})
   }
 
   function handleInputTypeChange(type) {
-    const clearedInfo = { ...noteToEdit.info }
+    const clearedInfo = { ...noteToAdd.info }
 
     if (type !== "text") clearedInfo.txt = ""
     if (type !== "image") clearedInfo.url = ""
     if (type !== "list") setTodos([""])
+    if (type !== "video") clearedInfo.video = ""
 
-    setNoteToEdit({ ...noteToEdit, info: clearedInfo })
+    setNoteToAdd({ ...noteToAdd, info: clearedInfo })
     setInputType(type)
   }
 
   return (
     <section className={`note-add ${isAdding ? "accordion-open" : ""}`}>
       <NotePreview
-        note={noteToEdit}
-        setNote={setNoteToEdit}
+        note={noteToAdd}
+        setNote={setNoteToAdd}
         onSaveNote={onSaveNote}
         inputType={inputType}
         setInputType={handleInputTypeChange}

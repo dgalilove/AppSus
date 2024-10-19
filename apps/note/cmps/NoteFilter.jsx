@@ -8,7 +8,6 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    // Use 'search' from query parameters
     const searchFromParams = searchParams.get("search") || ""
     const typeFromParams = searchParams.get("filterType") || ""
     setFilterByToEdit((prevFilter) => ({
@@ -21,8 +20,10 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   useEffect(() => {
     onSetFilterBy(filterByToEdit)
     const newSearchParams = new URLSearchParams()
-    if (filterByToEdit.title) newSearchParams.set("search", filterByToEdit.title)
-    if (filterByToEdit.type) newSearchParams.set("filterType", filterByToEdit.type)
+    if (filterByToEdit.title)
+      newSearchParams.set("search", filterByToEdit.title)
+    if (filterByToEdit.type)
+      newSearchParams.set("filterType", filterByToEdit.type)
     setSearchParams(newSearchParams, { replace: true })
   }, [filterByToEdit])
 
@@ -32,8 +33,8 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
       type === "checkbox"
         ? checked
         : type === "number" || type === "range"
-          ? +value
-          : value
+        ? +value
+        : value
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [name]: newValue }))
   }
 

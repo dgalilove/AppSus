@@ -7,5 +7,5 @@ export function NoteImg({ url, onChange }) {
       onChange={(e) => onChange(e.target.value)}
       className="image-url-input"
     />
-  );
+  )
 }

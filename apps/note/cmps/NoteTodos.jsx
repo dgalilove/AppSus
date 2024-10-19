@@ -1,6 +1,6 @@
 export function NoteTodos({ todos, onAddTodo, onTodoChange }) {
   return (
-    <div>
+    <div className="div-todos">
       {todos.map((todo, index) => (
         <input
           key={index}
@@ -10,7 +10,9 @@ export function NoteTodos({ todos, onAddTodo, onTodoChange }) {
           placeholder={`Todo ${index + 1}`}
         />
       ))}
-      <button type="button" onClick={onAddTodo}>Add Todo</button>
+      <button type="button" onClick={onAddTodo}>
+        Add Todo
+      </button>
     </div>
-  );
+  )
 }

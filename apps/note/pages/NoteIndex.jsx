@@ -1,53 +1,61 @@
-const { useEffect, useState } = React;
-const { useSearchParams, useNavigate, useParams } = ReactRouterDOM;
+const { useEffect, useState } = React
+const { useSearchParams, useNavigate, useParams } = ReactRouterDOM
 
-import { NoteAdd } from "../cmps/NoteAdd.jsx";
-import { NoteFilter } from "../cmps/NoteFilter.jsx";
-import { NoteList } from "../cmps/NoteList.jsx";
-import { noteService } from "../services/note.service.js";
-import { NoteEdit } from "../cmps/NoteEdit.jsx";
+import { NoteAdd } from "../cmps/NoteAdd.jsx"
+import { NoteFilter } from "../cmps/NoteFilter.jsx"
+import { NoteList } from "../cmps/NoteList.jsx"
+import { noteService } from "../services/note.service.js"
+import { NoteEdit } from "../cmps/NoteEdit.jsx"
 
 export function NoteIndex() {
-  const [notes, setNotes] = useState(null);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [filterBy, setFilterBy] = useState(noteService.getFilterFromSearchParams(searchParams));
-  const [selectedNote, setSelectedNote] = useState(null);
-  const [isAdding, setIsAdding] = useState(false);
-  const navigate = useNavigate();
-  const { noteId } = useParams();
+  const [notes, setNotes] = useState(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [filterBy, setFilterBy] = useState(
+    noteService.getFilterFromSearchParams(searchParams)
+  )
+  const [selectedNote, setSelectedNote] = useState(null)
+  const [isAdding, setIsAdding] = useState(false)
+  const navigate = useNavigate()
+  const { noteId } = useParams()
 
   useEffect(() => {
-    loadNotes();
+    loadNotes()
     if (noteId) {
-      noteService.get(noteId)
+      noteService
+        .get(noteId)
         .then(setSelectedNote)
         .catch(() => {
-          console.log("Failed to load the note.");
-          navigate("/note");
-        });
+          console.log("Failed to load the note.")
+          navigate("/note")
+        })
     }
-  }, [noteId, filterBy]);
+  }, [noteId, filterBy])
 
   function loadNotes() {
-    noteService.query(filterBy).then((notes) => {
-      setNotes(notes);
-    }).catch((err) => console.log("Problems getting notes:", err));
+    noteService
+      .query(filterBy)
+      .then((notes) => {
+        setNotes(notes)
+      })
+      .catch((err) => console.log("Problems getting notes:", err))
   }
 
   function onEditNote(note) {
-    setSelectedNote(note);
-    navigate(`/note/edit/${note.id}`, { replace: true });
+    setSelectedNote(note)
+    navigate(`/note/edit/${note.id}`, { replace: true })
   }
 
-
   function saveNoteChanges(updatedNote) {
-    noteService.save(updatedNote)
+    noteService
+      .save(updatedNote)
       .then(() => {
-        const updatedNotes = notes.map((note) => note.id === updatedNote.id ? updatedNote : note);
-        setNotes(sortNotes(updatedNotes));  // Reapply sorting
-        onClose();  // Close the edit mode
+        const updatedNotes = notes.map((note) =>
+          note.id === updatedNote.id ? updatedNote : note
+        )
+        setNotes(sortNotes(updatedNotes))
+        onClose()
       })
-      .catch((err) => console.log("Failed to update note", err));
+      .catch((err) => console.log("Failed to update note", err))
   }
 
   function sortNotes(notes) {
@@ -59,60 +67,57 @@ export function NoteIndex() {
   }
 
   function updateNote(noteId, updateCallback) {
-    const updatedNotes = notes.map((note) => (note.id === noteId ? updateCallback(note) : note));
-    const updatedNote = updatedNotes.find((note) => note.id === noteId);
+    const updatedNotes = notes.map((note) =>
+      note.id === noteId ? updateCallback(note) : note
+    )
+    const updatedNote = updatedNotes.find((note) => note.id === noteId)
 
-    noteService.save(updatedNote)
+    noteService
+      .save(updatedNote)
       .then(() => setNotes(sortNotes(updatedNotes)))
-      .catch((err) => console.log("Failed to update note", err));
+      .catch((err) => console.log("Failed to update note", err))
   }
 
   function onRemoveNote(noteId) {
-    noteService.remove(noteId)
+    noteService
+      .remove(noteId)
       .then(() => {
-        setNotes((notes) => notes.filter((note) => note.id !== noteId));
+        setNotes((notes) => notes.filter((note) => note.id !== noteId))
         loadNotes()
       })
-      .catch((err) => console.log("Problems removing note:", err));
+      .catch((err) => console.log("Problems removing note:", err))
   }
 
   function onChangeColor(noteId, color) {
     updateNote(noteId, (note) => ({
       ...note,
       style: { ...note.style, backgroundColor: color },
-    }));
+    }))
   }
-  useEffect(() => {
-    loadNotes();
-    if (noteId) {
-      noteService.get(noteId)
-        .then(setSelectedNote)
-        .catch(() => {
-          console.log("Failed to load the note.");
-          navigate("/note");
-        });
-    }
-  }, [noteId, filterBy]);
 
   function loadNotes() {
-    noteService.query(filterBy).then((notes) => {
-      // Ensure the notes are sorted after loading
-      setNotes(sortNotes(notes));
-    }).catch((err) => console.log("Problems getting notes:", err));
+    noteService
+      .query(filterBy)
+      .then((notes) => {
+        setNotes(sortNotes(notes))
+      })
+      .catch((err) => console.log("Problems getting notes:", err))
   }
 
   function onTogglePin(noteId) {
     updateNote(noteId, (note) => {
-      const updatedNote = { ...note, isPinned: !note.isPinned };
-      noteService.save(updatedNote)
+      const updatedNote = { ...note, isPinned: !note.isPinned }
+      noteService
+        .save(updatedNote)
         .then(() => {
-          // Re-sort the list after pinning/unpinning
-          const updatedNotes = notes.map(n => n.id === updatedNote.id ? updatedNote : n);
-          setNotes(sortNotes(updatedNotes));
+          const updatedNotes = notes.map((n) =>
+            n.id === updatedNote.id ? updatedNote : n
+          )
+          setNotes(sortNotes(updatedNotes))
         })
-        .catch((err) => console.log("Failed to update pin state", err));
-      return updatedNote;
-    });
+        .catch((err) => console.log("Failed to update pin state", err))
+      return updatedNote
+    })
   }
   function onClose() {
     navigate("/note", { replace: true })
@@ -120,11 +125,14 @@ export function NoteIndex() {
     setIsAdding(false)
   }
 
-  if (!notes) return <h1>Loading...</h1>;
+  if (!notes) return <h1>Loading...</h1>
 
   return (
     <section className="note-index">
-      <NoteFilter filterBy={filterBy} onSetFilterBy={(filterBy) => setFilterBy(filterBy)} />
+      <NoteFilter
+        filterBy={filterBy}
+        onSetFilterBy={(filterBy) => setFilterBy(filterBy)}
+      />
       <NoteAdd
         selectedNote={selectedNote}
         onNoteAdded={loadNotes}
@@ -148,5 +156,5 @@ export function NoteIndex() {
         </div>
       )}
     </section>
-  );
+  )
 }
