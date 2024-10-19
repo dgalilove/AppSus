@@ -2,10 +2,9 @@ const { Link } = ReactRouterDOM;
 
 export function Home() {
     return (
-        <section className="home">
+        <div className="home">
             <nav>
                 <div className='header-title'>
-
                     <h2>App Sus</h2>
                     <h3>Zohar & Daniel</h3>
                 </div>
@@ -22,6 +21,6 @@ export function Home() {
                     <img src="assets/css/apps/note/note-svgs/pixel-zohar.png" alt="" />
                 </div>
             </nav>
-        </section>
+        </div>
     );
 }
