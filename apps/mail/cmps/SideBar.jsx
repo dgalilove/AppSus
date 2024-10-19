@@ -4,7 +4,7 @@ const { useState, useRef } = React
 
 
 
-export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy, isOpen }) {
+export function SideBar({ unreadMails, openCompose, isOpen, setIsMobileSideBarOpen, isMobileSideBarOpen, setIsMobileBackDrop }) {
 
     const [hoverClass, setHoverClass] = useState('')
     const navigate = useNavigate()
@@ -15,6 +15,8 @@ export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy, isO
     function onSideBarBtn(status) {
         // onSetFilterBy({ status })
         navigate('/mail/' + status)
+        setIsMobileSideBarOpen(false)
+        setIsMobileBackDrop(false)
     }
 
     function onHover(hover) {
@@ -30,7 +32,7 @@ export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy, isO
         }
     }
 
-
+    const isMobileBarOpenClass = isMobileSideBarOpen ? 'open-mobile' : ''
     const numberOfUnreadMails = unreadMails ? unreadMails : ''
     const isOpenClass = isOpen ? 'open' : ''
     return (
@@ -41,7 +43,7 @@ export function SideBar({ unreadMails, openCompose, onSetFilterBy, filterBy, isO
             onMouseLeave={() => {
                 onHover(false)
             }}
-            className={`side-bar ${isOpenClass} ${hoverClass}`
+            className={`side-bar ${isOpenClass} ${hoverClass} ${isMobileBarOpenClass}`
             }>
             <div className="compose-container">
                 <button onClick={openCompose} className="compose-btn"><i className="fa-solid fa-pencil"></i></button>

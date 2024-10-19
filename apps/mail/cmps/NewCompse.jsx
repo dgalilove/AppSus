@@ -116,7 +116,7 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
             <form onSubmit={onAddMail}>
                 <div className="to-line form-line">
                     <label htmlFor="to">To</label>
-                    <input id={'to'} required type="text" name='to' value={to} onChange={handleChange} />
+                    <input id={'to'} required type="email" name='to' value={to} onChange={handleChange} />
                 </div>
                 <div className="subject-line form-line">
                     <input required type="text" placeholder={'Subject'} name='subject' value={subject} onChange={handleChange} />

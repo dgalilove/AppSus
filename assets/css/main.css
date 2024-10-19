@@ -32,3 +32,5 @@
 
 
 @import "./cmps/AppNavigator.css";
+
+@import "./apps/mail/setup/mqMail.css";

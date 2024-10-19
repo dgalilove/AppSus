@@ -1,15 +1,15 @@
 .mail-details {
+    position: relative;
+    z-index: 2;
     width: 100%;
     border-radius: 1em;
     overflow-y: hidden;
-
     display: grid;
     grid-template-columns: 80px 1fr 1em;
     grid-template-rows: repeat(3, 48px) 1fr;
-    height: calc(100vh - 63px);
+    height: 100vh;
     margin-bottom: 1em;
     padding-bottom: 2em;
-    transition: 0.4s;
     background-color: white;
 }
 
@@ -54,7 +54,6 @@
     grid-column: 1/-1;
     grid-row: 2/-1;
 }
-
 
 .mail-details .body-details::-webkit-scrollbar {
     display: none;

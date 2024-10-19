@@ -1,21 +1,32 @@
 .side-bar {
     display: flex;
     flex-direction: column;
-    position: relative;
+    align-items: flex-start;
+    position: fixed;
     z-index: 8;
 
+    overflow-y: scroll;
+    height: 100vh;
+    width: 0;
+    top: 0;
+    background-color: white;
+    transition: 0.4s;
 
-    width: 100%;
-    background-color: var(--clr-bg-side-bar);
-    transition: 0.2s;
+    padding: 1em 0;
+
 }
 
-.side-bar.hover,
-.side-bar.open {
-    width: 256px;
+.side-bar.open-mobile {
+    width: 80%;
+
+}
+
+.side-bar::-webkit-scrollbar {
+    display: none;
 }
 
 .side-bar .compose-container {
+    display: none;
     margin: 0.5em 0 1em;
     padding: 0 0 0 0.5em;
 
@@ -51,17 +62,6 @@
     transition: 0.1s;
 }
 
-.side-bar.hover .compose-btn,
-.side-bar.open .compose-btn {
-    min-width: 8.428571em;
-    padding-right: 1.71428857em;
-}
-
-.side-bar.hover .compose-btn:after,
-.side-bar.open .compose-btn:after {
-    display: block;
-}
-
 
 .side-bar .compose-container .compose-btn i {
     font-size: 1.25rem;
@@ -72,84 +72,14 @@
 
 }
 
-
-.side-bar .btn::before {
-    display: inline-block;
-
-    content: attr(title);
-    position: absolute;
-    /* font-size: 0.675rem; */
-
-    top: 50%;
-    left: 50px;
-
-    translate: 0 -50%;
-
-    display: none;
-
-
-}
-
-.side-bar .btn::after {
-    display: inline-block;
-
-    content: attr(title-2);
-    position: absolute;
-
-    top: 50%;
-    left: 75%;
-
-    translate: 0 -50%;
-
-    display: none;
-    border-left: 1px solid blue;
-    padding-left: 1em;
-
-}
-
-.side-bar.hover .btn::before,
-.side-bar.open .btn::before {
-    display: block;
-
-}
-
-.side-bar.hover .btn::after,
-.side-bar.open .btn::after {
-    display: block;
-
-}
-
-
 .side-bar .btn {
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    position: relative;
+    justify-content: flex-start;
     font-size: 0.875rem;
 
-
     background: none;
-    height: 30px;
-    width: 30px;
-
-    border-radius: 50%;
-    border: none;
-
-    padding: 0 6px;
-    margin-left: 1.625em;
-
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-
-.side-bar.hover .btn,
-.side-bar.open .btn {
-    justify-content: flex-start;
-
-    background: none;
-    height: 30px;
+    height: 80px;
     width: 80%;
 
     border-radius: 0 1em 1em 0;
@@ -160,38 +90,109 @@
     margin-left: 0;
 
     cursor: pointer;
+    position: relative;
+    box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
+    transition: 0.3s;
 }
 
-
-.side-bar .btn .unread-mails {
+.side-bar .btn::before {
+    content: attr(title);
     position: absolute;
 
-    top: 5px;
-    right: 7px;
+    top: 50%;
+    left: 50px;
 
-    width: 0.5em;
-    height: 0.5em;
+    translate: 0 -50%;
 
-    background-color: red;
-    border-radius: 50%;
-    transition: 0.4s;
+    display: block;
 }
 
+.side-bar .btn::after {
+    content: attr(title-2);
+    position: absolute;
 
-.side-bar.hover .btn .unread-mails,
-.side-bar.open .btn .unread-mails {
-    opacity: 0;
-    width: 0;
-    height: 0;
+    top: 50%;
+    left: 200px;
+    translate: 0 -50%;
+
+    display: block;
+    border-left: 1px solid blue;
+    padding-left: 1em;
+
 }
-
 
 .side-bar .btn:hover {
     background-color: var(--clr-search-bar-shadow-read-filter);
-
 }
 
 .side-bar .btn.active {
     background-color: var(--clr-selected-btn-side-bar);
     font-weight: bold;
+}
+
+.side-bar .labels {
+    margin-top: 66px;
+    width: 100%;
+}
+
+.side-bar .labels .add-label::before {
+    display: inline-block;
+
+    content: attr(title);
+    position: absolute;
+    font-size: 1rem;
+
+    top: 50%;
+    left: 50px;
+
+    translate: 0 -50%;
+
+    display: none;
+}
+
+
+.side-bar .user-labels {
+    margin-top: 18px;
+}
+
+.side-bar .user-labels .btn.label {
+    position: relative;
+}
+
+.side-bar .user-labels .btn.label span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 85%;
+    scale: 0;
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    color: gray;
+    transition: 0.2s;
+}
+
+
+.side-bar .user-labels .btn.label span:hover {
+    background-color: var(--clr-search-bar-shadow-read-filter-hover);
+    color: black;
+    scale: 1.02;
+}
+
+.side-bar .user-labels .btn.label.active {
+    background-color: var(--clr-search-bar-shadow-read-filter);
+}
+
+.side-bar .user-labels .btn.label::before {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: black;
+}
+
+.side-bar .user-labels .btn.label.active::before {
+
+    font-weight: bold;
+
 }

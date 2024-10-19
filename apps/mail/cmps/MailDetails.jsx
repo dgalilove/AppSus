@@ -3,7 +3,7 @@ import { mailService } from "../services/mail.service.js"
 const { useParams, useNavigate, Link } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function MailDetails() {
+export function MailDetails({ setIsMobileHeaderHidden }) {
 
     const [mail, setMail] = useState(null)
     const { mailId } = useParams()
@@ -19,6 +19,7 @@ export function MailDetails() {
 
     function onBack() {
         navigate(`/mail/${status}`)
+        setIsMobileHeaderHidden(false)
     }
 
     function onOpenNewWindow() {
@@ -41,14 +42,15 @@ export function MailDetails() {
         <div className="mail-details">
             <div className="tool-bar">
                 <button onClick={onBack} ><i className="fa-solid fa-arrow-left"></i></button>
+                <button onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
+                <button onClick={onCrateNote}><i className="fa-solid fa-notes-medical"></i></button>
+
             </div>
+
             <div className="body-details">
                 <div className="header">
                     <h2>{subject}</h2>
-                    <div className="header-tool-bar">
-                        <button onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
-                        <button onClick={onCrateNote}><i className="fa-solid fa-notes-medical"></i></button>
-                    </div>
+
                 </div>
                 <div className="sender-details">
                     <img src={`https://robohash.org/${mailId}`} alt="" />
