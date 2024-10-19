@@ -128,7 +128,7 @@ export function NoteEdit({
               />
             </div>
           ))}
-          <button onClick={addTodo}>Add Todo</button> {/* Add Todo Button */}
+          <button className='todo-add-button' onClick={addTodo}><i class="fa-solid fa-plus"></i></button>
         </div>
       )}
 

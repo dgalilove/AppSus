@@ -1,6 +1,6 @@
 @media (width < 640px) {
    .note-list{
-        column-count: 2;
+        column-count: 1 ;
         column-gap: 0.6em;
         padding: 2em 1em 1em 1em;
     }
