@@ -15,10 +15,6 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
 
     function onMailOpen(mail) {
         if (status === 'draft') {
-            // navigate = ({
-            //     pathname: `/mail/${status}`,
-            //     // search: `?title=${mail.subject}&text=${mail.body}`
-            // })
             navigate(`/mail/${status}/${mail.id}?compose=new&to=${mail.to}&subject=${mail.subject}&body=${mail.body}`)
             openCompose()
             showSuccessMsg(`Mail {${mail.id}} draft opened`)

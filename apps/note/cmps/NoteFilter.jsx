@@ -33,8 +33,8 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
       type === "checkbox"
         ? checked
         : type === "number" || type === "range"
-        ? +value
-        : value
+          ? +value
+          : value
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [name]: newValue }))
   }
 
@@ -92,14 +92,14 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
           <img
             onClick={() => setIsHidden(!isHidden)}
             className="dots"
-            src="/assets/css/apps/note/note-svgs/dot-library-light.svg"
+            src="./assets/css/apps/note/note-svgs/dot-library-light.svg"
             alt=""
           />
           <AppNavigator isHidden={isHidden} />
         </div>
         <img
           className="account-logo"
-          src="/assets/css/apps/mail/mail-svgs/account-logo.jpeg"
+          src="./assets/css/apps/mail/mail-svgs/account-logo.jpeg"
           alt=""
         />
       </div>
