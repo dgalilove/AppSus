@@ -92,11 +92,13 @@ export function MailIndex() {
     function openCompose() {
         setIsComposeOpen(true)
         onSetFilterBy({ compose: 'new' })
+        setIsMobileHeaderHidden(true)
     }
 
     function closeCompose() {
         setIsComposeOpen(false)
         onSetFilterBy({ compose: '', to: '', subject: '', body: '' })
+        setIsMobileHeaderHidden(false)
     }
 
     function onRemoveMail(mailId) {

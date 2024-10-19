@@ -31,14 +31,13 @@ export function NewCompose({ closeCompose, onSetFilterBy, filterBy }) {
 
 
     useEffect(() => {
-        if (!mailToAdd) return
         if (filterByToEdit.to !== '' ||
             filterByToEdit.subject !== '' ||
             filterByToEdit.body !== '') {
+            if (!mailToAdd) return
 
             mailService.save(mailToAdd)
                 .then(mail => {
-                    onSetFilterBy(filterByToEdit)
                     setMailToAdd(mail)
                     setDraftedMail(mail)
                 })
