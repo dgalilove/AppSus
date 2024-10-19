@@ -124,6 +124,35 @@ export function NoteIndex() {
     setSelectedNote(null)
     setIsAdding(false)
   }
+  function onToggleTodo(noteId, todoIdx) {
+    updateNote(noteId, (note) => {
+      const updatedTodos = note.info.todos.map((todo, idx) => {
+        if (idx === todoIdx) {
+          return {
+            ...todo,
+            doneAt: todo.doneAt ? null : Date.now()  
+          };
+        }
+        return todo;
+      });
+  
+      return {
+        ...note,
+        info: { ...note.info, todos: updatedTodos },
+      };
+    });
+  }
+  function onDeleteTodo(noteId, todoIdx) {
+    updateNote(noteId, (note) => {
+      const updatedTodos = note.info.todos.filter((_, idx) => idx !== todoIdx)
+      return {
+        ...note,
+        info: { ...note.info, todos: updatedTodos },
+      };
+    });
+  }
+  
+  
 
   if (!notes) return <h1>Loading...</h1>
 
@@ -140,19 +169,32 @@ export function NoteIndex() {
         isAdding={isAdding}
       />
 
-      <NoteList notes={notes} onEditNote={onEditNote} />
+      <div className={selectedNote ? "disable-pointer" : ""}>
+        <NoteList
+          notes={notes}
+          onEditNote={onEditNote}
+          onRemoveNote={onRemoveNote}
+          onChangeColor={onChangeColor}
+          onTogglePin={onTogglePin}
+          onToggleTodo={onToggleTodo}
+          onDeleteTodo={onDeleteTodo}
+        />
+      </div>
 
       {selectedNote && (
-        <div className="note-edit-wrapper">
-          <NoteEdit
-            note={selectedNote}
-            setNote={setSelectedNote}
-            onSave={saveNoteChanges}
-            onRemoveNote={onRemoveNote}
-            onChangeColor={onChangeColor}
-            onTogglePin={onTogglePin}
-            onClose={onClose}
-          />
+        <div>
+          <div className="backdrop" onClick={onClose}></div>
+          <div className="note-edit-wrapper">
+            <NoteEdit
+              note={selectedNote}
+              setNote={setSelectedNote}
+              onSave={saveNoteChanges}
+              onRemoveNote={onRemoveNote}
+              onChangeColor={onChangeColor}
+              onTogglePin={onTogglePin}
+              onClose={onClose}
+            />
+          </div>
         </div>
       )}
     </section>

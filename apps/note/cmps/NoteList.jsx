@@ -1,12 +1,33 @@
-export function NoteList({ notes, onEditNote }) {
-  if (!notes || notes.length === 0) {
-    return <p>No notes available.</p>
-  }
-  function extractYouTubeID(url) {
-    const regExp =
-      /(?:youtube\.com\/(?:.*v=|.*\/embed\/|v\/)|youtu\.be\/)([^&\n?%#]+)/
-    const match = url.match(regExp)
-    return match ? match[1] : null
+const { useEffect, useState } = React
+
+export function NoteList({
+  notes,
+  onEditNote,
+  onTogglePin,
+  onRemoveNote,
+  onChangeColor,
+  onToggleTodo,
+  onDeleteTodo,
+}) {
+  const [activeNoteId, setActiveNoteId] = useState(null)
+
+  const colorOptions = [
+    "#621708",
+    "#96897B",
+    "#156064",
+    "#364652",
+    "#63372C",
+    "#55038C",
+    "#2C0735",
+    "rgb(33, 33, 33)",
+  ]
+
+  const toggleColorPalette = (noteId) => {
+    if (activeNoteId === noteId) {
+      setActiveNoteId(null)
+    } else {
+      setActiveNoteId(noteId)
+    }
   }
 
   return (
@@ -14,6 +35,7 @@ export function NoteList({ notes, onEditNote }) {
       {notes.map((note) => {
         const backgroundColor =
           (note.style && note.style.backgroundColor) || "rgb(33, 33, 33)"
+
         return (
           <div
             key={note.id}
@@ -24,9 +46,36 @@ export function NoteList({ notes, onEditNote }) {
             <h3>{note.info.title || "Untitled"}</h3>
             {note.type === "NoteTxt" && <p>{note.info.txt || "Untitled"}</p>}
             {note.type === "NoteTodos" && (
-              <ul>
+              <ul className="todo-list">
                 {note.info.todos.map((todo, idx) => (
-                  <li key={idx}>{todo.txt}</li>
+                  <li
+                    key={idx}
+                    className={`todo-item ${todo.doneAt ? "completed" : ""}`} // Apply completed class if done
+                    onClick={(e) => {
+                      e.stopPropagation() // Prevent triggering the note edit
+                      onToggleTodo(note.id, idx) // Toggle the done state of the todo
+                    }}
+                  >
+                    {todo.txt}
+                    <div>
+                      <span className="todo-toggle">
+                        {todo.doneAt ? (
+                          <i class="fa-regular fa-circle"></i> // Undo icon
+                        ) : (
+                          <i class="fa-solid fa-circle"></i> // Mark as done icon
+                        )}
+                      </span>
+                      <span
+                        className="todo-delete"
+                        onClick={(e) => {
+                          e.stopPropagation() // Prevent triggering the toggle
+                          onDeleteTodo(note.id, idx) // Delete the todo
+                        }} // Delete the todo
+                      >
+                        <i class="fa-solid fa-xmark"></i>
+                      </span>
+                    </div>
+                  </li>
                 ))}
               </ul>
             )}
@@ -46,9 +95,66 @@ export function NoteList({ notes, onEditNote }) {
                 allowFullScreen
               ></iframe>
             )}
+
+            <button
+              className="pinInAdd"
+              onClick={(e) => {
+                e.stopPropagation()
+                onTogglePin(note.id)
+              }}
+            >
+              {note.isPinned ? (
+                <i className="fa-solid fa-thumbtack-slash"></i>
+              ) : (
+                <i className="fa-solid fa-thumbtack"></i>
+              )}
+            </button>
+            <div className="note-action-buttons">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onRemoveNote(note.id)
+                }}
+              >
+                <i className="fa-solid fa-trash-can"></i>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  toggleColorPalette(note.id)
+                }}
+              >
+                <i className="fa-solid fa-palette"></i>
+              </button>
+
+              <div
+                className={`color-palette-dropdown ${
+                  activeNoteId === note.id ? "open" : ""
+                }`}
+              >
+                {colorOptions.map((color) => (
+                  <div
+                    key={color}
+                    className="color-option"
+                    style={{ backgroundColor: color }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onChangeColor(note.id, color)
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         )
       })}
     </div>
   )
+}
+
+function extractYouTubeID(url) {
+  const regExp =
+    /(?:youtube\.com\/(?:.*v=|.*\/embed\/|v\/)|youtu\.be\/)([^&\n?%#]+)/
+  const match = url.match(regExp)
+  return match ? match[1] : null
 }

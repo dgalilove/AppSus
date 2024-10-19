@@ -1,6 +1,6 @@
 .note-list {
-  column-count: 5; 
-  column-gap: 1em; 
+  column-count: 5;
+  column-gap: 1em;
   padding: 2em 4em 1em 4em;
 }
 
@@ -18,36 +18,117 @@
   word-wrap: break-word;
   white-space: normal;
   height: auto;
+  position: relative;
 }
 
 .note-item:hover {
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
-.note-item img{
+.note-item img {
   border: none;
   border-radius: 15px;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .note-item ul {
-  padding-left: 1.4em;
+  padding-left: 0.5em;
 }
 
-.note-item ul li:not(:last-child){
-  margin-bottom: 0.6em;
-}
-
-.note-item iframe{
+.note-item iframe {
   margin-top: 10px;
   border: none;
   border-radius: 15px;
 }
 
-.note-item h3 , p{
+.note-item h3, p {
   margin-left: 5px;
 }
 
+.note-action-buttons {
+  position: absolute;
+  bottom: 0;
+  right: 15px;
+  display: none;
+  flex-direction: row;
+  gap: 5px;
+}
 
+.pinInAdd{
+  display: none;
+}
+.note-item:hover .pinInAdd{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+}
 
+.note-item:hover .note-action-buttons {
+  display: flex;
+}
 
+.note-action-buttons button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.note-action-buttons button:hover {
+  transform: scale(1.2);
+}
+
+.color-palette-dropdown {
+  position: absolute;
+  bottom: 0;
+  right: 60px;
+  display: none;
+  flex-direction: row;
+  gap: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.color-palette-dropdown.open {
+  display: flex;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.todo-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.todo-item.completed {
+  text-decoration: line-through; 
+  color: gray;              
+}
+.todo-toggle{
+  margin-left: 1em;
+  font-size: 1em;
+}
+.todo-delete {
+  cursor: pointer;
+  color: white;  
+  margin-left: 0.2em;
+}
+.before-li{
+  font-weight: bold;
+  font-size: 1.4em;
+  margin-right: 0.2em;
+}
