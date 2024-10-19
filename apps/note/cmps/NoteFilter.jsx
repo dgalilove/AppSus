@@ -41,7 +41,7 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   const { title, type } = filterByToEdit
 
   return (
-    <section className="note-filter">
+    <section className="note-filter ">
       <div className="logo-and-search">
         <svg
           className="keep-logo"

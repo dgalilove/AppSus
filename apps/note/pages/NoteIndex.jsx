@@ -130,17 +130,17 @@ export function NoteIndex() {
         if (idx === todoIdx) {
           return {
             ...todo,
-            doneAt: todo.doneAt ? null : Date.now()  
-          };
+            doneAt: todo.doneAt ? null : Date.now(),
+          }
         }
-        return todo;
-      });
-  
+        return todo
+      })
+
       return {
         ...note,
         info: { ...note.info, todos: updatedTodos },
-      };
-    });
+      }
+    })
   }
   function onDeleteTodo(noteId, todoIdx) {
     updateNote(noteId, (note) => {
@@ -148,16 +148,40 @@ export function NoteIndex() {
       return {
         ...note,
         info: { ...note.info, todos: updatedTodos },
-      };
-    });
+      }
+    })
   }
-  
-  
+  function onClickPage(page) {
+    if (page === "gmail") {
+      navigate("/mail/inbox")
+    } else if (page === "note") {
+      navigate("/note")
+    } else if (page === "books") {
+      navigate("/books")
+    } else {
+      navigate("/home")
+    }
+  }
 
   if (!notes) return <h1>Loading...</h1>
 
   return (
     <section className="note-index">
+      <div className="mobile-navigator">
+        <i
+          onClick={() => onClickPage("home")}
+          className="fa-solid fa-house"
+        ></i>
+        <i onClick={() => onClickPage("gmail")} className="fa-solid fa-at"></i>
+        <i
+          onClick={() => onClickPage("note")}
+          className="fa-solid fa-pager active"
+        ></i>
+        <i
+          onClick={() => onClickPage("books")}
+          className="fa-solid fa-book"
+        ></i>
+      </div>
       <NoteFilter
         filterBy={filterBy}
         onSetFilterBy={(filterBy) => setFilterBy(filterBy)}

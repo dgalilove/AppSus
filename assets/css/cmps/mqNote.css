@@ -6,7 +6,10 @@
     }
     .note-filter{
         padding: 5px 10px;
-        justify-content: none;
+        position: fixed;
+        z-index: 900;
+        background-color: var(--clr-note-main-bcg);
+        width: 100%;
     }
     .note-filter input[type="text"] {
         width: 10em;
@@ -20,9 +23,14 @@
     .note-filter form {
         margin-left: 0;
     }
+    .note-filter .dots-and-account .dots{
+        display: none;
+    }
     .note-index .note-add{
         justify-items:unset ;
         padding: 0 1em;
+        margin-top: 5em;
+
     }
     .accordion-header{
         display: grid;

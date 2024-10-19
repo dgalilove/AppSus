@@ -50,27 +50,27 @@ export function NoteList({
                 {note.info.todos.map((todo, idx) => (
                   <li
                     key={idx}
-                    className={`todo-item ${todo.doneAt ? "completed" : ""}`} // Apply completed class if done
+                    className={`todo-item ${todo.doneAt ? "completed" : ""}`} 
                     onClick={(e) => {
-                      e.stopPropagation() // Prevent triggering the note edit
-                      onToggleTodo(note.id, idx) // Toggle the done state of the todo
+                      e.stopPropagation() 
+                      onToggleTodo(note.id, idx) 
                     }}
                   >
                     {todo.txt}
                     <div>
                       <span className="todo-toggle">
                         {todo.doneAt ? (
-                          <i class="fa-regular fa-circle"></i> // Undo icon
+                          <i class="fa-regular fa-circle"></i> 
                         ) : (
-                          <i class="fa-solid fa-circle"></i> // Mark as done icon
+                          <i class="fa-solid fa-circle"></i> 
                         )}
                       </span>
                       <span
                         className="todo-delete"
                         onClick={(e) => {
-                          e.stopPropagation() // Prevent triggering the toggle
-                          onDeleteTodo(note.id, idx) // Delete the todo
-                        }} // Delete the todo
+                          e.stopPropagation() 
+                          onDeleteTodo(note.id, idx) 
+                        }} 
                       >
                         <i class="fa-solid fa-xmark"></i>
                       </span>
