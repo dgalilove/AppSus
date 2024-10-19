@@ -55,12 +55,12 @@ export function NoteEdit({
     }))
   }
   const addTodo = () => {
-    const newTodo = { txt: "", doneAt: null };
+    const newTodo = { txt: "", doneAt: null }
     setNote((prevNote) => ({
       ...prevNote,
       info: { ...prevNote.info, todos: [...prevNote.info.todos, newTodo] },
-    }));
-  };
+    }))
+  }
 
   const handleClickOutside = (event) => {
     if (accordionRef.current && !accordionRef.current.contains(event.target)) {
@@ -119,17 +119,16 @@ export function NoteEdit({
         <div>
           {note.info.todos.map((todo, idx) => (
             <div>
-            <input
-              key={idx}
-              type="text"
-              placeholder="Edit content"
-              value={todo.txt}
-              onChange={(e) => toDoEdit(idx, e.target.value)}
-            />
+              <input
+                key={idx}
+                type="text"
+                placeholder="Edit content"
+                value={todo.txt}
+                onChange={(e) => toDoEdit(idx, e.target.value)}
+              />
             </div>
           ))}
           <button onClick={addTodo}>Add Todo</button> {/* Add Todo Button */}
-
         </div>
       )}
 
