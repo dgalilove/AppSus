@@ -29,7 +29,7 @@ const loggedUser = {
 //     labels: []
 // }
 
-function query(filterBy = {}, status) {
+function query(filterBy = {}, status = 'inbox') {
     return storageService.query(ZMAIL_DB)
         .then(mails => {
             if (status === 'inbox') {

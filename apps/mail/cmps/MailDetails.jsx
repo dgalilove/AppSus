@@ -1,3 +1,4 @@
+import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { mailService } from "../services/mail.service.js"
 
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -14,6 +15,12 @@ export function MailDetails({ setIsMobileHeaderHidden }) {
         mailService.get(mailId)
             .then(mail => {
                 setMail(mail)
+                showSuccessMsg(`Mail {${mailId}} details opened`)
+            })
+            .catch(err => {
+                console.log(err)
+                showErrorMsg(`Cannot open {${mailId}} details`)
+
             })
     }, [mailId])
 

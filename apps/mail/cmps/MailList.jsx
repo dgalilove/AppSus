@@ -1,5 +1,7 @@
+import { showSuccessMsg } from "../../../services/event-bus.service.js"
 import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./MailPreview.jsx"
+import { NoMailsFound } from "./NoMailsFound.jsx"
 
 const { useParams, useNavigate } = ReactRouterDOM
 
@@ -19,8 +21,7 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
             // })
             navigate(`/mail/${status}/${mail.id}?compose=new&to=${mail.to}&subject=${mail.subject}&body=${mail.body}`)
             openCompose()
-
-
+            showSuccessMsg(`Mail {${mail.id}} draft opened`)
         } else {
             mailService.get(mail.id)
                 .then(mail => {
@@ -28,7 +29,6 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
                     mailService.save(mail)
                     navigate(`/mail/${status}/${mail.id}`)
                     setIsMobileHeaderHidden(true)
-
                 })
         }
     }
@@ -40,7 +40,7 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
             <button className={filterBy.sort === 'name' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'name' })}>name</button>
             <button className={filterBy.sort === 'subject' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'subject' })}>subject</button>
         </div>
-        {mailList.length === 0 ? <div>No Such Data</div> :
+        {mailList.length === 0 ? <NoMailsFound /> :
             <ul>
                 {mailList.map(mail => {
                     const classIsRead = mail.isRead ? 'read' : ''

@@ -1,7 +1,8 @@
 const { Route, Routes, Navigate } = ReactRouterDOM
 const Router = ReactRouterDOM.HashRouter
 
-import { AppHeader } from "./cmps/AppHeader.jsx"
+
+// import { AppHeader } from "./cmps/AppHeader.jsx"
 import { About } from "./pages/About.jsx"
 import { Home } from "./pages/Home.jsx"
 import { MailIndex } from "./apps/mail/pages/MailIndex.jsx"
@@ -23,6 +24,7 @@ export function App() {
                     <Route path="/note/edit/:noteId" element={<NoteIndex />} />
                 </Routes>
             </section>
+
         </Router>
     )
 }

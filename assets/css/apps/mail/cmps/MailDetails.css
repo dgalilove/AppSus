@@ -1,6 +1,6 @@
 .mail-details {
     position: relative;
-    z-index: 2;
+    z-index: 6;
     width: 100%;
     border-radius: 1em;
     overflow-y: hidden;
