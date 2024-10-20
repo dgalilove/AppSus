@@ -32,13 +32,11 @@ export function NoteIndex() {
   }, [noteId, filterBy])
 
   function loadNotes() {
-    console.log('Current FilterBy:', filterBy); // Add this to inspect the filter values
-
+    console.log('Current FilterBy:', filterBy)
     noteService
       .query(filterBy)
       .then((notes) => {
-        console.log('Filtered Notes:', notes); // Add this to inspect the filtered notes
-
+        console.log('Filtered Notes:', notes)
         setNotes(notes)
       })
       .catch((err) => console.log("Problems getting notes:", err))
