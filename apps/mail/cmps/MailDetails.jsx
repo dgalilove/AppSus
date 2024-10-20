@@ -105,7 +105,7 @@ export function MailDetails({ setIsMobileHeaderHidden, onRemoveMail, onSetFilter
                         <p className="date">{`${date[1]} ${date[2]}, ${date[3]}, ${date[4]}`}</p>
                     </div>
                 </div>
-                <h4>{body}</h4>
+                <pre>{body}</pre>
             </div>
 
         </div>
