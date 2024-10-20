@@ -37,9 +37,9 @@ export function MailList({ setIsMobileHeaderHidden, mailList, onSetFilterBy, onR
 
     return <div className="mail-list">
         <div className="sorting-container">
-            <button className={filterBy.sort === 'date' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'date' })}>date</button>
-            <button className={filterBy.sort === 'name' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'name' })}>name</button>
-            <button className={filterBy.sort === 'subject' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'subject' })}>subject</button>
+            <button title='Sort by date' className={filterBy.sort === 'date' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'date' })}>date</button>
+            <button title='Sort by name' className={filterBy.sort === 'name' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'name' })}>name</button>
+            <button title='Sort by subject' className={filterBy.sort === 'subject' ? 'active' : ''} onClick={() => onSetFilterBy({ sort: 'subject' })}>subject</button>
         </div>
         {mailList.length === 0 ? <NoMailsFound /> :
             <ul>

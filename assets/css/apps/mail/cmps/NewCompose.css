@@ -155,4 +155,6 @@
     font-size: 1.25rem;
     color: var(--clr-mail);
     background-color: var(--clr-compose-send-btn);
+
+    cursor: pointer;
 }

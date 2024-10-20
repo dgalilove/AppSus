@@ -81,13 +81,13 @@ export function MailDetails({ setIsMobileHeaderHidden, onRemoveMail, onSetFilter
     return (
         <div className="mail-details">
             <div className="tool-bar">
-                <button onClick={onBack} ><i className="fa-solid fa-arrow-left"></i></button>
-                <button onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
-                <button onClick={onCrateNote}><i className="fa-solid fa-notes-medical"></i></button>
-                <button onClick={(event) => onRemove(event, mail.id)}> <i className="fa-regular fa-trash-can" ></i></button>
+                <button title='Back' onClick={onBack} ><i className="fa-solid fa-arrow-left"></i></button>
+                <button title='Open in new window' onClick={onOpenNewWindow}><i className="fa-solid fa-up-right-from-square"></i></button>
+                <button title='Convert mail to note' onClick={onCrateNote}><i className="fa-solid fa-notes-medical"></i></button>
+                <button title='Remove' onClick={(event) => onRemove(event, mail.id)}> <i className="fa-regular fa-trash-can" ></i></button>
                 {mail.isRead ?
-                    <button onClick={(event) => onMailReadMark(event, mail.id)}><i className="fa-regular fa-envelope" ></i></button>
-                    : <button onClick={(event) => onMailReadMark(event, mail.id)}> <i className="fa-regular fa-envelope-open"></i></button>}
+                    <button title='Check as read' onClick={(event) => onMailReadMark(event, mail.id)}><i className="fa-regular fa-envelope" ></i></button>
+                    : <button title='Check as unread' onClick={(event) => onMailReadMark(event, mail.id)}> <i className="fa-regular fa-envelope-open"></i></button>}
 
 
             </div>
